@@ -39,7 +39,7 @@ class StudentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('student_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('activeClassroom.classroom_name')
+                Tables\Columns\TextColumn::make('classrooms.classroom_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('student_nis')
                     ->searchable(),
@@ -149,5 +149,17 @@ class StudentResource extends Resource
                 ->unique(ignoreRecord: true)
                 ->maxLength(255),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        if(auth()->user()->email != 'super@sekolahbasic.sch.id'){
+            $userHomeroom = auth()->user()->activeHomeroom->first()->classroom_id;
+            return parent::getEloquentQuery()->whereHas('classrooms',function($q) use($userHomeroom){
+                $q->where('classroom_id', $userHomeroom);
+            });
+        }
+
+        return parent::getEloquentQuery();
     }
 }

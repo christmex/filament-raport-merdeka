@@ -46,20 +46,19 @@ class AssessmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('student_id')
+                Tables\Columns\TextColumn::make('student.student_name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('assessment_method_setting_id')
+                Tables\Columns\TextColumn::make('assessmentMethodSetting.assessment_method_setting_name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('topic_setting_id')
+                Tables\Columns\TextColumn::make('topicSetting.topic_setting_name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('subject_user_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('grading')
-                    ->numeric()
+                // Tables\Columns\TextColumn::make('subject_user_id')
+                //     ->numeric()
+                //     ->sortable(),
+                Tables\Columns\TextInputColumn::make('grading')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topic_name')
                     ->searchable(),
@@ -81,11 +80,12 @@ class AssessmentResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                    ->deselectRecordsAfterCompletion(),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                // Tables\Actions\CreateAction::make(),
             ]);
     }
     

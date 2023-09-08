@@ -56,10 +56,10 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                EnsureApplicationAlreadySetup::class
             ])
             ->authMiddleware([
                 Authenticate::class,
+                EnsureApplicationAlreadySetup::class
             ])
             ->userMenuItems([
                 // MenuItem::make()
@@ -67,6 +67,8 @@ class AdminPanelProvider extends PanelProvider
                 //     // ->url(fn (): string => Settings::getUrl())
                 //     ->icon('heroicon-o-cog-6-tooth'),
             ])
-            ->sidebarCollapsibleOnDesktop();
+            ->topNavigation()
+            // ->sidebarCollapsibleOnDesktop()
+            ;
     }
 }

@@ -29,8 +29,11 @@ class ListStudents extends ListRecords
 
     public function getSubheading(): ?string
     {
-        $classroom = auth()->user()->activeHomeroom->first()->classroom->classroom_name;
-        return "{$classroom}\'s homeroom teacher | School year 2023/2024 ~ Term Genap";
+        $classroom = null;
+        if(auth()->user()->activeHomeroom->count()){
+            $classroom = auth()->user()->activeHomeroom->first()->classroom->classroom_name."\'s homeroom teacher | School year 2023/2024 ~ Term Genap";
+        }
+        return $classroom;
         // return __('Custom Page Subheading');
     }
 

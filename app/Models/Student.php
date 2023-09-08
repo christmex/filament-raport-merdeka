@@ -40,6 +40,10 @@ class Student extends Model
         //     ;
     }
 
+    public function latestClassroom(){
+        return $this->classrooms()->latest();
+    }
+
     // public function getBookNameAttribute()
     // {
     //     return $this->book->book_name;

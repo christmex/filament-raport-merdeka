@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::get('/', function () {
+//     dd(auth()->user()->getActiveSubjectIds());
 //     dd(Auth()->user()->activeHomeroom->first());
 //     return view('welcome');
 // });

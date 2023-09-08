@@ -32,4 +32,11 @@ class SubjectUser extends Model
     {
         return $this->belongsTo(Classroom::class);
     }
+
+    public function getSubjectUserNameAttribute()
+    {
+        return $this->subject->subject_name." - ".$this->classroom->classroom_name;
+        // return !empty($this->subject->subject_name) ? "- ".$this->subject->subject_name : "";
+        // return $this->department->department_name;
+    }
 }
