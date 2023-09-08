@@ -53,7 +53,7 @@ class HomeroomTeacherResource extends Resource
                     ->preload()
                     ->createOptionForm(UserResource::getForm())
                     ->editOptionForm(UserResource::getForm())
-                    ->visibleOn('create')
+                    // ->visibleOn('create')
                     ->rules([
                         fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
                             $check = HomeroomTeacher::where('user_id', $value)
@@ -131,7 +131,7 @@ class HomeroomTeacherResource extends Resource
         return [
             'index' => Pages\ListHomeroomTeachers::route('/'),
             'create' => Pages\CreateHomeroomTeacher::route('/create'),
-            // 'edit' => Pages\EditHomeroomTeacher::route('/{record}/edit'),
+            'edit' => Pages\EditHomeroomTeacher::route('/{record}/edit'),
         ];
     }    
 }

@@ -89,7 +89,7 @@ class SubjectUserResource extends Resource
                     ->preload()
                     ->createOptionForm(SubjectResource::getForm())
                     ->editOptionForm(SubjectResource::getForm())
-                    ->visibleOn('create')
+                    // ->visibleOn('create')
                     ->required(),
                 Forms\Components\TextInput::make('grade_minimum')
                     ->maxValue(100)
