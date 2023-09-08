@@ -51,4 +51,13 @@ class User extends Authenticatable
     public function activeHomeroom(){
         return $this->homerooms()->where('school_year_id', SchoolYear::active())->where('school_term_id', SchoolTerm::active())->latest();
     }
+
+    public function subjects(): HasMany
+    {
+        return $this->hasMany(SubjectUser::class);
+    }
+    public function activeSubject(): HasMany
+    {
+        return $this->subjects()->where('school_year_id', SchoolYear::active())->where('school_term_id', SchoolTerm::active())->latest();
+    }
 }
