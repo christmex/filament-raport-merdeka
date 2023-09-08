@@ -92,8 +92,13 @@ class UserResource extends Resource
             Forms\Components\TextInput::make('password')
                 // ->visibleOn('create')
                 ->password()
-                ->required()
-                ->maxLength(255),
+                // ->required()
+                ->maxLength(255)
+
+                ->dehydrateStateUsing(fn (string $state): string => bcrypt($state))
+                ->dehydrated(fn (?string $state): bool => filled($state))
+                ->required(fn (string $operation): bool => $operation === 'create')
+                ,
         ];
     }
 }

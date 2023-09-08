@@ -11,6 +11,11 @@ class SchoolYear extends Model
 
     protected $guarded = [];
 
+    public function setSchoolYearNameAttribute($value)
+    {
+        $this->attributes['school_year_name'] = ucwords($value);
+    }
+
     public static function boot()
     {
         parent::boot();

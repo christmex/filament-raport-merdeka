@@ -57,8 +57,7 @@ class SubjectUserResource extends Resource
                     ->default(fn($state) => $state)
                     ->rules([
                         fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                            $check = SubjectUser::where('user_id', $get('user_id'))
-                                    ->where('user_id', $value)
+                            $check = SubjectUser::where('user_id', $value)
                                     ->where('subject_id', $get('subject_id'))
                                     ->where('school_year_id', $get('school_year_id'))
                                     ->where('school_term_id', $get('school_term_id'))

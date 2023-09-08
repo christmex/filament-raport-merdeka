@@ -10,4 +10,9 @@ class Classroom extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function setClassroomNameAttribute($value)
+    {
+        $this->attributes['classroom_name'] = ucwords($value);
+    }
 }

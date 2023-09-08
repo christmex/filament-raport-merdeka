@@ -10,4 +10,9 @@ class Subject extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function setSubjectNameAttribute($value)
+    {
+        $this->attributes['subject_name'] = ucwords($value);
+    }
 }

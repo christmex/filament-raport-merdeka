@@ -11,6 +11,11 @@ class SchoolTerm extends Model
 
     protected $guarded = [];
 
+    public function setSchoolTermNameAttribute($value)
+    {
+        $this->attributes['school_term_name'] = ucwords($value);
+    }
+
     public static function boot()
     {
         parent::boot();

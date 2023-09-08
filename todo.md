@@ -1,0 +1,1 @@
+- [x] Prevent all action before the admin set the school year and school term
