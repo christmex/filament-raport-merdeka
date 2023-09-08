@@ -35,6 +35,7 @@ class HomeroomTeacherResource extends Resource
                     ->createOptionForm(SchoolYearResource::getForm())
                     ->editOptionForm(SchoolYearResource::getForm())
                     ->default(fn($state) => $state)
+                    ->visibleOn('create')
                     ->required(),
                 Forms\Components\Select::make('school_term_id')
                     ->live()
@@ -44,6 +45,7 @@ class HomeroomTeacherResource extends Resource
                     ->createOptionForm(SchoolTermResource::getForm())
                     ->editOptionForm(SchoolTermResource::getForm())
                     ->default(fn($state) => $state)
+                    ->visibleOn('create')
                     ->required(),
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
@@ -51,6 +53,7 @@ class HomeroomTeacherResource extends Resource
                     ->preload()
                     ->createOptionForm(UserResource::getForm())
                     ->editOptionForm(UserResource::getForm())
+                    ->visibleOn('create')
                     ->rules([
                         fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
                             $check = HomeroomTeacher::where('user_id', $value)
@@ -70,6 +73,7 @@ class HomeroomTeacherResource extends Resource
                     ->preload()
                     ->createOptionForm(ClassroomResource::getForm())
                     ->editOptionForm(ClassroomResource::getForm())
+                    ->visibleOn('create')
                     ->required(),
             ]);
     }
@@ -103,11 +107,11 @@ class HomeroomTeacherResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
@@ -127,7 +131,7 @@ class HomeroomTeacherResource extends Resource
         return [
             'index' => Pages\ListHomeroomTeachers::route('/'),
             'create' => Pages\CreateHomeroomTeacher::route('/create'),
-            'edit' => Pages\EditHomeroomTeacher::route('/{record}/edit'),
+            // 'edit' => Pages\EditHomeroomTeacher::route('/{record}/edit'),
         ];
     }    
 }

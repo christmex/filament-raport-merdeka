@@ -31,7 +31,7 @@ class ListStudents extends ListRecords
     {
         $classroom = null;
         if(auth()->user()->activeHomeroom->count()){
-            $classroom = auth()->user()->activeHomeroom->first()->classroom->classroom_name."\'s homeroom teacher | School year 2023/2024 ~ Term Genap";
+            $classroom = auth()->user()->activeHomeroom->first()->classroom->classroom_name."\'s homeroom teacher | School year ".auth()->user()->activeHomeroom->first()->schoolYear->school_year_name." ~ Term ".auth()->user()->activeHomeroom->first()->schoolTerm->school_term_name;
         }
         return $classroom;
         // return __('Custom Page Subheading');

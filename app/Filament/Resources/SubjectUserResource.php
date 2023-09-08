@@ -37,6 +37,7 @@ class SubjectUserResource extends Resource
                     ->createOptionForm(SchoolYearResource::getForm())
                     ->editOptionForm(SchoolYearResource::getForm())
                     ->default(fn($state) => $state)
+                    ->visibleOn('create')
                     ->required(),
                 Forms\Components\Select::make('school_term_id')
                     ->live()
@@ -46,6 +47,7 @@ class SubjectUserResource extends Resource
                     ->createOptionForm(SchoolTermResource::getForm())
                     ->editOptionForm(SchoolTermResource::getForm())
                     ->default(fn($state) => $state)
+                    ->visibleOn('create')
                     ->required(),
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
@@ -55,6 +57,7 @@ class SubjectUserResource extends Resource
                     ->editOptionForm(UserResource::getForm())
                     // ->mutateDehydratedState()
                     ->default(fn($state) => $state)
+                    ->visibleOn('create')
                     ->rules([
                         fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
                             $check = SubjectUser::where('user_id', $value)
@@ -77,6 +80,7 @@ class SubjectUserResource extends Resource
                     ->createOptionForm(ClassroomResource::getForm())
                     ->editOptionForm(ClassroomResource::getForm())
                     ->default(fn($state) => $state)
+                    ->visibleOn('create')
                     ->required(),
                 Forms\Components\Select::make('subject_id')
                     ->live()
@@ -85,6 +89,7 @@ class SubjectUserResource extends Resource
                     ->preload()
                     ->createOptionForm(SubjectResource::getForm())
                     ->editOptionForm(SubjectResource::getForm())
+                    ->visibleOn('create')
                     ->required(),
                 Forms\Components\TextInput::make('grade_minimum')
                     ->maxValue(100)
@@ -134,7 +139,7 @@ class SubjectUserResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([

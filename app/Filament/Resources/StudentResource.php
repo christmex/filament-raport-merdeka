@@ -154,10 +154,12 @@ class StudentResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         if(auth()->user()->email != 'super@sekolahbasic.sch.id'){
-            $userHomeroom = auth()->user()->activeHomeroom->first()->classroom_id;
-            return parent::getEloquentQuery()->whereHas('classrooms',function($q) use($userHomeroom){
-                $q->where('classroom_id', $userHomeroom);
-            });
+            if(auth()->user()->activeHomeroom->count()){
+                $userHomeroom = auth()->user()->activeHomeroom->first()->classroom_id;
+                return parent::getEloquentQuery()->whereHas('classrooms',function($q) use($userHomeroom){
+                    $q->where('classroom_id', $userHomeroom);
+                });
+            }
         }
 
         return parent::getEloquentQuery();
