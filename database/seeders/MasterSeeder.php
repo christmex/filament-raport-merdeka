@@ -14,9 +14,9 @@ class MasterSeeder extends Seeder
     public function run(): void
     {
         $school_years = [
-            ['school_year_name' => date('Y-m-d').'/'.date('Y-m-d', strtotime('+1 year')),],
-            ['school_year_name' => date('Y-m-d', strtotime('+1 year')).'/'.date('Y-m-d', strtotime('+2 year')),],
-            ['school_year_name' => date('Y-m-d', strtotime('+2 year')).'/'.date('Y-m-d', strtotime('+3 year')),]
+            ['school_year_name' => date('Y').'/'.date('Y', strtotime('+1 year')),],
+            ['school_year_name' => date('Y', strtotime('+1 year')).'/'.date('Y', strtotime('+2 year')),],
+            ['school_year_name' => date('Y', strtotime('+2 year')).'/'.date('Y', strtotime('+3 year')),]
         ];
         DB::table('school_years')->insertOrIgnore($school_years);
 

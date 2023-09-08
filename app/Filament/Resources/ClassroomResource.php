@@ -32,8 +32,7 @@ class ClassroomResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('classroom_name')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('school_level')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('school_level'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -48,6 +47,7 @@ class ClassroomResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
