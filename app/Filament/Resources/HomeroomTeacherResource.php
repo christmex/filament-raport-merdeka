@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\HomeroomTeacher;
 use Filament\Resources\Resource;
+use Illuminate\Validation\Rules\Unique;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\HomeroomTeacherResource\Pages;
@@ -53,18 +54,26 @@ class HomeroomTeacherResource extends Resource
                     ->preload()
                     ->createOptionForm(UserResource::getForm())
                     ->editOptionForm(UserResource::getForm())
+                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                        return $rule->where('school_year_id', $get('school_year_id'))
+                                    ->where('school_term_id', $get('school_term_id'));
+                    },ignoreRecord:true)
                     // ->visibleOn('create')
-                    ->rules([
-                        fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                            $check = HomeroomTeacher::where('user_id', $value)
-                                    ->where('school_year_id', $get('school_year_id'))
-                                    ->where('school_term_id', $get('school_term_id'))
-                                    ->first();
-                            if ($check) {
-                                $fail("This user already became homeroon teacher.");
-                            }
-                        },
-                    ])
+                    // ->rules([
+                    //     fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
+                    //         $check = HomeroomTeacher::query()
+                    //                 ->where('user_id', $value)
+                    //                 // ->whereNot('user_id', $value)
+                    //                 ->orWhere('classroom_id', $get('classroom_id'))
+                    //                 ->where('school_year_id', $get('school_year_id'))
+                    //                 ->where('school_term_id', $get('school_term_id'))
+                    //                 ->first();
+                            
+                    //         if ($check) {
+                    //             $fail("This user already became homeroon teacher.");
+                    //         }
+                    //     },
+                    // ])
                     ->required(),
                 Forms\Components\Select::make('classroom_id')
                     ->live()
@@ -74,6 +83,10 @@ class HomeroomTeacherResource extends Resource
                     ->createOptionForm(ClassroomResource::getForm())
                     ->editOptionForm(ClassroomResource::getForm())
                     ->visibleOn('create')
+                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                        return $rule->where('school_year_id', $get('school_year_id'))
+                                    ->where('school_term_id', $get('school_term_id'));
+                    },ignoreRecord:true)
                     ->required(),
             ]);
     }
@@ -111,7 +124,7 @@ class HomeroomTeacherResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([

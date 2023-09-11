@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('student_classrooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
-            $table->foreignId('classroom_id')->constrained('classrooms')->cascadeOnDelete();
-            $table->foreignId('school_year_id')->constrained('school_years')->cascadeOnDelete();
-            $table->foreignId('school_term_id')->constrained('school_terms')->cascadeOnDelete();
+            $table->foreignId('homeroom_teacher_id')->constrained('homeroom_teachers')->cascadeOnDelete();
+            // $table->foreignId('classroom_id')->constrained('classrooms')->cascadeOnDelete();
+            // $table->foreignId('school_year_id')->constrained('school_years')->cascadeOnDelete();
+            // $table->foreignId('school_term_id')->constrained('school_terms')->cascadeOnDelete();
             $table->timestamps();
         });
     }

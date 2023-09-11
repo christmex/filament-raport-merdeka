@@ -19,7 +19,9 @@ class SchoolYearResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Master';
+    protected static ?string $navigationGroup = 'Configuration';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

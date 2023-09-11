@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\SubjectUser;
 use Filament\Resources\Resource;
+use Illuminate\Validation\Rules\Unique;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubjectUserResource\Pages;
@@ -58,19 +59,25 @@ class SubjectUserResource extends Resource
                     // ->mutateDehydratedState()
                     ->default(fn($state) => $state)
                     ->visibleOn('create')
-                    ->rules([
-                        fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                            $check = SubjectUser::where('user_id', $value)
-                                    ->where('subject_id', $get('subject_id'))
-                                    ->where('school_year_id', $get('school_year_id'))
+                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                        return $rule->where('school_year_id', $get('school_year_id'))
                                     ->where('school_term_id', $get('school_term_id'))
                                     ->where('classroom_id', $get('classroom_id'))
-                                    ->first();
-                            if ($check) {
-                                $fail("This user already teach that subject in that class.");
-                            }
-                        },
-                    ])
+                                    ->where('subject_id', $get('subject_id'));
+                    },ignoreRecord:true)
+                    // ->rules([
+                    //     fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
+                    //         $check = SubjectUser::where('user_id', $value)
+                    //                 ->where('subject_id', $get('subject_id'))
+                    //                 ->where('school_year_id', $get('school_year_id'))
+                    //                 ->where('school_term_id', $get('school_term_id'))
+                    //                 ->where('classroom_id', $get('classroom_id'))
+                    //                 ->first();
+                    //         if ($check) {
+                    //             $fail("This user already teach that subject in that class.");
+                    //         }
+                    //     },
+                    // ])
                     ->required(),
                 Forms\Components\Select::make('classroom_id')
                     ->live()
@@ -81,6 +88,11 @@ class SubjectUserResource extends Resource
                     ->editOptionForm(ClassroomResource::getForm())
                     ->default(fn($state) => $state)
                     ->visibleOn('create')
+                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                        return $rule->where('school_year_id', $get('school_year_id'))
+                                    ->where('school_term_id', $get('school_term_id'))
+                                    ->where('subject_id', $get('subject_id'));
+                    },ignoreRecord:true)
                     ->required(),
                 Forms\Components\Select::make('subject_id')
                     ->live()

@@ -21,13 +21,18 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('mantapjiwa00')
             ],
             [
-                'name' => 'Guru Bahasa Indonesia',
-                'email' => 'gurubindo'.$domain,
+                'name' => 'Jonathan Christian',
+                'email' => 'jonathan'.$domain,
                 'password' => bcrypt('mantapjiwa00')
             ],
             [
-                'name' => 'Guru Bahasa Inggris',
-                'email' => 'gurubinggris'.$domain,
+                'name' => 'Dimas',
+                'email' => 'dimas'.$domain,
+                'password' => bcrypt('mantapjiwa00')
+            ],
+            [
+                'name' => 'Kurni',
+                'email' => 'kurni'.$domain,
                 'password' => bcrypt('mantapjiwa00')
             ]
         ];

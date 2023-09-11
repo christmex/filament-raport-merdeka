@@ -39,7 +39,7 @@ class StudentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('student_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('classrooms.classroom_name')
+                Tables\Columns\TextColumn::make('activeStudentClassrooms.homeroomTeacher.classroom.classroom_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('student_nis')
                     ->searchable(),
@@ -151,17 +151,17 @@ class StudentResource extends Resource
         ];
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        if(auth()->user()->email != 'super@sekolahbasic.sch.id'){
-            if(auth()->user()->activeHomeroom->count()){
-                $userHomeroom = auth()->user()->activeHomeroom->first()->classroom_id;
-                return parent::getEloquentQuery()->whereHas('classrooms',function($q) use($userHomeroom){
-                    $q->where('classroom_id', $userHomeroom);
-                });
-            }
-        }
+    // public static function getEloquentQuery(): Builder
+    // {
+    //     if(auth()->user()->email != 'super@sekolahbasic.sch.id'){
+    //         if(auth()->user()->activeHomeroom->count()){
+    //             $userHomeroom = auth()->user()->activeHomeroom->first()->classroom_id;
+    //             return parent::getEloquentQuery()->whereHas('classrooms',function($q) use($userHomeroom){
+    //                 $q->where('classroom_id', $userHomeroom);
+    //             });
+    //         }
+    //     }
 
-        return parent::getEloquentQuery();
-    }
+    //     return parent::getEloquentQuery();
+    // }
 }

@@ -13,6 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use App\Filament\Resources\AssessmentResource;
+use App\Models\HomeroomTeacher;
 
 class ManageAssessments extends ManageRecords
 {
@@ -75,18 +76,34 @@ class ManageAssessments extends ManageRecords
                 
             ])
             ->action(function (array $data): void {
-                // dd($data,);
+                // dd($data);
                 $dataArray = [];
                 $selectSubjectUser = SubjectUser::with('classroom')->whereIn('id',$data['subject_user_id'])->get();
                 foreach ($selectSubjectUser as $key => $value) {
+                    // $getCLassroomStudentIds = StudentClassroom::query()
+                    //     ->where('classroom_id',$value->classroom_id)
+                    //     ->where('school_year_id',$value->school_year_id)
+                    //     ->where('school_term_id',$value->school_term_id)
+                    //     ->get()
+                    //     ->pluck('student_id')
+                    //     ->toArray()
+                    //     ;
+
+                    $getHomeroomTeacherIds = HomeroomTeacher::query()
+                    ->where('classroom_id',$value->classroom_id)
+                    ->where('school_year_id',$value->school_year_id)
+                    ->where('school_term_id',$value->school_term_id)
+                    ->where('user_id',auth()->id())
+                    ->get()
+                    ->pluck('id')
+                    ->toArray()
+                    ;
+
                     $getCLassroomStudentIds = StudentClassroom::query()
-                        ->where('classroom_id',$value->classroom_id)
-                        ->where('school_year_id',$value->school_year_id)
-                        ->where('school_term_id',$value->school_term_id)
-                        ->get()
-                        ->pluck('student_id')
-                        ->toArray()
-                        ;
+                    ->whereIn('id',$getHomeroomTeacherIds)
+                    ->get()
+                    ->pluck('student_id')
+                    ->toArray();
 
                     if(!count($getCLassroomStudentIds)){
                         Notification::make()

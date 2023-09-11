@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Student extends Model
@@ -16,6 +17,15 @@ class Student extends Model
     public function setStudentNameAttribute($value)
     {
         $this->attributes['student_name'] = ucwords($value);
+    }
+
+    public function studentClassrooms(): HasMany
+    {
+        return $this->hasMany(StudentClassroom::class);
+    }
+    public function activeStudentClassrooms(): HasMany
+    {
+        return $this->studentClassrooms()->latest();
     }
 
 
