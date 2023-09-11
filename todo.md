@@ -11,3 +11,7 @@
 - [x] Ada bug di bagian HomeroomTeacherResource, masih bisa terjadi dupliakt data, karna rules untuk ngecek tidak tepat, coba nanti di lihat lagi (homeroom teacher kelas bisa memiliki 2 wali kelas di tahun ajaran dan semester yang sama)
 
 - [x] Ada bug di bagian SubjectUserResource, masih bisa terjadi dupliakt data, karna rules untuk ngecek tidak tepat, coba nanti di lihat lagi (subject user kelas bisa memiliki 2 wali kelas di tahun ajaran dan semester yang sama)
+
+- [ ] As a main teacher, i want be able to print student progrees report so that i can give it to the student
+
+- [ ] As a subject teacher, i want be able to create assessment for specific student in assessment menu so that i can give the grading to that student
