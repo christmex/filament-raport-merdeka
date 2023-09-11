@@ -54,8 +54,11 @@ class Student extends Model
         return $this->classrooms()->latest();
     }
 
-    // public function getBookNameAttribute()
-    // {
-    //     return $this->book->book_name;
-    // }
+    public function getActiveClassroomNameAttribute()
+    {
+        // return 'as';
+        return $this->activeStudentClassrooms->first()->homeroomTeacher->classroom->classroom_name;
+
+        
+    }
 }

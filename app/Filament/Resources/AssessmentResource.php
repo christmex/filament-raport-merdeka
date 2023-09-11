@@ -47,21 +47,27 @@ class AssessmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('student.student_name')
-                    ->numeric()
+                    // ->description(fn (Assessment $record): string => $record->student->active_classroom_name)
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('student.active_classroom_name')
+                    ->label('Classroom')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('assessmentMethodSetting.assessment_method_setting_name')
-                    ->numeric()
+                    ->label('Assessment Method')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topicSetting.topic_setting_name')
-                    ->numeric()
+                    ->label('Topic')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('topic_name')
+                    ->searchable(),
                 // Tables\Columns\TextColumn::make('subject_user_id')
                 //     ->numeric()
                 //     ->sortable(),
                 Tables\Columns\TextInputColumn::make('grading')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('topic_name')
-                    ->searchable(),
+                
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
