@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,3 +19,11 @@ use Illuminate\Support\Facades\Route;
 //     dd(Auth()->user()->activeHomeroom->first());
 //     return view('welcome');
 // });
+
+Route::get('/print', function(){
+    // return view('print');
+    // $student = Student::all();
+ 
+	// $pdf = PDF::loadview('pegawai_pdf',['pegawai'=>$pegawai]);
+	// return $pdf->download('laporan-pegawai-pdf');
+});
