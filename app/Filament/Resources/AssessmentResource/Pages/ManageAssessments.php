@@ -80,6 +80,7 @@ class ManageAssessments extends ManageRecords
                 $dataArray = [];
                 $selectSubjectUser = SubjectUser::with('classroom')->whereIn('id',$data['subject_user_id'])->get();
                 foreach ($selectSubjectUser as $key => $value) {
+                    
                     // $getCLassroomStudentIds = StudentClassroom::query()
                     //     ->where('classroom_id',$value->classroom_id)
                     //     ->where('school_year_id',$value->school_year_id)
@@ -93,11 +94,13 @@ class ManageAssessments extends ManageRecords
                     ->where('classroom_id',$value->classroom_id)
                     ->where('school_year_id',$value->school_year_id)
                     ->where('school_term_id',$value->school_term_id)
-                    ->where('user_id',auth()->id())
+                    // ->where('user_id',auth()->id()) //i comment this because it wont select if the subject teacher not the homeroom teacher, please review this later 
                     ->get()
                     ->pluck('id')
                     ->toArray()
                     ;
+
+                    // dd($value,$getHomeroomTeacherIds);
 
                     $getCLassroomStudentIds = StudentClassroom::query()
                     ->whereIn('id',$getHomeroomTeacherIds)
