@@ -90,6 +90,8 @@ class ManageAssessments extends ManageRecords
                     //     ->toArray()
                     //     ;
 
+                    // why did i perform this stupid action?
+                    // i want to select the homeroom teacher's id, so i can select the studentClassroom based on the homeroom teacher id, but the quistion is why i use where user_id in that condition? please find out again, for now it work fine
                     $getHomeroomTeacherIds = HomeroomTeacher::query()
                     ->where('classroom_id',$value->classroom_id)
                     ->where('school_year_id',$value->school_year_id)
