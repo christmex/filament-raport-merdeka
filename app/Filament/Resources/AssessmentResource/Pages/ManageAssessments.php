@@ -105,7 +105,7 @@ class ManageAssessments extends ManageRecords
                     // dd($value,$getHomeroomTeacherIds);
 
                     $getCLassroomStudentIds = StudentClassroom::query()
-                    ->whereIn('id',$getHomeroomTeacherIds)
+                    ->whereIn('homeroom_teacher_id',$getHomeroomTeacherIds)
                     ->get()
                     ->pluck('student_id')
                     ->toArray();
@@ -119,7 +119,7 @@ class ManageAssessments extends ManageRecords
                         break;
                     }
                     
-                    for($i=0; $i < count($getCLassroomStudentIds); $i++) { 
+                    for($i=0; $i < count($getCLassroomStudentIds); $i++) {
                         $dataArray[] = [
                             'student_id' => $getCLassroomStudentIds[$i],
                             'assessment_method_setting_id' => $data['assessment_method_setting_id'],
