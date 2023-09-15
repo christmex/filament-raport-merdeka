@@ -24,3 +24,11 @@
 - [ ] Bug, saat user sedang mengisi form di modal, saat klik di luar modal tertutup dan data hilang
 - [ ] Dibagian Assessments grading, validasi hanya bisa ngisi angka, minimal 0 dan maximal 100
 - [ ] (important)Feature, tambah filter di menu assessments, pilih hanya topic tertentu, kelas, dan subject dan sebagainya
+
+
+
+There is 3 ways to use laravel global scope
+
+1. Create new laravel global scope in new class and use it in the specific model
+2. Anonymouse/closure ways, you can define your global scope direcly in your specific model
+3. lokal scope if you you think thats is optional or its simple as you want to sort the popular person, you can create something like 

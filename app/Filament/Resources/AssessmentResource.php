@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use App\Models\Assessment;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -62,8 +63,9 @@ class AssessmentResource extends Resource
                     ->label('Topic')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topic_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('subjectUser.subject.subject_name')
+                    ->searchable(isIndividual:true),
+                Tables\Columns\TextColumn::make('subjectUserThrough.subject_name')
+                    ->label('Subject')
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('subject_user_id')
                 //     ->numeric()
@@ -82,9 +84,17 @@ class AssessmentResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('topic_setting')
+                    ->multiple()
+                    ->preload()
+                    ->optionsLimit(7)
                     ->relationship('topicSetting', 'topic_setting_name'),
-                // SelectFilter::make('subject')
-                //     ->relationship('subjectUser', 'subject_name',fn (Builder $query) => $query->with('subject.subject_name')),
+                SelectFilter::make('assessmentMethodSetting')
+                    ->multiple()
+                    ->relationship('assessmentMethodSetting', 'assessment_method_setting_name'),
+                SelectFilter::make('subject')
+                    ->multiple()
+                    ->relationship('subjectUserThrough', 'subject_name'),
+                Filter::make('topic_name')
                 // SelectFilter::make('subject_topic')
                 //     ->relationship('topicSetting', 'topic_setting_name'),
             ])

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Assessment extends Model
 {
     use HasFactory;
+    use \Znck\Eloquent\Traits\BelongsToThrough;
 
     protected $guarded = [];
 
@@ -44,6 +45,10 @@ class Assessment extends Model
     public function subjectUser(): BelongsTo
     {
         return $this->belongsTo(SubjectUser::class);
+    }
+    public function subjectUserThrough()
+    {
+        return $this->belongsToThrough(Subject::class, SubjectUser::class);
     }
 
     
