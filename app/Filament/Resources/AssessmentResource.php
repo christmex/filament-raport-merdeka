@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AssessmentResource\Pages;
-use App\Filament\Resources\AssessmentResource\RelationManagers;
-use App\Models\Assessment;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
+use App\Models\Assessment;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\AssessmentResource\Pages;
+use App\Filament\Resources\AssessmentResource\RelationManagers;
 
 class AssessmentResource extends Resource
 {
@@ -80,7 +81,12 @@ class AssessmentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('topic_setting')
+                    ->relationship('topicSetting', 'topic_setting_name'),
+                // SelectFilter::make('subject')
+                //     ->relationship('subjectUser', 'subject_name',fn (Builder $query) => $query->with('subject.subject_name')),
+                // SelectFilter::make('subject_topic')
+                //     ->relationship('topicSetting', 'topic_setting_name'),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
