@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Assessment;
 use App\Models\Student;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +23,13 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/print', function(){
+    $data = [
+        ''
+    ];
+    $student = Assessment::all();
+    dd($student);
     // return view('print');
-    // $student = Student::all();
  
-	// $pdf = PDF::loadview('pegawai_pdf',['pegawai'=>$pegawai]);
-	// return $pdf->download('laporan-pegawai-pdf');
+	// $pdf = Pdf::loadview('print',['student'=>$student])->setPaper('a4', 'landscape')->setWarnings(false);
+	// return $pdf->download('invoice.pdf');
 });

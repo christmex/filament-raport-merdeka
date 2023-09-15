@@ -15,3 +15,5 @@
 - [ ] As a main teacher, i want be able to print student progrees report so that i can give it to the student
 
 - [ ] As a subject teacher, i want be able to create assessment for specific student in assessment menu so that i can give the grading to that student
+
+- [ ] There is an error in ManageAssessments take a look at here $getHomeroomTeacherIds

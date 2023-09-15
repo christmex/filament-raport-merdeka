@@ -63,6 +63,7 @@ class StudentResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\BulkAction::make(''),
                     // Tables\Actions\BulkAction::make('promoted_students')
                     //     ->form([
                     //         Forms\Components\Select::make('school_year_id')

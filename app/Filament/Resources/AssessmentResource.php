@@ -62,6 +62,8 @@ class AssessmentResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topic_name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('subjectUser.subject.subject_name')
+                    ->searchable(),
                 // Tables\Columns\TextColumn::make('subject_user_id')
                 //     ->numeric()
                 //     ->sortable(),

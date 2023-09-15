@@ -2,15 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 
 class Assessment extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope('ancient', function (Builder $builder) {
+            $builder->whereIn('subject_user_id',auth()->user()->activeSubjects->pluck('id')->toArray());
+        });
+    }
 
     public function setTopicNameAttribute($value)
     {
@@ -29,4 +41,10 @@ class Assessment extends Model
     {
         return $this->belongsTo(Student::class);
     }
+    public function subjectUser(): BelongsTo
+    {
+        return $this->belongsTo(SubjectUser::class);
+    }
+
+    
 }
