@@ -300,25 +300,29 @@
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata Sumatif</div></th>
 					
 				</tr>
-				<tr>
-					<td>1</td>
-					<td style="text-align: left; padding: 10px">Matematika</td>
-					<td>20</td>
-					<td></td>
-					<td>0</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-				</tr>
+				@foreach($data as $value)
+					<tr>
+						<td>{{$loop->iteration}}</td>
+						<td style="text-align: left; padding: 10px">{{$value['subject_name']}}</td>
+						<td>{{$value['topic_1_tes_lisan']}}</td>
+						<td>{{$value['topic_1_penugasan']}}</td>
+						<td>{{$value['topic_1_kinerja']}}</td>
+						<td>{{$value['topic_1_monthly_test']}}</td>
+						<td>{{$value['topic_1_avg']}}</td>
+
+						<td>{{$value['topic_2_tes_lisan']}}</td>
+						<td>{{$value['topic_2_penugasan']}}</td>
+						<td>{{$value['topic_2_kinerja']}}</td>
+						<td>{{$value['topic_2_monthly_test']}}</td>
+						<td>{{$value['topic_2_avg']}}</td>
+
+						<td>{{$value['topic_3_tes_lisan']}}</td>
+						<td>{{$value['topic_3_penugasan']}}</td>
+						<td>{{$value['topic_3_kinerja']}}</td>
+						<td>{{$value['topic_3_monthly_test']}}</td>
+						<td>{{$value['topic_3_avg']}}</td>
+					</tr>
+				@endforeach
 			</thead>
 		</table>
 	</section>

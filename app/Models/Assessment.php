@@ -20,8 +20,10 @@ class Assessment extends Model
      */
     protected static function booted(): void
     {
-        static::addGlobalScope('ancient', function (Builder $builder) {
-            $builder->whereIn('subject_user_id',auth()->user()->activeSubjects->pluck('id')->toArray());
+        static::addGlobalScope('subjectUser', function (Builder $builder) {
+            if(auth()->id()){     
+                $builder->whereIn('subject_user_id',auth()->user()->activeSubjects->pluck('id')->toArray());
+            }
         });
     }
 
