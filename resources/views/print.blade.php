@@ -61,7 +61,11 @@
 			right: 0;
 			bottom: 0;
 			margin: 0 auto;
+			visibility: hidden;
 			/* height: 100vh; */
+		}
+		@media print {
+			.vision_tagline {visibility: visible;}
 		}
 		.flex {
 			display: flex;
