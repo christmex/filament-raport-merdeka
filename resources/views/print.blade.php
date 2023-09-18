@@ -22,6 +22,9 @@
 		.border_sign {
 			margin-top: 100px;
 		}
+		.border_sign > p{
+			font-weight: bold;
+		}
 		.sign_top {
 
 		}
