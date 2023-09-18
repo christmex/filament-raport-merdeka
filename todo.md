@@ -1,3 +1,10 @@
+## Urgent
+
+## Planned
+
+## Need to think about it
+
+
 - [x] Prevent all action before the admin set the school year and school term
 
 - [ ] Create a new custom student page for super admin, in that table loop data from StudentClassroom model insted of Student model
@@ -17,7 +24,7 @@
 - [ ] As a subject teacher, i want be able to create assessment for specific student in assessment menu so that i can give the grading to that student
 
 - [x] There is an error in ManageAssessments take a look at here $getHomeroomTeacherIds, i think it's just wrong logic, its done,already check  in 18 september 2023
-- refactor code, in ManageAssessments inside the action dont do select table inside loop, instead, in thatloop, extract the classroom_id,school_year_id and school_term_id in array, then do select database after the loop, dont place the select in loop
+- [ ] refactor code, in ManageAssessments inside the action dont do select table inside loop, instead, in thatloop, extract the classroom_id,school_year_id and school_term_id in array, then do select database after the loop, dont place the select in loop
 
 - [x] Add seeder for the classroom data
 - [x] Add seeder for the subject data 
@@ -26,6 +33,10 @@
 - [x] X14 - Dibagian Assessments grading, validasi hanya bisa ngisi angka, minimal 0 dan maximal 100
 - [x] (important)Feature, tambah filter di menu assessments, pilih hanya topic tertentu, kelas, dan subject dan sebagainya
 - [x] Pasang ke semua master data feature soft delete untuk menghindari data hilang
+- [ ] add master data for setting school information
+- [ ] add shoutout plugin for giving information,if the superadmin havent setting the school year and school term
+- [ ] please, refarcor the active method on school year model and school term model
+- [ ] please refactor code in helper for getSchoolYearName and getSchoolTermName
 
 
 There is 3 ways to use laravel global scope

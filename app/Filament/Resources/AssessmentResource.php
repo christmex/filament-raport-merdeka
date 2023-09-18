@@ -68,7 +68,8 @@ class AssessmentResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('subjectUserThrough.subject_name')
                     ->label('Subject')
-                    ->searchable(),
+                    // ->searchable()
+                    ,
                 // Tables\Columns\TextColumn::make('subject_user_id')
                 //     ->numeric()
                 //     ->sortable(),
@@ -94,12 +95,23 @@ class AssessmentResource extends Resource
                     ->relationship('topicSetting', 'topic_setting_name'),
                 SelectFilter::make('assessmentMethodSetting')
                     ->multiple()
+                    ->preload()
+                    ->optionsLimit(5)
                     ->relationship('assessmentMethodSetting', 'assessment_method_setting_name'),
                 SelectFilter::make('subject')
                     ->multiple()
+                    ->preload()
+                    ->optionsLimit(5)
                     ->relationship('subjectUserThrough', 'subject_name'),
-                // SelectFilter::make('subject_topic')
-                //     ->relationship('topicSetting', 'topic_setting_name'),
+                SelectFilter::make('classroom')
+                    ->multiple()
+                    ->preload()
+                    ->optionsLimit(5)
+                    // ->baseQuery(function(Builder $query, $livewire){
+                    //     $query->whereIn('id',$livewire->tableFilters['subject']['values']);
+                    //     // dd();
+                    // })
+                    ->relationship('classroomSubjectUserThrough', 'classroom_name'),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

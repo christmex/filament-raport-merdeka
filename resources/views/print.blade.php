@@ -247,12 +247,12 @@
 				<tr>
 					<td>Semester</td>
 					<td>:</td>
-					<td>Ganjil</td>
+					<td>{{Helper::getSchoolTermName()}}</td>
 				</tr>
 				<tr>
 					<td>Tahun pelajaran</td>
 					<td>:</td>
-					<td>2023/2024</td>
+					<td>{{Helper::getSchoolYearName()}}</td>
 				</tr>
 			</table>
 		</div>

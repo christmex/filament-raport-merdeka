@@ -96,4 +96,17 @@ class Helper {
             return false;
         }
     }
+
+    public static function getSchoolYearName(): ?string
+    {
+        return SchoolYear::where('school_year_status', true)->first()->school_year_name;
+    }
+
+    public static function getSchoolTermName(): ?string
+    {
+        return SchoolTerm::where('school_term_status', true)->first()->school_term_name;
+    }
+
+
+
 }

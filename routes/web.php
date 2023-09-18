@@ -28,6 +28,7 @@ use App\Models\SchoolYear;
 // });
 
 Route::get('/debug',function(){
+    dd(auth()->user()->activeSubjects->count());
     // session(['active_school_year_id' => 1]);
     dd(session('active_school_year_id'),session('active_school_term_id'));
 });
@@ -84,7 +85,12 @@ Route::get('/print/{student}', function(Student $student){
     $kk = [];
 
 
-    $assessments = Assessment::with('assessmentMethodSetting','topicSetting','student','subjectUserThrough')->where('student_id', $student->id)->orderByDesc('grading')->withoutGlobalScope('subjectUser')->get();
+    $assessments = Assessment::query()
+        ->with('assessmentMethodSetting','topicSetting','student','subjectUserThrough')
+        ->where('student_id', $student->id)
+        ->orderByDesc('grading')
+        // ->withoutGlobalScope('subjectUser')
+        ->get();
     
     
     foreach ($assessments as $key => $value) {

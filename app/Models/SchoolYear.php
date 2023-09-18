@@ -60,4 +60,5 @@ class SchoolYear extends Model
     public static function activeId(){
         return self::where('school_year_status', true)->pluck('id')->first();
     }
+
 }

@@ -53,5 +53,10 @@ class Assessment extends Model
         return $this->belongsToThrough(Subject::class, SubjectUser::class);
     }
 
+    public function classroomSubjectUserThrough()
+    {
+        return $this->belongsToThrough(Classroom::class, SubjectUser::class);
+    }
+
     
 }
