@@ -16,7 +16,8 @@
 
 - [ ] As a subject teacher, i want be able to create assessment for specific student in assessment menu so that i can give the grading to that student
 
-- [ ] There is an error in ManageAssessments take a look at here $getHomeroomTeacherIds
+- [x] There is an error in ManageAssessments take a look at here $getHomeroomTeacherIds, i think it's just wrong logic, its done,already check  in 18 september 2023
+- refactor code, in ManageAssessments inside the action dont do select table inside loop, instead, in thatloop, extract the classroom_id,school_year_id and school_term_id in array, then do select database after the loop, dont place the select in loop
 
 - [x] Add seeder for the classroom data
 - [x] Add seeder for the subject data 
