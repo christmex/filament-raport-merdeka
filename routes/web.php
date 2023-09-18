@@ -26,7 +26,9 @@ use App\Models\AssessmentMethodSetting;
 //     return view('welcome');
 // });
 
-Route::get('/print', function(){
+Route::get('/print/{student}', function(Student $student){
+    // dd(Assessment::all());
+    // dd($student);
     // dd(AssessmentMethodSetting::find(1));
     // dd(TopicSetting::find(3));
 
@@ -77,8 +79,9 @@ Route::get('/print', function(){
     $kk = [];
 
 
-    $assessments = Assessment::with('assessmentMethodSetting','topicSetting','student','subjectUserThrough')->where('student_id', 2)->orderByDesc('grading')->get();
-    // dd($assessments);
+    $assessments = Assessment::with('assessmentMethodSetting','topicSetting','student','subjectUserThrough')->where('student_id', $student->id)->orderByDesc('grading')->withoutGlobalScope('subjectUser')->get();
+    
+    
     foreach ($assessments as $key => $value) {
         if(!Helper::searchValueOnKey($kk, 'subject_name',$value->subjectUserThrough->subject_name)){
             $kk[] = [
@@ -119,7 +122,8 @@ Route::get('/print', function(){
         }
     }
 
-    return view('print',['data'=>$kk]);
+    // return view('print',['data'=>$kk, 'student',$student]);
+    return view('print',compact('kk','student'));
 
     // dd($kk, $assessments);
 
@@ -244,4 +248,4 @@ Route::get('/print', function(){
  
 	// $pdf = Pdf::loadview('print',['student'=>$student])->setPaper('a4', 'landscape')->setWarnings(false);
 	// return $pdf->download('invoice.pdf');
-});
+})->name('students.print');

@@ -220,12 +220,12 @@
 				<tr>
 					<td>Nama peserta didik</td>
 					<td>:</td>
-					<td>Jonathan</td>
+					<td>{{$student->student_name}}</td>
 				</tr>
 				<tr>
 					<td>NIS/NISN</td>
 					<td>:</td>
-					<td>123/1423</td>
+					<td>{{$student->student_nis}}/{{$student->student_nisn}}</td>
 				</tr>
 			</table>
 			<table style="
@@ -300,7 +300,7 @@
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata Sumatif</div></th>
 					
 				</tr>
-				@foreach($data as $value)
+				@foreach($kk as $value)
 					<tr>
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 10px">{{$value['subject_name']}}</td>

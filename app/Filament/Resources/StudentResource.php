@@ -59,6 +59,10 @@ class StudentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('print_progress_report')
+                    ->url(fn (Student $record): string => route('students.print', $record))
+                    ->openUrlInNewTab()
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
