@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('assessment_method_settings', function (Blueprint $table) {
             $table->id();
             $table->string('assessment_method_setting_name')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

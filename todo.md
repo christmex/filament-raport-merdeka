@@ -18,13 +18,13 @@
 
 - [ ] There is an error in ManageAssessments take a look at here $getHomeroomTeacherIds
 
-- [ ] Add seeder for the classroom data 
-- [ ] Add seeder for the subject data 
+- [x] Add seeder for the classroom data
+- [x] Add seeder for the subject data 
 - [ ] Super admin cant access another page except if em already set the school year and term
 - [ ] Bug, saat user sedang mengisi form di modal, saat klik di luar modal tertutup dan data hilang
 - [ ] Dibagian Assessments grading, validasi hanya bisa ngisi angka, minimal 0 dan maximal 100
-- [ ] (important)Feature, tambah filter di menu assessments, pilih hanya topic tertentu, kelas, dan subject dan sebagainya
-
+- [x] (important)Feature, tambah filter di menu assessments, pilih hanya topic tertentu, kelas, dan subject dan sebagainya
+- [x] Pasang ke semua master data feature soft delete untuk menghindari data hilang
 
 
 There is 3 ways to use laravel global scope

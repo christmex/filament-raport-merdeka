@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('subject_name')->unique();
             $table->string('subject_code')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

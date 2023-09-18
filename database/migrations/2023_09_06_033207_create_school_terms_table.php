@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('school_term_name')->unique();
             $table->boolean('school_term_status')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('school_year_name')->unique();
             $table->boolean('school_year_status')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

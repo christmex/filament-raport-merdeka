@@ -48,5 +48,66 @@ class MasterSeeder extends Seeder
 
         DB::table('school_terms')->insertOrIgnore($school_terms);
 
+        $classrooms = [
+            ['classroom_name' => 'Matthew 1', 'school_level' => 1],
+            ['classroom_name' => 'Matthew 2', 'school_level' => 1],
+            ['classroom_name' => 'Matthew 3', 'school_level' => 1],
+            ['classroom_name' => 'Mark 1', 'school_level' => 2],
+            ['classroom_name' => 'Mark 2', 'school_level' => 2],
+            ['classroom_name' => 'Mark 3', 'school_level' => 2],
+            ['classroom_name' => 'Luke 1', 'school_level' => 3],
+            ['classroom_name' => 'Luke 2', 'school_level' => 3],
+            ['classroom_name' => 'Luke 3', 'school_level' => 3],
+            ['classroom_name' => 'John 1', 'school_level' => 4],
+            ['classroom_name' => 'John 2', 'school_level' => 4],
+            ['classroom_name' => 'John 3', 'school_level' => 4],
+            ['classroom_name' => 'Acts 1', 'school_level' => 5],
+            ['classroom_name' => 'Acts 2', 'school_level' => 5],
+            ['classroom_name' => 'Acts 3', 'school_level' => 5],
+            ['classroom_name' => 'Romans 1', 'school_level' => 6],
+            ['classroom_name' => 'Romans 2', 'school_level' => 6],
+            ['classroom_name' => 'Romans 3', 'school_level' => 6],
+            ['classroom_name' => 'Joshua 1', 'school_level' => 7],
+            ['classroom_name' => 'Joshua 2', 'school_level' => 7],
+            ['classroom_name' => 'Joshua 3', 'school_level' => 7],
+            ['classroom_name' => 'Caleb 1', 'school_level' => 8],
+            ['classroom_name' => 'Caleb 2', 'school_level' => 8],
+            ['classroom_name' => 'Caleb 3', 'school_level' => 8],
+            ['classroom_name' => 'Moses 1', 'school_level' => 9],
+            ['classroom_name' => 'Moses 2', 'school_level' => 9],
+            ['classroom_name' => 'Moses 3', 'school_level' => 9],
+            ['classroom_name' => 'Jacob 1', 'school_level' => 10],
+            ['classroom_name' => 'Jacob 2', 'school_level' => 10],
+            ['classroom_name' => 'Jacob 3', 'school_level' => 10],
+            ['classroom_name' => 'Isaac 1 IPA', 'school_level' => 11],
+            ['classroom_name' => 'Isaac 2 IPA', 'school_level' => 11],
+            ['classroom_name' => 'Isaac 3 IPA', 'school_level' => 11],
+            ['classroom_name' => 'Isaac 1 IPS', 'school_level' => 11],
+            ['classroom_name' => 'Isaac 2 IPS', 'school_level' => 11],
+            ['classroom_name' => 'Isaac 3 IPS', 'school_level' => 11],
+            ['classroom_name' => 'Abraham 1 IPA', 'school_level' => 12],
+            ['classroom_name' => 'Abraham 2 IPA', 'school_level' => 12],
+            ['classroom_name' => 'Abraham 3 IPA', 'school_level' => 12],
+            ['classroom_name' => 'Abraham 1 IPS', 'school_level' => 12],
+            ['classroom_name' => 'Abraham 2 IPS', 'school_level' => 12],
+            ['classroom_name' => 'Abraham 3 IPS', 'school_level' => 12],
+        ];
+
+        DB::table('classrooms')->insertOrIgnore($classrooms);
+
+        $subjects = [
+            ['subject_name' => 'Matematika'],
+            ['subject_name' => 'Maths'],
+            ['subject_name' => 'Bahasa Indonesia'],
+            ['subject_name' => 'Bahasa Inggris'],
+            ['subject_name' => 'IPA'],
+            ['subject_name' => 'IPS'],
+            ['subject_name' => 'Geografi'],
+            ['subject_name' => 'Sejarah Peminatan XI IPA'],
+            ['subject_name' => 'Sejarah'],
+        ];
+
+        DB::table('subjects')->insertOrIgnore($subjects);
+
     }
 }

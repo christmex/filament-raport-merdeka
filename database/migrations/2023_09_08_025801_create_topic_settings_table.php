@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('topic_settings', function (Blueprint $table) {
             $table->id();
             $table->string('topic_setting_name')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

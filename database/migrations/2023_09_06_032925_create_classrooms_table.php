@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('classroom_name')->unique();
             $table->tinyInteger('school_level');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

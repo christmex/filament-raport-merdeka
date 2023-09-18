@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('student_name');
             $table->string('student_nis')->nullable();
             $table->string('student_nisn')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
