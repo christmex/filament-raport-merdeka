@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Subject;
 use App\Models\User;
+use App\Helpers\Helper;
+use App\Models\Subject;
 use Illuminate\Auth\Access\Response;
 
 class SubjectPolicy
@@ -13,7 +14,10 @@ class SubjectPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -21,7 +25,10 @@ class SubjectPolicy
      */
     public function view(User $user, Subject $subject): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -29,7 +36,10 @@ class SubjectPolicy
      */
     public function create(User $user): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -37,7 +47,10 @@ class SubjectPolicy
      */
     public function update(User $user, Subject $subject): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -45,7 +58,10 @@ class SubjectPolicy
      */
     public function delete(User $user, Subject $subject): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -53,7 +69,10 @@ class SubjectPolicy
      */
     public function restore(User $user, Subject $subject): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -61,6 +80,9 @@ class SubjectPolicy
      */
     public function forceDelete(User $user, Subject $subject): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 }

@@ -8,6 +8,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Models\AssessmentMethodSetting;
+use App\Models\SchoolYear;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,10 @@ use App\Models\AssessmentMethodSetting;
 //     return view('welcome');
 // });
 
+Route::get('/debug',function(){
+    // session(['active_school_year_id' => 1]);
+    dd(session('active_school_year_id'),session('active_school_term_id'));
+});
 Route::get('/print/{student}', function(Student $student){
     // dd(Assessment::all());
     // dd($student);

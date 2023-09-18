@@ -2,7 +2,9 @@
 
 namespace App\Policies;
 
+use App\Helpers\Helper;
 use App\Models\AssessmentMethodSetting;
+use App\Models\SchoolYear;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -13,7 +15,10 @@ class AssessmentMethodSettingPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -21,7 +26,10 @@ class AssessmentMethodSettingPolicy
      */
     public function view(User $user, AssessmentMethodSetting $assessmentMethodSetting): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -29,7 +37,10 @@ class AssessmentMethodSettingPolicy
      */
     public function create(User $user): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -37,7 +48,10 @@ class AssessmentMethodSettingPolicy
      */
     public function update(User $user, AssessmentMethodSetting $assessmentMethodSetting): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -45,7 +59,10 @@ class AssessmentMethodSettingPolicy
      */
     public function delete(User $user, AssessmentMethodSetting $assessmentMethodSetting): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -53,7 +70,10 @@ class AssessmentMethodSettingPolicy
      */
     public function restore(User $user, AssessmentMethodSetting $assessmentMethodSetting): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -61,6 +81,9 @@ class AssessmentMethodSettingPolicy
      */
     public function forceDelete(User $user, AssessmentMethodSetting $assessmentMethodSetting): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Models\SchoolTerm;
+use App\Models\SchoolYear;
+
 class Helper {
     public static function searchValueOnKey($array, $keyToSearch, $valueToFind) {
         foreach ($array as $subArray) {
@@ -41,19 +44,56 @@ class Helper {
     }
 
     public static function topicAvg($array){
-        // return count(array_filter($array));
-        // $div = count(array_filter($array));
-        // return array_sum(array_filter($array))/$div;
-
-        // $array = [null, 1, null];
-
-        // Filter out null values
         $filteredArray = array_filter($array);
 
         if (count($filteredArray) > 0) {
             // Calculate the average
             $average = array_sum($filteredArray) / count($filteredArray);
             return $average;
+        }
+    }
+
+    public static function setActiveSchoolYear(): void
+    {
+        request()->session()->put('active_school_year_id',SchoolYear::activeId());
+    }
+    public static function getActiveSchoolYear(){
+        // check if the session already provide, if dont create one
+        if(!session('active_school_year_id')){
+            self::setActiveSchoolYear();
+        }
+
+        return session('active_school_year_id');
+    }
+
+    public static function isSchoolYearActive(): bool
+    {
+        if(self::getActiveSchoolYear()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    
+    public static function setActiveSchoolTerm(): void
+    {
+        request()->session()->put('active_school_term_id',SchoolTerm::activeId());
+    }
+    public static function getActiveSchoolTerm(){
+        // check if the session already provide, if dont create one
+        if(!session('active_school_term_id')){
+            self::setActiveSchoolTerm();
+        }
+
+        return session('active_school_term_id');
+    }
+
+    public static function isSchoolTermActive(): bool
+    {
+        if(self::getActiveSchoolTerm()){
+            return true;
+        }else {
+            return false;
         }
     }
 }

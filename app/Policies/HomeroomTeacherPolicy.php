@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\HomeroomTeacher;
 use App\Models\User;
+use App\Helpers\Helper;
+use App\Models\HomeroomTeacher;
 use Illuminate\Auth\Access\Response;
 
 class HomeroomTeacherPolicy
@@ -13,7 +14,10 @@ class HomeroomTeacherPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -21,7 +25,10 @@ class HomeroomTeacherPolicy
      */
     public function view(User $user, HomeroomTeacher $homeroomTeacher): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -29,7 +36,10 @@ class HomeroomTeacherPolicy
      */
     public function create(User $user): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -37,7 +47,10 @@ class HomeroomTeacherPolicy
      */
     public function update(User $user, HomeroomTeacher $homeroomTeacher): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -45,7 +58,10 @@ class HomeroomTeacherPolicy
      */
     public function delete(User $user, HomeroomTeacher $homeroomTeacher): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -53,7 +69,10 @@ class HomeroomTeacherPolicy
      */
     public function restore(User $user, HomeroomTeacher $homeroomTeacher): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 
     /**
@@ -61,6 +80,9 @@ class HomeroomTeacherPolicy
      */
     public function forceDelete(User $user, HomeroomTeacher $homeroomTeacher): bool
     {
-        return $user->email == "super@sekolahbasic.sch.id";
+        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+            return $user->email == "super@sekolahbasic.sch.id";
+        }
+        return false;
     }
 }
