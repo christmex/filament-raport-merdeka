@@ -36,8 +36,6 @@ class ManageAssessments extends ManageRecords
                     ->required()
                     ->searchable()
                     ->preload(),
-                TextInput::make('topic_name')
-                    ->required(),
                 Select::make('subject_user_id')
                     ->label('subject')
                     ->options(SubjectUser::with('subject')->whereIn('id',auth()->user()->activeSubjects->pluck('id')->toArray())->get()->pluck('subject_user_name', 'id'))
@@ -73,6 +71,8 @@ class ManageAssessments extends ManageRecords
                 //     ->searchable()
                 //     ->preload()
                 // ,
+                TextInput::make('topic_name')
+                ->required(),
                 
             ])
             ->action(function (array $data): void {

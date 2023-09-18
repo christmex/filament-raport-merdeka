@@ -23,7 +23,7 @@
 - [x] Add seeder for the subject data 
 - [x] X12 - Super admin cant access another page except if em already set the school year and term
 - [x] X13 - Bug, saat user sedang mengisi form di modal, saat klik di luar modal tertutup dan data hilang
-- [ ] Dibagian Assessments grading, validasi hanya bisa ngisi angka, minimal 0 dan maximal 100
+- [x] X14 - Dibagian Assessments grading, validasi hanya bisa ngisi angka, minimal 0 dan maximal 100
 - [x] (important)Feature, tambah filter di menu assessments, pilih hanya topic tertentu, kelas, dan subject dan sebagainya
 - [x] Pasang ke semua master data feature soft delete untuk menghindari data hilang
 

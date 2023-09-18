@@ -38,7 +38,9 @@ class AssessmentResource extends Resource
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('grading')
-                    ->numeric(),
+                    ->numeric()
+                    ->minValue(0)
+                    ->maxValue(100),
                 Forms\Components\TextInput::make('topic_name')
                     ->maxLength(255),
             ]);
@@ -63,7 +65,7 @@ class AssessmentResource extends Resource
                     ->label('Topic')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topic_name')
-                    ->searchable(isIndividual:true),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('subjectUserThrough.subject_name')
                     ->label('Subject')
                     ->searchable(),
@@ -71,6 +73,8 @@ class AssessmentResource extends Resource
                 //     ->numeric()
                 //     ->sortable(),
                 Tables\Columns\TextInputColumn::make('grading')
+                    ->type('number')
+                    ->rules(['integer','min:0', 'max:100'])
                     ->sortable(),
                 
                 Tables\Columns\TextColumn::make('created_at')
@@ -94,7 +98,6 @@ class AssessmentResource extends Resource
                 SelectFilter::make('subject')
                     ->multiple()
                     ->relationship('subjectUserThrough', 'subject_name'),
-                Filter::make('topic_name')
                 // SelectFilter::make('subject_topic')
                 //     ->relationship('topicSetting', 'topic_setting_name'),
             ])
