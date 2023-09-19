@@ -56,8 +56,9 @@ class AssessmentResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('student.active_classroom_name')
                     ->label('Classroom')
-                    ->searchable()
-                    ->sortable(),
+                    // ->searchable()
+                    // ->sortable()
+                    ,
                 Tables\Columns\TextColumn::make('assessmentMethodSetting.assessment_method_setting_name')
                     ->label('Assessment Method')
                     ->sortable(),
@@ -88,6 +89,11 @@ class AssessmentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                SelectFilter::make('student')
+                    ->multiple()
+                    ->preload()
+                    ->optionsLimit(5)
+                    ->relationship('student', 'student_name'),
                 SelectFilter::make('topic_setting')
                     ->multiple()
                     ->preload()
@@ -115,7 +121,7 @@ class AssessmentResource extends Resource
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
-                // Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -47,7 +47,15 @@ class StudentPolicy
      */
     public function delete(User $user, Student $student): bool
     {
-        return $user->activeHomeroom->count() > 0;
+        return $user->activeHomeroom->count() > 0 && auth()->user()->email == 'super@sekolahbasic.sch.id';
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function deleteAny(User $usert): bool
+    {
+        return auth()->user()->email == 'super@sekolahbasic.sch.id';
     }
 
     /**
@@ -55,7 +63,7 @@ class StudentPolicy
      */
     public function restore(User $user, Student $student): bool
     {
-        return $user->activeHomeroom->count() > 0;
+        return $user->activeHomeroom->count() > 0 && auth()->user()->email == 'super@sekolahbasic.sch.id';
     }
 
     /**
@@ -63,6 +71,6 @@ class StudentPolicy
      */
     public function forceDelete(User $user, Student $student): bool
     {
-        return $user->activeHomeroom->count() > 0;
+        return $user->activeHomeroom->count() > 0 && auth()->user()->email == 'super@sekolahbasic.sch.id';
     }
 }

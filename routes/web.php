@@ -33,6 +33,9 @@ Route::get('/debug',function(){
     dd(session('active_school_year_id'),session('active_school_term_id'));
 });
 Route::get('/print/{student}', function(Student $student){
+    if(auth()->guest()){
+        abort(404,'Login First');
+    }
     // dd(Assessment::all());
     // dd($student);
     // dd(AssessmentMethodSetting::find(1));
@@ -45,7 +48,7 @@ Route::get('/print/{student}', function(Student $student){
             'topic_1_penugasan' => 60,
             'topic_1_kinerja' => 60,
             'topic_1_monthly_test' => 60,
-            '2' => 60,
+            'topic_1_avg' => 60,
 
             'topic_2_tes_lisan' => 60,
             'topic_2_penugasan' => 60,
@@ -82,61 +85,252 @@ Route::get('/print/{student}', function(Student $student){
     ];
 
 
-    $kk = [];
+    $dataList = [];
 
+
+    // $assessments = Assessment::query()
+    //     ->with('assessmentMethodSetting','topicSetting','student','subjectUserThrough')
+    //     ->where('student_id', $student->id)
+    //     ->where('grading','!=',NULL)
+    //     ->orderByDesc('grading')
+    //     // ->withoutGlobalScope('subjectUser')
+    //     ->get();
 
     $assessments = Assessment::query()
-        ->with('assessmentMethodSetting','topicSetting','student','subjectUserThrough')
+        ->select('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id', DB::raw('MAX(grading) as max_grading'))
+        ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough')
         ->where('student_id', $student->id)
-        ->orderByDesc('grading')
-        // ->withoutGlobalScope('subjectUser')
+        ->whereNotNull('grading') // Check for non-null values
+        ->groupBy('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
+        ->orderByDesc('max_grading') // Order by the maximum grading
         ->get();
-    
-    
+
+        
+
+
     foreach ($assessments as $key => $value) {
-        if(!Helper::searchValueOnKey($kk, 'subject_name',$value->subjectUserThrough->subject_name)){
-            $kk[] = [
+        // Cek apakah subject ini sudah ada di data array?
+        if(Helper::searchValueOnKey($dataList, 'subject_name',$value->subjectUserThrough->subject_name)){
+
+            // Yes
+            $initData = Helper::findSubjectByName($dataList,$value->subjectUserThrough->subject_name);
+            if(!($initData[1]['model_value']['assessment_method_setting_id'] == $value->assessment_method_setting_id && $initData[1]['model_value']['topic_setting_id'] == $value->topic_setting_id)){
+                // jika beda, maka kita harus tambahkan ke key yang bersangkutan, 
+
+                $dataList[$initData[0]]['topic_1_tes_lisan'] = $dataList[$initData[0]]['topic_1_tes_lisan'] ?? Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_1_tes_lisan', 1, 1);
+                $dataList[$initData[0]]['topic_1_penugasan'] = $dataList[$initData[0]]['topic_1_penugasan'] ??  Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_1_penugasan', 1, 2) ;
+                $dataList[$initData[0]]['topic_1_kinerja'] = $dataList[$initData[0]]['topic_1_kinerja'] ??  Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_1_kinerja', 1, 3) ;
+                $dataList[$initData[0]]['topic_1_monthly_test'] = $dataList[$initData[0]]['topic_1_monthly_test'] ??  Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_1_monthly_test', 1, 4) ;
+                $dataList[$initData[0]]['topic_1_avg'] =  Helper::topicAvg([
+                    $dataList[$initData[0]]['topic_1_tes_lisan'],
+                    $dataList[$initData[0]]['topic_1_penugasan'],
+                    $dataList[$initData[0]]['topic_1_kinerja'],
+                    $dataList[$initData[0]]['topic_1_monthly_test']
+                ]);
+
+               $dataList[$initData[0]]['topic_2_tes_lisan'] = $dataList[$initData[0]]['topic_2_tes_lisan'] ?? Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_2_tes_lisan', 2, 1) ;
+               $dataList[$initData[0]]['topic_2_penugasan'] = $dataList[$initData[0]]['topic_2_penugasan'] ?? Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_2_penugasan', 2, 2) ;
+               $dataList[$initData[0]]['topic_2_kinerja'] = $dataList[$initData[0]]['topic_2_kinerja'] ?? Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_2_kinerja', 2, 3) ;
+               $dataList[$initData[0]]['topic_2_monthly_test'] = $dataList[$initData[0]]['topic_2_monthly_test'] ?? Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_2_monthly_test', 2, 4) ;
+               $dataList[$initData[0]]['topic_2_avg'] = Helper::topicAvg([
+                    $dataList[$initData[0]]['topic_2_tes_lisan'],
+                    $dataList[$initData[0]]['topic_2_penugasan'],
+                    $dataList[$initData[0]]['topic_2_kinerja'],
+                    $dataList[$initData[0]]['topic_2_monthly_test']
+                ]);
+
+                $dataList[$initData[0]]['topic_3_tes_lisan'] = $dataList[$initData[0]]['topic_3_tes_lisan'] ?? Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_3_tes_lisan', 3, 1) ;
+                $dataList[$initData[0]]['topic_3_penugasan'] = $dataList[$initData[0]]['topic_3_penugasan'] ?? Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_3_penugasan', 3, 2) ;
+                $dataList[$initData[0]]['topic_3_kinerja'] = $dataList[$initData[0]]['topic_3_kinerja'] ?? Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_3_kinerja', 3, 3) ;
+                $dataList[$initData[0]]['topic_3_monthly_test'] = $dataList[$initData[0]]['topic_3_monthly_test'] ?? Helper::CheckAssessment($value,$dataList[$initData[0]], 'topic_3_monthly_test', 3, 4) ;
+                $dataList[$initData[0]]['topic_3_avg'] = Helper::topicAvg([
+                    $dataList[$initData[0]]['topic_3_tes_lisan'],
+                    $dataList[$initData[0]]['topic_3_penugasan'],
+                    $dataList[$initData[0]]['topic_3_kinerja'],
+                    $dataList[$initData[0]]['topic_3_monthly_test']
+                ]);
+
+                $dataList[$initData[0]]['model_value'] = $value->toArray();
+
+                
+            }
+
+            // if($key== 2){
+            //     dd($value, $initData[1]['model_value']['assessment_method_setting_id'], $value->assessment_method_setting_id, $value->topic_setting_id,$initData[1]['model_value']['topic_setting_id']);
+            // }
+        }else {
+            // No,init the data
+            $dataList[] = [
                 'subject_name' => $value->subjectUserThrough->subject_name,
-                'topic_1_tes_lisan' => Helper::CheckAssessment($value,$kk, 'topic_1_tes_lisan', 1, 1),
-                'topic_1_penugasan' => Helper::CheckAssessment($value,$kk, 'topic_1_penugasan', 1, 2),
-                'topic_1_kinerja' => Helper::CheckAssessment($value,$kk, 'topic_1_kinerja', 1, 3),
-                'topic_1_monthly_test' => Helper::CheckAssessment($value,$kk, 'topic_1_monthly_test', 1, 4),
+                'topic_1_tes_lisan' => Helper::CheckAssessment($value,$dataList, 'topic_1_tes_lisan', 1, 1),
+                'topic_1_penugasan' => Helper::CheckAssessment($value,$dataList, 'topic_1_penugasan', 1, 2),
+                'topic_1_kinerja' => Helper::CheckAssessment($value,$dataList, 'topic_1_kinerja', 1, 3),
+                'topic_1_monthly_test' => Helper::CheckAssessment($value,$dataList, 'topic_1_monthly_test', 1, 4),
                 'topic_1_avg' => Helper::topicAvg([
-                    Helper::CheckAssessment($value,$kk, 'topic_1_tes_lisan', 1, 1),
-                    Helper::CheckAssessment($value,$kk, 'topic_1_penugasan', 1, 2),
-                    Helper::CheckAssessment($value,$kk, 'topic_1_kinerja', 1, 3),
-                    Helper::CheckAssessment($value,$kk, 'topic_1_monthly_test', 1, 4),
+                    Helper::CheckAssessment($value,$dataList, 'topic_1_tes_lisan', 1, 1),
+                    Helper::CheckAssessment($value,$dataList, 'topic_1_penugasan', 1, 2),
+                    Helper::CheckAssessment($value,$dataList, 'topic_1_kinerja', 1, 3),
+                    Helper::CheckAssessment($value,$dataList, 'topic_1_monthly_test', 1, 4),
                 ]),
 
-                'topic_2_tes_lisan' => Helper::CheckAssessment($value,$kk, 'topic_2_tes_lisan', 2, 1),
-                'topic_2_penugasan' => Helper::CheckAssessment($value,$kk, 'topic_2_penugasan', 2, 2),
-                'topic_2_kinerja' => Helper::CheckAssessment($value,$kk, 'topic_2_kinerja', 2, 3),
-                'topic_2_monthly_test' => Helper::CheckAssessment($value,$kk, 'topic_2_monthly_test', 2, 4),
+
+                'topic_2_tes_lisan' => Helper::CheckAssessment($value,$dataList, 'topic_2_tes_lisan', 2, 1),
+                'topic_2_penugasan' => Helper::CheckAssessment($value,$dataList, 'topic_2_penugasan', 2, 2),
+                'topic_2_kinerja' => Helper::CheckAssessment($value,$dataList, 'topic_2_kinerja', 2, 3),
+                'topic_2_monthly_test' => Helper::CheckAssessment($value,$dataList, 'topic_2_monthly_test', 2, 4),
                 'topic_2_avg' => Helper::topicAvg([
-                    Helper::CheckAssessment($value,$kk, 'topic_2_tes_lisan', 2, 1),
-                    Helper::CheckAssessment($value,$kk, 'topic_2_penugasan', 2, 2),
-                    Helper::CheckAssessment($value,$kk, 'topic_2_kinerja', 2, 3),
-                    Helper::CheckAssessment($value,$kk, 'topic_2_monthly_test', 2, 4),
+                    Helper::CheckAssessment($value,$dataList, 'topic_2_tes_lisan', 2, 1),
+                    Helper::CheckAssessment($value,$dataList, 'topic_2_penugasan', 2, 2),
+                    Helper::CheckAssessment($value,$dataList, 'topic_2_kinerja', 2, 3),
+                    Helper::CheckAssessment($value,$dataList, 'topic_2_monthly_test', 2, 4),
                 ]),
 
-                'topic_3_tes_lisan' => Helper::CheckAssessment($value,$kk, 'topic_3_tes_lisan', 3, 1),
-                'topic_3_penugasan' => Helper::CheckAssessment($value,$kk, 'topic_3_penugasan', 3, 2),
-                'topic_3_kinerja' => Helper::CheckAssessment($value,$kk, 'topic_3_kinerja', 3, 3),
-                'topic_3_monthly_test' => Helper::CheckAssessment($value,$kk, 'topic_3_monthly_test', 3, 4),
+
+                'topic_3_tes_lisan' => Helper::CheckAssessment($value,$dataList, 'topic_3_tes_lisan', 3, 1),
+                'topic_3_penugasan' => Helper::CheckAssessment($value,$dataList, 'topic_3_penugasan', 3, 2),
+                'topic_3_kinerja' => Helper::CheckAssessment($value,$dataList, 'topic_3_kinerja', 3, 3),
+                'topic_3_monthly_test' => Helper::CheckAssessment($value,$dataList, 'topic_3_monthly_test', 3, 4),
                 'topic_3_avg' => Helper::topicAvg([
-                    Helper::CheckAssessment($value,$kk, 'topic_3_tes_lisan', 3, 1),
-                    Helper::CheckAssessment($value,$kk, 'topic_3_penugasan', 3, 2),
-                    Helper::CheckAssessment($value,$kk, 'topic_3_kinerja', 3, 3),
-                    Helper::CheckAssessment($value,$kk, 'topic_3_monthly_test', 3, 4),
+                    Helper::CheckAssessment($value,$dataList, 'topic_3_tes_lisan', 3, 1),
+                    Helper::CheckAssessment($value,$dataList, 'topic_3_penugasan', 3, 2),
+                    Helper::CheckAssessment($value,$dataList, 'topic_3_kinerja', 3, 3),
+                    Helper::CheckAssessment($value,$dataList, 'topic_3_monthly_test', 3, 4),
                 ]),
+
+                'model_value' => $value->toArray()
             ];
         }
     }
 
-    // return view('print',['data'=>$kk, 'student',$student]);
-    return view('print',compact('kk','student'));
+    return view('print',compact('dataList','student'));
 
-    // dd($kk, $assessments);
+    dd($dataList, $assessments);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    foreach ($assessments as $key => $value) {
+        // bukan cek subject_name karna subject name bisa beberapa kali loop, tapi yang di cek adalah assessment method setting, jadi biarkan subject name nya sama, tapi jika assemsne tmethod nya sama maka tidak usah dilakukan apapun, cukup ambi nilai terbaik, dan jika assemenet method setting beda maka boleh dimasukkan ke data, lakukan seperti itu
+        if(!Helper::searchValueOnKey($dataList, 'subject_name',$value->subjectUserThrough->subject_name)){
+            $dataList[] = [
+                'subject_name' => $value->subjectUserThrough->subject_name,
+                'topic_1_tes_lisan' => Helper::CheckAssessment($value,$dataList, 'topic_1_tes_lisan', 1, 1),
+                'topic_1_penugasan' => Helper::CheckAssessment($value,$dataList, 'topic_1_penugasan', 1, 2),
+                'topic_1_kinerja' => Helper::CheckAssessment($value,$dataList, 'topic_1_kinerja', 1, 3),
+                'topic_1_monthly_test' => Helper::CheckAssessment($value,$dataList, 'topic_1_monthly_test', 1, 4),
+                'topic_1_avg' => Helper::topicAvg([
+                    Helper::CheckAssessment($value,$dataList, 'topic_1_tes_lisan', 1, 1),
+                    Helper::CheckAssessment($value,$dataList, 'topic_1_penugasan', 1, 2),
+                    Helper::CheckAssessment($value,$dataList, 'topic_1_kinerja', 1, 3),
+                    Helper::CheckAssessment($value,$dataList, 'topic_1_monthly_test', 1, 4),
+                ]),
+
+                'topic_2_tes_lisan' => Helper::CheckAssessment($value,$dataList, 'topic_2_tes_lisan', 2, 1),
+                'topic_2_penugasan' => Helper::CheckAssessment($value,$dataList, 'topic_2_penugasan', 2, 2),
+                'topic_2_kinerja' => Helper::CheckAssessment($value,$dataList, 'topic_2_kinerja', 2, 3),
+                'topic_2_monthly_test' => Helper::CheckAssessment($value,$dataList, 'topic_2_monthly_test', 2, 4),
+                'topic_2_avg' => Helper::topicAvg([
+                    Helper::CheckAssessment($value,$dataList, 'topic_2_tes_lisan', 2, 1),
+                    Helper::CheckAssessment($value,$dataList, 'topic_2_penugasan', 2, 2),
+                    Helper::CheckAssessment($value,$dataList, 'topic_2_kinerja', 2, 3),
+                    Helper::CheckAssessment($value,$dataList, 'topic_2_monthly_test', 2, 4),
+                ]),
+
+                'topic_3_tes_lisan' => Helper::CheckAssessment($value,$dataList, 'topic_3_tes_lisan', 3, 1),
+                'topic_3_penugasan' => Helper::CheckAssessment($value,$dataList, 'topic_3_penugasan', 3, 2),
+                'topic_3_kinerja' => Helper::CheckAssessment($value,$dataList, 'topic_3_kinerja', 3, 3),
+                'topic_3_monthly_test' => Helper::CheckAssessment($value,$dataList, 'topic_3_monthly_test', 3, 4),
+                'topic_3_avg' => Helper::topicAvg([
+                    Helper::CheckAssessment($value,$dataList, 'topic_3_tes_lisan', 3, 1),
+                    Helper::CheckAssessment($value,$dataList, 'topic_3_penugasan', 3, 2),
+                    Helper::CheckAssessment($value,$dataList, 'topic_3_kinerja', 3, 3),
+                    Helper::CheckAssessment($value,$dataList, 'topic_3_monthly_test', 3, 4),
+                ]),
+                'model_value' => $value->toArray()
+            ];
+            // dd($value);
+        }else {
+            // jika mapel sudah ada,berarti ambil nilai yang beda aja, ambilk assemeend method setting yang beda
+            $initData = Helper::findSubjectByName($dataList,$value->subjectUserThrough->subject_name);
+            if(!($initData['model_value']['assessment_method_setting_id'] == $value->assessment_method_setting_id)){
+                // jika beda, maka kita harus tambahkan ke key yang bersangkutan, 
+                $initData['topic_1_tes_lisan'] = Helper::CheckAssessment($value,$initData, 'topic_1_tes_lisan', 1, 1) ?? Helper::CheckAssessment($value,$initData, 'topic_1_tes_lisan', 1, 1);
+                $initData['topic_1_penugasan'] = Helper::CheckAssessment($value,$initData, 'topic_1_penugasan', 1, 2) ?? Helper::CheckAssessment($value,$initData, 'topic_1_penugasan', 1, 2);
+                $initData['topic_1_kinerja'] = Helper::CheckAssessment($value,$initData, 'topic_1_kinerja', 1, 3) ?? Helper::CheckAssessment($value,$initData, 'topic_1_kinerja', 1, 3);
+                $initData['topic_1_monthly_test'] = Helper::CheckAssessment($value,$initData, 'topic_1_monthly_test', 1, 4) ?? Helper::CheckAssessment($value,$initData, 'topic_1_monthly_test', 1, 4);
+                $initData['topic_1_avg'] = Helper::topicAvg([
+                    Helper::CheckAssessment($value,$initData, 'topic_1_tes_lisan', 1, 1),
+                    Helper::CheckAssessment($value,$initData, 'topic_1_penugasan', 1, 2),
+                    Helper::CheckAssessment($value,$initData, 'topic_1_kinerja', 1, 3),
+                    Helper::CheckAssessment($value,$initData, 'topic_1_monthly_test', 1, 4),
+                ]) ?? Helper::topicAvg([
+                    Helper::CheckAssessment($value,$initData, 'topic_1_tes_lisan', 1, 1),
+                    Helper::CheckAssessment($value,$initData, 'topic_1_penugasan', 1, 2),
+                    Helper::CheckAssessment($value,$initData, 'topic_1_kinerja', 1, 3),
+                    Helper::CheckAssessment($value,$initData, 'topic_1_monthly_test', 1, 4),
+                ]);
+
+                $initData['topic_2_tes_lisan'] = Helper::CheckAssessment($value,$initData, 'topic_2_tes_lisan', 2, 1) ?? Helper::CheckAssessment($value,$initData, 'topic_2_tes_lisan', 2, 1);
+                $initData['topic_2_penugasan'] = Helper::CheckAssessment($value,$initData, 'topic_2_penugasan', 2, 2) ?? Helper::CheckAssessment($value,$initData, 'topic_2_penugasan', 2, 2);
+                $initData['topic_2_kinerja'] = Helper::CheckAssessment($value,$initData, 'topic_2_kinerja', 2, 3) ?? Helper::CheckAssessment($value,$initData, 'topic_2_kinerja', 2, 3);
+                $initData['topic_2_monthly_test'] = Helper::CheckAssessment($value,$initData, 'topic_2_monthly_test', 2, 4) ?? Helper::CheckAssessment($value,$initData, 'topic_2_monthly_test', 2, 4);
+                $initData['topic_2_avg'] = Helper::topicAvg([
+                    Helper::CheckAssessment($value,$initData, 'topic_2_tes_lisan', 2, 1),
+                    Helper::CheckAssessment($value,$initData, 'topic_2_penugasan', 2, 2),
+                    Helper::CheckAssessment($value,$initData, 'topic_2_kinerja', 2, 3),
+                    Helper::CheckAssessment($value,$initData, 'topic_2_monthly_test', 2, 4),
+                ]) ?? Helper::topicAvg([
+                    Helper::CheckAssessment($value,$initData, 'topic_2_tes_lisan', 2, 1),
+                    Helper::CheckAssessment($value,$initData, 'topic_2_penugasan', 2, 2),
+                    Helper::CheckAssessment($value,$initData, 'topic_2_kinerja', 2, 3),
+                    Helper::CheckAssessment($value,$initData, 'topic_2_monthly_test', 2, 4),
+                ]);
+
+                $initData['topic_3_tes_lisan'] = Helper::CheckAssessment($value,$initData, 'topic_3_tes_lisan', 3, 1) ?? Helper::CheckAssessment($value,$initData, 'topic_3_tes_lisan', 3, 1);
+                $initData['topic_3_penugasan'] = Helper::CheckAssessment($value,$initData, 'topic_3_penugasan', 3, 2) ?? Helper::CheckAssessment($value,$initData, 'topic_3_penugasan', 3, 2);
+                $initData['topic_3_kinerja'] = Helper::CheckAssessment($value,$initData, 'topic_3_kinerja', 3, 3) ?? Helper::CheckAssessment($value,$initData, 'topic_3_kinerja', 3, 3);
+                $initData['topic_3_monthly_test'] = Helper::CheckAssessment($value,$initData, 'topic_3_monthly_test', 3, 4) ?? Helper::CheckAssessment($value,$initData, 'topic_3_monthly_test', 3, 4);
+                $initData['topic_3_avg'] = Helper::topicAvg([
+                    Helper::CheckAssessment($value,$initData, 'topic_3_tes_lisan', 3, 1),
+                    Helper::CheckAssessment($value,$initData, 'topic_3_penugasan', 3, 2),
+                    Helper::CheckAssessment($value,$initData, 'topic_3_kinerja', 3, 3),
+                    Helper::CheckAssessment($value,$initData, 'topic_3_monthly_test', 3, 4),
+                ]) ?? Helper::topicAvg([
+                    Helper::CheckAssessment($value,$initData, 'topic_3_tes_lisan', 3, 1),
+                    Helper::CheckAssessment($value,$initData, 'topic_3_penugasan', 3, 2),
+                    Helper::CheckAssessment($value,$initData, 'topic_3_kinerja', 3, 3),
+                    Helper::CheckAssessment($value,$initData, 'topic_3_monthly_test', 3, 4),
+                ]);
+
+                // dd($initData,$key, $value);
+            }
+            // dd(Helper::findSubjectByName($dataList,$value->subjectUserThrough->subject_name),$value);
+            // 
+            // dd($value->assessmentMethodSetting->assessment_method_setting_name);
+            
+        }
+    }
+    dd($dataList);
+    // return view('print',['data'=>$dataList, 'student',$student]);
+    return view('print',compact('dataList','student'));
+
+    // dd($dataList, $assessments);
 
 
 

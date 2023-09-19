@@ -34,10 +34,20 @@ class Helper {
         return false;
     }
 
+    public static function findSubjectByName($array, $subjectName) {
+        foreach ($array as $key => $item) {
+            if (isset($item['subject_name']) && $item['subject_name'] === $subjectName) {
+                return [$key,$item];
+            }
+        }
+        return null; // Return null if the subject is not found
+    }
+
     public static function CheckAssessment($object, $array, $key, $topicSettingId, $assessmentMethodId){
         if(!self::findValueByKey($array, $key)){
             if($object->topic_setting_id == $topicSettingId && $object->assessment_method_setting_id == $assessmentMethodId){
-                return $object->grading;
+                // return $object->grading;
+                return $object->max_grading;
             }
         }
         return null;

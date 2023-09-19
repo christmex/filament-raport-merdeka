@@ -307,7 +307,7 @@
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata Sumatif</div></th>
 					
 				</tr>
-				@foreach($kk as $value)
+				@foreach($dataList as $value)
 					<tr>
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 10px">{{$value['subject_name']}}</td>
