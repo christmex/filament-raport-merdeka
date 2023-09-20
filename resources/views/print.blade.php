@@ -358,7 +358,7 @@
 			</div>
 		</div>
 	</section>
-	<section id="sign_principle" style="text-align:center; width: 180px;margin: 5% auto 0">
+	<section id="sign_principle" style="text-align:center; margin: 5% auto 0">
 		<div class="sign_top">
 			<p>Mengetahui</p>
 			<p>Kepala Sekolah</p>
