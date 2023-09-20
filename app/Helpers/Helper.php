@@ -55,7 +55,9 @@ class Helper {
     }
 
     public static function topicAvg($array){
-        $filteredArray = array_filter($array);
+        $filteredArray = array_filter($array,function($var){
+            return ($var !== NULL && $var !== FALSE && $var !== '');
+        });
 
         if (count($filteredArray) > 0) {
             // Calculate the average
