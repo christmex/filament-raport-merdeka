@@ -20,13 +20,15 @@ class EnsureApplicationAlreadySetup
     public function handle(Request $request, Closure $next): Response
     {
         if((auth()->user()->email != 'super@sekolahbasic.sch.id') && Route::current()->getName() != 'filament.admin.pages.dashboard'){
-            if(!(SchoolYear::active() && SchoolTerm::active())){
-                Notification::make()
-                    ->warning()
-                    ->title('Whopps, cant do that :(')
-                    ->body('This application need to be configurate first by admin, please contact your admin')
-                    ->send();
-                return redirect()->route('filament.admin.pages.dashboard');
+            if($request->path() != 'logout'){
+                if(!(SchoolYear::active() && SchoolTerm::active())){
+                    Notification::make()
+                        ->warning()
+                        ->title('Whopps, cant do that :(')
+                        ->body('This application need to be configurate first by admin, please contact your admin')
+                        ->send();
+                    return redirect()->route('filament.admin.pages.dashboard');
+                }
             }
         }
 
