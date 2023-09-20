@@ -20,7 +20,7 @@
 			margin-top: 50px
 		}
 		.border_sign {
-			margin-top: 100px;
+			/* margin-top: 100px; */
 		}
 		.border_sign > p{
 			font-weight: bold;
@@ -32,9 +32,9 @@
 		#sign_main_teacher {
 			display: flex;
 			justify-content: space-around;
-			height: 180px;
+			height: 140px;
 			/* height: 50vh; */
-			overflow: hidden;
+			/* overflow: hidden; */
 			width: 30%;
 			flex-direction: column;
     		justify-content: space-between;
@@ -89,7 +89,7 @@
 			/* border: 1px solid black; */
 			/* text-align: center; */
 			padding: 0;
-			vertical-align: baseline;
+			vertical-align: middle;
 		}
 
 		#grade table td,
@@ -260,7 +260,7 @@
 	</section>
 
 	<section id="grade">
-		<h3 style="margin: 20px 0 10px">A. Kompetensi Pengetahuan dan Keterampilan</h3>
+		<h3 style="margin: 10px 0 10px">A. Kompetensi Pengetahuan dan Keterampilan</h3>
 		<table>
 			<thead>
 				<tr>
@@ -311,7 +311,7 @@
 				@foreach($dataList as $value)
 					<tr>
 						<td>{{$loop->iteration}}</td>
-						<td style="text-align: left; padding: 10px">{{$value['subject_name']}}</td>
+						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
 						<td>{{$value['topic_1_tes_lisan']}}</td>
 						<td>{{$value['topic_1_penugasan']}}</td>
 						<td>{{$value['topic_1_kinerja']}}</td>
@@ -358,16 +358,16 @@
 			</div>
 		</div>
 	</section>
-	<section id="sign_principle" style="text-align:center; width: 180px;margin: 50px auto">
+	<section id="sign_principle" style="text-align:center; width: 180px;margin: 5% auto 0">
 		<div class="sign_top">
 			<p>Mengetahui</p>
 			<p>Kepala Sekolah</p>
 		</div>
 
-		<div class="border_sign">
+		<div class="border_sign" style="margin-top: 100px">
 			<!-- <p style="text-decoration:underline">Rudi wanro situmorang</p> -->
-			<p>{{Helper::getSchoolSetting()->school_principal_name}}</p>
-			<hr>
+			<p style="text-decoration:underline">{{Helper::getSchoolSetting()->school_principal_name}}</p>
+			<!-- <hr> -->
 		</div>
 	</section>
 
