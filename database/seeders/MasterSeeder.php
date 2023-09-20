@@ -109,5 +109,17 @@ class MasterSeeder extends Seeder
 
         DB::table('subjects')->insertOrIgnore($subjects);
 
+        $school_settings = [
+            [
+                'school_name_prefix' => 'SDS Kristen',
+                'school_name_suffix' => '1',
+                'school_address' => 'Jl.Laksamana Kawasan Industri No.1, Batam center',
+                'school_principal_name' => 'Yanthi',
+                'school_progress_report_date' => date('d').' '.date('M').' '.date('Y'),
+            ],
+        ];
+
+        DB::table('school_settings')->insertOrIgnore($school_settings);
+
     }
 }

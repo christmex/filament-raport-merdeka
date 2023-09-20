@@ -19,7 +19,7 @@
 
 - [x] Ada bug di bagian SubjectUserResource, masih bisa terjadi dupliakt data, karna rules untuk ngecek tidak tepat, coba nanti di lihat lagi (subject user kelas bisa memiliki 2 wali kelas di tahun ajaran dan semester yang sama)
 
-- [ ] As a main teacher, i want be able to print student progrees report so that i can give it to the student
+- [x] As a main teacher, i want be able to print student progrees report so that i can give it to the student
 
 - [ ] As a subject teacher, i want be able to create assessment for specific student in assessment menu so that i can give the grading to that student
 
@@ -33,7 +33,7 @@
 - [x] X14 - Dibagian Assessments grading, validasi hanya bisa ngisi angka, minimal 0 dan maximal 100
 - [x] (important)Feature, tambah filter di menu assessments, pilih hanya topic tertentu, kelas, dan subject dan sebagainya
 - [x] Pasang ke semua master data feature soft delete untuk menghindari data hilang
-- [ ] add master data for setting school information
+- [x] add master data for setting school information
 - [ ] add shoutout plugin for giving information,if the superadmin havent setting the school year and school term
 - [ ] please, refarcor the active method on school year model and school term model
 - [ ] please refactor code in helper for getSchoolYearName and getSchoolTermName

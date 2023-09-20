@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\SchoolSetting;
 use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
 
@@ -115,6 +116,11 @@ class Helper {
     public static function getSchoolTermName(): ?string
     {
         return SchoolTerm::where('school_term_status', true)->first()->school_term_name;
+    }
+
+    public static function getSchoolSetting()
+    {
+        return SchoolSetting::first();
     }
 
 

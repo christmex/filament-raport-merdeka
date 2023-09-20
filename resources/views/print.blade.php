@@ -31,10 +31,11 @@
 		#sign_parent,
 		#sign_main_teacher {
 			display: flex;
+			justify-content: space-around;
 			height: 180px;
 			/* height: 50vh; */
 			overflow: hidden;
-
+			width: 30%;
 			flex-direction: column;
     		justify-content: space-between;
 		}
@@ -210,19 +211,19 @@
 				<tr>
 					<td>Nama Sekolah</td>
 					<td>:</td>
-					<td class="xl9511880">SMAS Kristen
+					<td class="xl9511880">{{Helper::getSchoolSetting()->school_name_prefix}}
 						<span class="logoB">B</span>
 						<span class="logoA">A</span>
 						<span class="logoS">S</span>
 						<span class="logoI">I</span>
 						<span class="logoC">C</span>
-						<span class="font511880">1</span>
+						<span class="font511880">{{Helper::getSchoolSetting()->school_name_suffix}}</span>
 					</td>
 				</tr>
 				<tr>
 					<td>Alamat</td>
 					<td>:</td>
-					<td>Jl.Laksamana Kawasan Industri No.1, Batam Center</td>
+					<td>{{Helper::getSchoolSetting()->school_address}}</td>
 				</tr>
 				<tr>
 					<td>Nama peserta didik</td>
@@ -242,7 +243,7 @@
 				<tr>
 					<td>Kelas</td>
 					<td>:</td>
-					<td>IV John 2</td>
+					<td>{{$student->active_classroom_name}}</td>
 				</tr>
 				<tr>
 					<td>Semester</td>
@@ -347,12 +348,12 @@
 		</div>
 		<div id="sign_main_teacher">
 			<div class="sign_top">
-				<p>Batam, 21 April 2018</p>
+				<p>Batam, {{Helper::getSchoolSetting()->school_progress_report_date}}</p>
 				<p>Wali Kelas</p>
 			</div>
 
 			<div class="border_sign">
-				<p>Jonathan</p>
+				<p>{{auth()->user()->name}}</p>
 				<hr>
 			</div>
 		</div>
@@ -365,7 +366,7 @@
 
 		<div class="border_sign">
 			<!-- <p style="text-decoration:underline">Rudi wanro situmorang</p> -->
-			<p>Rudi wanro situmorang</p>
+			<p>{{Helper::getSchoolSetting()->school_principal_name}}</p>
 			<hr>
 		</div>
 	</section>
