@@ -309,7 +309,7 @@
 					
 				</tr>
 				@foreach($dataList as $value)
-					<tr>
+					<tr draggable="true">
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
 						<td>{{$value['topic_1_tes_lisan']}}</td>
