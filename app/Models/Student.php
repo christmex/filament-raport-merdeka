@@ -61,4 +61,10 @@ class Student extends Model
         // return 'as';
         return $this->activeStudentClassrooms->first()->homeroomTeacher->classroom->classroom_name;
     }
+
+    public function getStudentNameWithClassroomAttribute()
+    {
+        // return 'as';
+        return $this->student_name.' - '.$this->active_classroom_name;
+    }
 }

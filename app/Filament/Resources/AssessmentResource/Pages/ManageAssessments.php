@@ -14,6 +14,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use App\Filament\Resources\AssessmentResource;
 use App\Models\HomeroomTeacher;
+use App\Models\Student;
 
 class ManageAssessments extends ManageRecords
 {
@@ -23,7 +24,93 @@ class ManageAssessments extends ManageRecords
     {
         return [
             // Actions\CreateAction::make(),
-            Actions\Action::make('Create Assessment')
+            // Actions\Action::make('Create Assessment By Student')
+            // ->button()
+            // ->form([
+            //     Select::make('assessment_method_setting_id')
+            //         ->relationship('assessmentMethodSetting','assessment_method_setting_name')
+            //         ->required()
+            //         ->searchable()
+            //         ->preload(),
+            //     Select::make('topic_setting_id')
+            //         ->relationship('topicSetting','topic_setting_name')
+            //         ->required()
+            //         ->searchable()
+            //         ->preload(),
+            //     Select::make('subject_user_id')
+            //         ->label('subject')
+            //         ->options(SubjectUser::with('subject')->whereIn('id',auth()->user()->activeSubjects->pluck('id')->toArray())->get()->pluck('subject_user_name', 'id'))
+            //         ->required()
+            //         ->searchable()
+            //         // ->multiple()
+            //         ->live()
+            //         ->selectablePlaceholder(false)
+            //         ->preload(),
+            //     Select::make('student_id')
+            //         ->options(function(Get $get){
+
+            //             if($get('subject_user_id')){
+            //                 $querySubjectUser = [];
+    
+            //                 $SubjectUserIds = SubjectUser::whereIn('id',$get('subject_user_id'))
+            //                     ->get()
+            //                     // ->pluck('classroom_id')
+            //                     // ->toArray()
+            //                     ;
+            //                 foreach ($SubjectUserIds as $key => $value) {
+            //                     $querySubjectUser['classroom_id'][] = $value->classroom_id;
+            //                     $querySubjectUser['school_year_id'][] = $value->school_year_id;
+            //                     $querySubjectUser['school_term_id'][] = $value->school_term_id;
+            //                 }
+    
+            //                 $HomeroomTeacherIds = HomeroomTeacher::query()
+            //                     ->whereIn('classroom_id',$querySubjectUser['classroom_id'])
+            //                     ->whereIn('school_year_id',$querySubjectUser['school_year_id'])
+            //                     ->whereIn('school_term_id',$querySubjectUser['school_term_id'])
+            //                     ->get()
+            //                     ->pluck('id')
+            //                     ->toArray()
+            //                     ;
+    
+                                
+            //                 $StudentClassroomIds = StudentClassroom::query()
+            //                 ->whereIn('homeroom_teacher_id',$HomeroomTeacherIds)
+            //                 ->get()
+            //                 ->pluck('student_id')
+            //                 ->toArray();
+    
+            //                 return Student::whereIn('id', $StudentClassroomIds)->get()->pluck('student_name_with_classroom','id');
+            //             }
+            //         })
+            //         ,
+            //     TextInput::make('topic_name')
+            //         ->required(),
+            // ])
+            // ->action(function (array $data): void {
+            //     $dataArray = [];
+
+            //     for($i=0; $i < count($data['subject_user_id']); $i++) {
+            //         $dataArray[] = [
+            //             'student_id' => $data['student_id'],
+            //             'assessment_method_setting_id' => $data['assessment_method_setting_id'],
+            //             'topic_setting_id' => $data['topic_setting_id'],
+            //             'subject_user_id' => $data['subject_user_id'][$i],
+            //             'topic_name' => $data['topic_name'],
+            //         ];
+            //     }
+
+            //     dd($dataArray);
+
+            //     if(DB::table('assessments')->insertOrIgnore($dataArray)){
+            //         Notification::make()
+            //             ->success()
+            //             ->title('yeayy, success!')
+            //             ->body('Successfully added data')
+            //             ->send();
+            //     }
+            // })
+            // ,
+            Actions\Action::make('Create Assessment By Classroom')
             ->button()
             ->form([
                 Select::make('assessment_method_setting_id')
