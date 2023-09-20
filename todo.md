@@ -38,7 +38,7 @@
 - [ ] please, refarcor the active method on school year model and school term model
 - [ ] please refactor code in helper for getSchoolYearName and getSchoolTermName
 - [ ] ada bug di AssessmentResouce di bagian student.active_classroom_name kolom, saat disearchakanada error,  cobapikirkanapakah bisa menggunakan belongstothrough
-- [ ] ada bug,dibagian print, jadi kita berhasil memasukkan hanya 1 jenis assessment method , coba di lihatdi web.php di bagian printnya,semisal kita masukkan nilai kinerja terlebih dahulu dan nilai monthly testnya ngg muncul
+- [x] ada bug,dibagian print, jadi kita berhasil memasukkan hanya 1 jenis assessment method , coba di lihatdi web.php di bagian printnya,semisal kita masukkan nilai kinerja terlebih dahulu dan nilai monthly testnya ngg muncul
 
 There is 3 ways to use laravel global scope
 
