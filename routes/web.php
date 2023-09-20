@@ -96,16 +96,25 @@ Route::get('/print/{student}', function(Student $student){
     //     // ->withoutGlobalScope('subjectUser')
     //     ->get();
 
-    $assessments = Assessment::query()
-        ->select('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id', DB::raw('MAX(grading) as max_grading'))
-        ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough')
-        ->where('student_id', $student->id)
-        ->whereNotNull('grading') // Check for non-null values
-        ->groupBy('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
-        ->orderByDesc('max_grading') // Order by the maximum grading
-        ->get();
+    // $assessments = Assessment::query()
+    //     ->select('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id', DB::raw('MAX(grading) as max_grading'))
+    //     ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough')
+    //     ->where('student_id', $student->id)
+    //     ->whereNotNull('grading') // Check for non-null values
+    //     ->groupBy('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
+    //     ->orderByDesc('max_grading') // Order by the maximum grading
+    //     ->get();
 
-        
+    $assessments = Assessment::query()
+    ->select('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id', DB::raw('MAX(grading) as max_grading'))
+    ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough')
+    ->where('student_id', $student->id)
+    ->whereNotNull('grading') // Check for non-null values
+    ->groupBy('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
+    ->orderByDesc('max_grading') // Order by the maximum grading
+    ->withoutGlobalScope('subjectUser')
+    ->get();
+    // dd($assessments,$student->id);
 
 
     foreach ($assessments as $key => $value) {
