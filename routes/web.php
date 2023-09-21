@@ -105,15 +105,37 @@ Route::get('/print/{student}', function(Student $student){
     //     ->orderByDesc('max_grading') // Order by the maximum grading
     //     ->get();
 
+    // $assessments = Assessment::query()
+    // ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough')
+    // ->select('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id', DB::raw('MAX(grading) as max_grading'))
+    // ->where('student_id', $student->id)
+    // ->whereNotNull('grading') // Check for non-null values
+    // ->groupBy('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
+    // ->orderByDesc('max_grading') // Order by the maximum grading
+    // ->withoutGlobalScope('subjectUser')
+    // ->get();
+
     $assessments = Assessment::query()
-    ->select('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id', DB::raw('MAX(grading) as max_grading'))
     ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough')
+    ->join('subject_users', 'assessments.subject_user_id', '=', 'subject_users.id')
+
+    ->join('subjects', 'subject_users.subject_id', '=', 'subjects.id') // Inner join another_table inside subject_users
+
+    ->select(
+        'assessment_method_setting_id',
+        'subject_user_id',
+        'topic_setting_id',
+        DB::raw('MAX(grading) as max_grading')
+    )
     ->where('student_id', $student->id)
-    ->whereNotNull('grading') // Check for non-null values
+    ->whereNotNull('grading')
     ->groupBy('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
+    ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
     ->orderByDesc('max_grading') // Order by the maximum grading
     ->withoutGlobalScope('subjectUser')
     ->get();
+
+
     // dd($assessments,$student->id);
 
 
