@@ -4,12 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Panel;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Filament\Models\Contracts\FilamentUser;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -45,6 +46,22 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucwords($value);
+    }
+
+    public function setEmailAttribute($value)
+    {
+        if(!(str_ends_with($value, '@sekolahbasic.sch.id'))){
+            $this->attributes['email'] = $value.'@sekolahbasic.sch.id';
+        }else{
+            $this->attributes['email'] = $value;
+        }
+    }
+
+
     public function homerooms(): HasMany
     {
         return $this->hasMany(HomeroomTeacher::class);

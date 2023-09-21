@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Illuminate\Support\HtmlString;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
 {
@@ -85,16 +86,19 @@ class UserResource extends Resource
                 ->required()
                 ->maxLength(255),
             Forms\Components\TextInput::make('email')
-                ->email()
+                ->default('@sekolahbasic.sch.id')
+                ->helperText(new HtmlString('Just write the user name, without space and any unique character, <strong>alphabet only and end with @sekolahbasic.sch.id</strong>'))
                 ->unique(ignoreRecord: true)
+                ->email()
+                ->rules(['regex:/^[a-zA-Z0-9]+@sekolahbasic\.sch\.id$/'])
                 ->required()
                 ->maxLength(255),
             Forms\Components\TextInput::make('password')
-                // ->visibleOn('create')
+                ->helperText(new HtmlString('Default Password <strong>(mantapjiwa00)</strong>'))
+                ->default('mantapjiwa00')
                 ->password()
                 // ->required()
                 ->maxLength(255)
-
                 ->dehydrateStateUsing(fn (string $state): string => bcrypt($state))
                 ->dehydrated(fn (?string $state): bool => filled($state))
                 ->required(fn (string $operation): bool => $operation === 'create')
