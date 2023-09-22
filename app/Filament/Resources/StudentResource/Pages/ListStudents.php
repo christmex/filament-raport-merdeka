@@ -4,7 +4,11 @@ namespace App\Filament\Resources\StudentResource\Pages;
 
 use Filament\Actions;
 use Filament\Tables\Table;
+use App\Imports\StudentImport;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Facades\Excel;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StudentResource;
@@ -19,6 +23,29 @@ class ListStudents extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            \Filament\Actions\Action::make('importStudent')->color('success')
+            ->form([
+                \Filament\Forms\Components\FileUpload::make('import_student')
+                    ->storeFiles(false)
+                    ->columnSpanFull(),
+            ])
+            ->action(function(array $data){
+                DB::beginTransaction();
+                try {
+                    Excel::import(new StudentImport, $data['import_student']);
+                    DB::commit();
+                    Notification::make()
+                        ->success()
+                        ->title('Student imported')
+                        ->send();
+                } catch (\Throwable $th) {
+                    DB::rollback();
+                    Notification::make()
+                        ->danger()
+                        ->title($th->getMessage())
+                        ->send();
+                }
+            })
         ];
     }
 

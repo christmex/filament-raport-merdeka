@@ -273,23 +273,7 @@
 				<tr>
 					<th class="rotate-td bc-browser bc-browser-chrome">
 						<div class="bc-head-txt-label bc-head-icon-chrome">Tes Lisan</div>
-						<!-- <div class="bc-head-icon-symbol icon icon-chrome"></div> -->
 					</th>
-					<!-- <td class="rotate-td"><span class="rotate">Tes Lisan</span></td> -->
-					<!-- <td class="rotate-td"><span class="rotate">Tes tertulis</span></td> -->
-					<!-- <td class="rotate-td"><span class="rotate">Tes tertulis</span></td>
-					<td class="rotate-td"><span class="rotate">Tes tertulis</span></td>
-					<td class="rotate-td"><span class="rotate">Tes tertulis</span></td>
-					<td class="rotate-td"><span class="rotate">Tes Lisan</span></td>
-					<td class="rotate-td"><span class="rotate">Tes tertulis</span></td>
-					<td class="rotate-td"><span class="rotate">Tes tertulis</span></td>
-					<td class="rotate-td"><span class="rotate">Tes tertulis</span></td>
-					<td class="rotate-td"><span class="rotate">Tes tertulis</span></td>
-					<td class="rotate-td"><span class="rotate">Tes Lisan</span></td>
-					<td class="rotate-td"><span class="rotate">Tes tertulis</span></td>
-					<td class="rotate-td"><span class="rotate">Tes tertulis</span></td>
-					<td class="rotate-td"><span class="rotate">Tes tertulis</span></td>
-					<td class="rotate-td"><span class="rotate">Tes tertulis</span></td> -->
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Penugasan</div></th>
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Kinerja</div></th>
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Monthly Test</div></th>
