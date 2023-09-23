@@ -236,7 +236,7 @@ Route::get('/print/{student}', function(Student $student){
         }
     }
 
-    return view('print',compact('dataList','student'));
+    return view('printv2',compact('dataList','student'));
 
     dd($dataList, $assessments);
 

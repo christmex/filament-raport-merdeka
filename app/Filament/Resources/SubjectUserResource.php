@@ -7,6 +7,8 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
+use App\Models\SchoolTerm;
+use App\Models\SchoolYear;
 use Filament\Tables\Table;
 use App\Models\SubjectUser;
 use Filament\Resources\Resource;
@@ -37,7 +39,7 @@ class SubjectUserResource extends Resource
                     ->preload()
                     ->createOptionForm(SchoolYearResource::getForm())
                     ->editOptionForm(SchoolYearResource::getForm())
-                    ->default(fn($state) => $state)
+                    ->default(fn($state) => $state ?? SchoolYear::activeId())
                     ->visibleOn('create')
                     ->required(),
                 Forms\Components\Select::make('school_term_id')
@@ -47,7 +49,7 @@ class SubjectUserResource extends Resource
                     ->preload()
                     ->createOptionForm(SchoolTermResource::getForm())
                     ->editOptionForm(SchoolTermResource::getForm())
-                    ->default(fn($state) => $state)
+                    ->default(fn($state) => $state ?? SchoolTerm::activeId())
                     ->visibleOn('create')
                     ->required(),
                 Forms\Components\Select::make('user_id')
@@ -107,6 +109,7 @@ class SubjectUserResource extends Resource
                     ->maxValue(100)
                     ->minValue(0)
                     ->numeric()
+                    ->default(75)
                     ->required(),
             ]);
     }

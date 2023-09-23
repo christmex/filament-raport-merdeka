@@ -15,10 +15,11 @@ class AssessmentMethodSettingPolicy
      */
     public function viewAny(User $user): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -26,10 +27,11 @@ class AssessmentMethodSettingPolicy
      */
     public function view(User $user, AssessmentMethodSetting $assessmentMethodSetting): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -37,10 +39,11 @@ class AssessmentMethodSettingPolicy
      */
     public function create(User $user): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -48,10 +51,11 @@ class AssessmentMethodSettingPolicy
      */
     public function update(User $user, AssessmentMethodSetting $assessmentMethodSetting): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -59,10 +63,11 @@ class AssessmentMethodSettingPolicy
      */
     public function delete(User $user, AssessmentMethodSetting $assessmentMethodSetting): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -70,10 +75,11 @@ class AssessmentMethodSettingPolicy
      */
     public function restore(User $user, AssessmentMethodSetting $assessmentMethodSetting): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -81,9 +87,10 @@ class AssessmentMethodSettingPolicy
      */
     public function forceDelete(User $user, AssessmentMethodSetting $assessmentMethodSetting): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 }

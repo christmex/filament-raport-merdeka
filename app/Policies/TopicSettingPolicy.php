@@ -14,10 +14,11 @@ class TopicSettingPolicy
      */
     public function viewAny(User $user): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -25,10 +26,11 @@ class TopicSettingPolicy
      */
     public function view(User $user, TopicSetting $topicSetting): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -36,10 +38,11 @@ class TopicSettingPolicy
      */
     public function create(User $user): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -47,10 +50,11 @@ class TopicSettingPolicy
      */
     public function update(User $user, TopicSetting $topicSetting): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -58,10 +62,11 @@ class TopicSettingPolicy
      */
     public function delete(User $user, TopicSetting $topicSetting): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -69,10 +74,11 @@ class TopicSettingPolicy
      */
     public function restore(User $user, TopicSetting $topicSetting): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 
     /**
@@ -80,9 +86,10 @@ class TopicSettingPolicy
      */
     public function forceDelete(User $user, TopicSetting $topicSetting): bool
     {
-        if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
-            return $user->email == "super@sekolahbasic.sch.id";
-        }
         return false;
+        // if(Helper::isSchoolYearActive() && Helper::isSchoolTermActive()){
+        //     return $user->email == "super@sekolahbasic.sch.id";
+        // }
+        // return false;
     }
 }

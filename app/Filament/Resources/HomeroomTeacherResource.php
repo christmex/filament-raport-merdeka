@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\HomeroomTeacherResource\Pages;
 use App\Filament\Resources\HomeroomTeacherResource\RelationManagers;
+use App\Models\SchoolTerm;
+use App\Models\SchoolYear;
 
 class HomeroomTeacherResource extends Resource
 {
@@ -37,7 +39,7 @@ class HomeroomTeacherResource extends Resource
                     ->preload()
                     ->createOptionForm(SchoolYearResource::getForm())
                     ->editOptionForm(SchoolYearResource::getForm())
-                    ->default(fn($state) => $state)
+                    ->default(fn($state) => $state ?? SchoolYear::activeId())
                     ->visibleOn('create')
                     ->required(),
                 Forms\Components\Select::make('school_term_id')
@@ -47,7 +49,7 @@ class HomeroomTeacherResource extends Resource
                     ->preload()
                     ->createOptionForm(SchoolTermResource::getForm())
                     ->editOptionForm(SchoolTermResource::getForm())
-                    ->default(fn($state) => $state)
+                    ->default(fn($state) => $state ?? SchoolTerm::activeId())
                     ->visibleOn('create')
                     ->required(),
                 Forms\Components\Select::make('user_id')
