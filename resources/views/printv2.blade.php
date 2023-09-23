@@ -272,9 +272,9 @@
 				<tr>
 					<th rowspan="2" style="vertical-align: middle;">No</th>
 					<th rowspan="2" style="vertical-align: middle;">Muatan Pelajaran</th>
-					<td colspan="">Topik 1</td>
-					<td colspan="">Topik 2</td>
-					<td colspan="">Topik 3</td>
+					@foreach($topicSettings as $value)
+					    <td colspan="">{{$value->topic_setting_name}}</td>
+                    @endforeach
 				</tr>
 				<tr>
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata</div></th>
@@ -282,7 +282,7 @@
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata</div></th>
 					
 				</tr>
-				@foreach($dataList as $value)
+				@foreach($dataPublicCur as $value)
 					<tr draggable="true">
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
@@ -307,9 +307,9 @@
 				<tr>
 					<th rowspan="2" style="vertical-align: middle;">No</th>
 					<th rowspan="2" style="vertical-align: middle;">Muatan Pelajaran</th>
-					<td colspan="">Topik 1</td>
-					<td colspan="">Topik 2</td>
-					<td colspan="">Topik 3</td>
+                    @foreach($topicSettings as $value)
+					    <td colspan="">{{$value->topic_setting_name}}</td>
+                    @endforeach
 				</tr>
 				<tr>
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata</div></th>
@@ -317,7 +317,7 @@
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata</div></th>
 					
 				</tr>
-				@foreach($dataList as $value)
+				@foreach($dataBasicCur as $value)
 					<tr draggable="true">
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>

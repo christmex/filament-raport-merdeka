@@ -30,13 +30,13 @@ class MasterSeeder extends Seeder
         DB::table('assessment_method_settings')->insertOrIgnore($assessment_method_settings);
 
         $topic_settings = [
-            ['topic_setting_name' => 'Topic 1'],
-            ['topic_setting_name' => 'Topic 2'],
-            ['topic_setting_name' => 'Topic 3'],
-            ['topic_setting_name' => 'Topic 4'],
-            ['topic_setting_name' => 'Topic 5'],
-            ['topic_setting_name' => 'Topic 6'],
-            ['topic_setting_name' => 'Topic 7'],
+            ['topic_setting_name' => 'Topic 1', 'sort_order' => 1],
+            ['topic_setting_name' => 'Topic 2', 'sort_order' => 2],
+            ['topic_setting_name' => 'Topic 3', 'sort_order' => 3],
+            ['topic_setting_name' => 'Topic 4', 'sort_order' => 4],
+            ['topic_setting_name' => 'Topic 5', 'sort_order' => 5],
+            ['topic_setting_name' => 'Topic 6', 'sort_order' => 6],
+            ['topic_setting_name' => 'Topic 7', 'sort_order' => 7],
         ];
 
         DB::table('topic_settings')->insertOrIgnore($topic_settings);

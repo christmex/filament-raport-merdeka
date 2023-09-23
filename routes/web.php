@@ -28,6 +28,7 @@ use App\Models\SchoolYear;
 // });
 
 Route::get('/debug',function(){
+    dd(TopicSetting::all());
     $student = Student::where('student_nis','')->orWhere('student_nisn', '')->first();
 
     dd(!$student);
@@ -125,9 +126,11 @@ Route::get('/print/{student}', function(Student $student){
     ->join('subjects', 'subject_users.subject_id', '=', 'subjects.id') // Inner join another_table inside subject_users
 
     ->select(
+        'subjects.is_curiculum_basic',
         'assessment_method_setting_id',
         'subject_user_id',
         'topic_setting_id',
+        // DB::raw('(SELECT is_curiculum_basic FROM is_curiculum_basic WHERE some_condition) as is_curriculum_basic_column') // Replace with your actual condition
         DB::raw('MAX(grading) as max_grading')
     )
     ->where('student_id', $student->id)
@@ -138,8 +141,10 @@ Route::get('/print/{student}', function(Student $student){
     ->withoutGlobalScope('subjectUser')
     ->get();
 
+    $dataPublicCur = Helper::generateRaportData($assessments->where('is_curiculum_basic',false));
+    $dataBasicCur = Helper::generateRaportData($assessments->where('is_curiculum_basic',true));
 
-    // dd($assessments,$student->id);
+    // dd($dataPublicCur,$assessments->where('is_curiculum_basic',true));
 
 
     foreach ($assessments as $key => $value) {
@@ -236,7 +241,11 @@ Route::get('/print/{student}', function(Student $student){
         }
     }
 
-    return view('printv2',compact('dataList','student'));
+    // dd($dataList,$dataPublicCur,$assessments->where('is_curiculum_basic',true));
+
+    $topicSettings = TopicSetting::take(3)->get();
+    return view('printv2',compact('dataPublicCur','dataBasicCur','student','topicSettings'));
+    // return view('printv2',compact('dataList','student','topicSettings'));
 
     dd($dataList, $assessments);
 

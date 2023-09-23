@@ -125,6 +125,102 @@ class Helper {
         return SchoolSetting::first();
     }
 
+    public static function generateRaportData($object){
+        $dataList = [];
+        foreach ($object as $key => $value) {
+            // Cek apakah subject ini sudah ada di data array?
+            if(self::searchValueOnKey($dataList, 'subject_name',$value->subjectUserThrough->subject_name)){
+    
+                // Yes
+                $initData = self::findSubjectByName($dataList,$value->subjectUserThrough->subject_name);
+                if(!($initData[1]['model_value']['assessment_method_setting_id'] == $value->assessment_method_setting_id && $initData[1]['model_value']['topic_setting_id'] == $value->topic_setting_id)){
+                    // jika beda, maka kita harus tambahkan ke key yang bersangkutan, 
+    
+                    $dataList[$initData[0]]['topic_1_tes_lisan'] = $dataList[$initData[0]]['topic_1_tes_lisan'] ?? self::CheckAssessment($value,$dataList[$initData[0]], 'topic_1_tes_lisan', 1, 1);
+                    $dataList[$initData[0]]['topic_1_penugasan'] = $dataList[$initData[0]]['topic_1_penugasan'] ??  self::CheckAssessment($value,$dataList[$initData[0]], 'topic_1_penugasan', 1, 2) ;
+                    $dataList[$initData[0]]['topic_1_kinerja'] = $dataList[$initData[0]]['topic_1_kinerja'] ??  self::CheckAssessment($value,$dataList[$initData[0]], 'topic_1_kinerja', 1, 3) ;
+                    $dataList[$initData[0]]['topic_1_monthly_test'] = $dataList[$initData[0]]['topic_1_monthly_test'] ??  self::CheckAssessment($value,$dataList[$initData[0]], 'topic_1_monthly_test', 1, 4) ;
+                    $dataList[$initData[0]]['topic_1_avg'] =  self::topicAvg([
+                        $dataList[$initData[0]]['topic_1_tes_lisan'],
+                        $dataList[$initData[0]]['topic_1_penugasan'],
+                        $dataList[$initData[0]]['topic_1_kinerja'],
+                        $dataList[$initData[0]]['topic_1_monthly_test']
+                    ]);
+    
+                   $dataList[$initData[0]]['topic_2_tes_lisan'] = $dataList[$initData[0]]['topic_2_tes_lisan'] ?? self::CheckAssessment($value,$dataList[$initData[0]], 'topic_2_tes_lisan', 2, 1) ;
+                   $dataList[$initData[0]]['topic_2_penugasan'] = $dataList[$initData[0]]['topic_2_penugasan'] ?? self::CheckAssessment($value,$dataList[$initData[0]], 'topic_2_penugasan', 2, 2) ;
+                   $dataList[$initData[0]]['topic_2_kinerja'] = $dataList[$initData[0]]['topic_2_kinerja'] ?? self::CheckAssessment($value,$dataList[$initData[0]], 'topic_2_kinerja', 2, 3) ;
+                   $dataList[$initData[0]]['topic_2_monthly_test'] = $dataList[$initData[0]]['topic_2_monthly_test'] ?? self::CheckAssessment($value,$dataList[$initData[0]], 'topic_2_monthly_test', 2, 4) ;
+                   $dataList[$initData[0]]['topic_2_avg'] = self::topicAvg([
+                        $dataList[$initData[0]]['topic_2_tes_lisan'],
+                        $dataList[$initData[0]]['topic_2_penugasan'],
+                        $dataList[$initData[0]]['topic_2_kinerja'],
+                        $dataList[$initData[0]]['topic_2_monthly_test']
+                    ]);
+    
+                    $dataList[$initData[0]]['topic_3_tes_lisan'] = $dataList[$initData[0]]['topic_3_tes_lisan'] ?? self::CheckAssessment($value,$dataList[$initData[0]], 'topic_3_tes_lisan', 3, 1) ;
+                    $dataList[$initData[0]]['topic_3_penugasan'] = $dataList[$initData[0]]['topic_3_penugasan'] ?? self::CheckAssessment($value,$dataList[$initData[0]], 'topic_3_penugasan', 3, 2) ;
+                    $dataList[$initData[0]]['topic_3_kinerja'] = $dataList[$initData[0]]['topic_3_kinerja'] ?? self::CheckAssessment($value,$dataList[$initData[0]], 'topic_3_kinerja', 3, 3) ;
+                    $dataList[$initData[0]]['topic_3_monthly_test'] = $dataList[$initData[0]]['topic_3_monthly_test'] ?? self::CheckAssessment($value,$dataList[$initData[0]], 'topic_3_monthly_test', 3, 4) ;
+                    $dataList[$initData[0]]['topic_3_avg'] = self::topicAvg([
+                        $dataList[$initData[0]]['topic_3_tes_lisan'],
+                        $dataList[$initData[0]]['topic_3_penugasan'],
+                        $dataList[$initData[0]]['topic_3_kinerja'],
+                        $dataList[$initData[0]]['topic_3_monthly_test']
+                    ]);
+    
+                    $dataList[$initData[0]]['model_value'] = $value->toArray();
+    
+                    
+                }
+    
+            }else {
+                // No,init the data
+                $dataList[] = [
+                    'subject_name' => $value->subjectUserThrough->subject_name,
+                    'topic_1_tes_lisan' => self::CheckAssessment($value,$dataList, 'topic_1_tes_lisan', 1, 1),
+                    'topic_1_penugasan' => self::CheckAssessment($value,$dataList, 'topic_1_penugasan', 1, 2),
+                    'topic_1_kinerja' => self::CheckAssessment($value,$dataList, 'topic_1_kinerja', 1, 3),
+                    'topic_1_monthly_test' => self::CheckAssessment($value,$dataList, 'topic_1_monthly_test', 1, 4),
+                    'topic_1_avg' => self::topicAvg([
+                        self::CheckAssessment($value,$dataList, 'topic_1_tes_lisan', 1, 1),
+                        self::CheckAssessment($value,$dataList, 'topic_1_penugasan', 1, 2),
+                        self::CheckAssessment($value,$dataList, 'topic_1_kinerja', 1, 3),
+                        self::CheckAssessment($value,$dataList, 'topic_1_monthly_test', 1, 4),
+                    ]),
+    
+    
+                    'topic_2_tes_lisan' => self::CheckAssessment($value,$dataList, 'topic_2_tes_lisan', 2, 1),
+                    'topic_2_penugasan' => self::CheckAssessment($value,$dataList, 'topic_2_penugasan', 2, 2),
+                    'topic_2_kinerja' => self::CheckAssessment($value,$dataList, 'topic_2_kinerja', 2, 3),
+                    'topic_2_monthly_test' => self::CheckAssessment($value,$dataList, 'topic_2_monthly_test', 2, 4),
+                    'topic_2_avg' => self::topicAvg([
+                        self::CheckAssessment($value,$dataList, 'topic_2_tes_lisan', 2, 1),
+                        self::CheckAssessment($value,$dataList, 'topic_2_penugasan', 2, 2),
+                        self::CheckAssessment($value,$dataList, 'topic_2_kinerja', 2, 3),
+                        self::CheckAssessment($value,$dataList, 'topic_2_monthly_test', 2, 4),
+                    ]),
+    
+    
+                    'topic_3_tes_lisan' => self::CheckAssessment($value,$dataList, 'topic_3_tes_lisan', 3, 1),
+                    'topic_3_penugasan' => self::CheckAssessment($value,$dataList, 'topic_3_penugasan', 3, 2),
+                    'topic_3_kinerja' => self::CheckAssessment($value,$dataList, 'topic_3_kinerja', 3, 3),
+                    'topic_3_monthly_test' => self::CheckAssessment($value,$dataList, 'topic_3_monthly_test', 3, 4),
+                    'topic_3_avg' => self::topicAvg([
+                        self::CheckAssessment($value,$dataList, 'topic_3_tes_lisan', 3, 1),
+                        self::CheckAssessment($value,$dataList, 'topic_3_penugasan', 3, 2),
+                        self::CheckAssessment($value,$dataList, 'topic_3_kinerja', 3, 3),
+                        self::CheckAssessment($value,$dataList, 'topic_3_monthly_test', 3, 4),
+                    ]),
+    
+                    'model_value' => $value->toArray()
+                ];
+            }
+        }
+
+        return $dataList;
+    }
+
 
 
 }
