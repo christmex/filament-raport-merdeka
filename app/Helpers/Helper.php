@@ -7,6 +7,9 @@ use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
 
 class Helper {
+
+    public static $superUserEmail = 'super@sekolahbasic.sch.id';
+    
     public static function searchValueOnKey($array, $keyToSearch, $valueToFind) {
         foreach ($array as $subArray) {
             if (is_array($subArray)) {

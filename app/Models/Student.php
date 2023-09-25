@@ -16,6 +16,22 @@ class Student extends Model
 
     protected $guarded = [];
 
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope('ownStudent', function (Builder $builder) {
+            if(auth()->id()){
+                // dd(model::activeStudentClassrooms());
+                // dd();
+                // dd(auth()->user()->activeHomeroom->first()->id);
+                
+                $builder->whereIn('id',StudentClassroom::where('homeroom_teacher_id',auth()->user()->activeHomeroom->first()->id)->get()->pluck('id')->toArray());
+            }
+        });
+    }
+
     public function setStudentNameAttribute($value)
     {
         $this->attributes['student_name'] = ucwords($value);
@@ -28,7 +44,7 @@ class Student extends Model
     public function activeStudentClassrooms(): HasMany
     {
         return $this->studentClassrooms()->latest();
-    }
+    }   
 
 
     public function classrooms(): BelongsToMany

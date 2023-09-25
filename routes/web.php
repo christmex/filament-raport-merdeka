@@ -28,14 +28,11 @@ use App\Models\SchoolYear;
 // });
 
 Route::get('/debug',function(){
-    dd(TopicSetting::all());
-    $student = Student::where('student_nis','')->orWhere('student_nisn', '')->first();
 
-    dd(!$student);
-    dd(auth()->user()->activeSubjects->count());
-    // session(['active_school_year_id' => 1]);
-    dd(session('active_school_year_id'),session('active_school_term_id'));
 });
+
+
+
 Route::get('/print/{student}', function(Student $student){
     if(auth()->guest()){
         abort(404,'Login First');

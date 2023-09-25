@@ -42,6 +42,7 @@
 - [x] add import feature in student page inside main teacher menu
 - [x] Feature for change password and name
 - [x] Xgg Add feature when press arrow down or up to next and previous text input, also when hit enter and tab it will go to the another number text input
+- [ ] bug di menu homeroom teacher, saat membuat teacher di tahun ajaran sama namun semester berbeda maka tidak bisa, seharusnya bisa
 
 
 There is 3 ways to use laravel global scope
