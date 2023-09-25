@@ -39,8 +39,8 @@
 - [ ] please refactor code in helper for getSchoolYearName and getSchoolTermName
 - [ ] ada bug di AssessmentResouce di bagian student.active_classroom_name kolom, saat disearchakanada error,  cobapikirkanapakah bisa menggunakan belongstothrough
 - [x] ada bug,dibagian print, jadi kita berhasil memasukkan hanya 1 jenis assessment method , coba di lihat di web.php di bagian printnya,semisal kita masukkan nilai kinerja terlebih dahulu dan nilai monthly testnya ngg muncul
-- [ ] add import feature in student page inside main teacher menu
-- [ ] Feature for change password and name
+- [x] add import feature in student page inside main teacher menu
+- [x] Feature for change password and name
 
 
 There is 3 ways to use laravel global scope
