@@ -96,15 +96,15 @@ class MasterSeeder extends Seeder
         DB::table('classrooms')->insertOrIgnore($classrooms);
 
         $subjects = [
-            ['subject_name' => 'Matematika'],
-            ['subject_name' => 'Maths'],
-            ['subject_name' => 'Bahasa Indonesia'],
-            ['subject_name' => 'Bahasa Inggris'],
-            ['subject_name' => 'IPA'],
-            ['subject_name' => 'IPS'],
-            ['subject_name' => 'Geografi'],
-            ['subject_name' => 'Sejarah Peminatan XI IPA'],
-            ['subject_name' => 'Sejarah'],
+            ['subject_name' => 'Matematika', 'is_curiculum_basic' => 0],
+            ['subject_name' => 'Maths', 'is_curiculum_basic' => 1],
+            ['subject_name' => 'Bahasa Indonesia', 'is_curiculum_basic' => 0],
+            ['subject_name' => 'Bahasa Inggris', 'is_curiculum_basic' => 1],
+            ['subject_name' => 'IPA', 'is_curiculum_basic' => 0],
+            ['subject_name' => 'IPS', 'is_curiculum_basic' => 0],
+            ['subject_name' => 'Geografi', 'is_curiculum_basic' => 0],
+            ['subject_name' => 'Sejarah Peminatan XI IPA', 'is_curiculum_basic' => 0],
+            ['subject_name' => 'Sejarah', 'is_curiculum_basic' => 0],
         ];
 
         DB::table('subjects')->insertOrIgnore($subjects);
