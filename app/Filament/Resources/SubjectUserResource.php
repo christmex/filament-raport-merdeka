@@ -121,6 +121,7 @@ class SubjectUserResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->wrap(true)
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('subject.subject_name')
                     ->numeric()
