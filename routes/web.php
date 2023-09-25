@@ -127,12 +127,14 @@ Route::get('/print/{student}', function(Student $student){
         'assessment_method_setting_id',
         'subject_user_id',
         'topic_setting_id',
+        // DB::raw('(SELECT is_curiculum_basic FROM subjects) as is_curiculum_basi'), // Replace with your actual condition
         // DB::raw('(SELECT is_curiculum_basic FROM is_curiculum_basic WHERE some_condition) as is_curriculum_basic_column') // Replace with your actual condition
         DB::raw('MAX(grading) as max_grading')
     )
     ->where('student_id', $student->id)
     ->whereNotNull('grading')
-    ->groupBy('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
+    // ->groupBy('assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
+    ->groupBy('subjects.is_curiculum_basic', 'assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
     ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
     ->orderByDesc('max_grading') // Order by the maximum grading
     ->withoutGlobalScope('subjectUser')
