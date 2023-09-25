@@ -150,6 +150,7 @@ class StudentResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
+            ->ownStudent()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
