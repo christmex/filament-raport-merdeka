@@ -41,6 +41,7 @@
 - [x] ada bug,dibagian print, jadi kita berhasil memasukkan hanya 1 jenis assessment method , coba di lihat di web.php di bagian printnya,semisal kita masukkan nilai kinerja terlebih dahulu dan nilai monthly testnya ngg muncul
 - [x] add import feature in student page inside main teacher menu
 - [x] Feature for change password and name
+- [x] Xgg Add feature when press arrow down or up to next and previous text input, also when hit enter and tab it will go to the another number text input
 
 
 There is 3 ways to use laravel global scope
