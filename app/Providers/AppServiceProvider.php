@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         FilamentAsset::register([
-            Js::make('move-to-another-text-field', __DIR__ . '/../../resources/js/move_to_another_text_field.js'),
+            Js::make('move-to-another-text-field', __DIR__ . '/../../resources/js/move_to_another_text_field.js')->loadedOnRequest(),
         ]);
     }
 }

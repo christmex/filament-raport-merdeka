@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Tables\Columns\GradingTextInputColumn;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -74,10 +75,14 @@ class AssessmentResource extends Resource
                 // Tables\Columns\TextColumn::make('subject_user_id')
                 //     ->numeric()
                 //     ->sortable(),
-                Tables\Columns\TextInputColumn::make('grading')
+                GradingTextInputColumn::make('grading')
                     ->type('number')
                     ->rules(['integer','min:0', 'max:100'])
                     ->sortable(),
+                // Tables\Columns\TextInputColumn::make('grading')
+                //     ->type('number')
+                //     ->rules(['integer','min:0', 'max:100'])
+                //     ->sortable(),
                 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
