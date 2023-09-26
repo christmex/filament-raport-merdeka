@@ -22,7 +22,7 @@ class HomeroomTeacherResource extends Resource
 {
     protected static ?string $model = HomeroomTeacher::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-user-plus';
 
     protected static ?string $navigationLabel = 'Main Teacher';
 

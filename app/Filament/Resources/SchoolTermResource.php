@@ -17,7 +17,7 @@ class SchoolTermResource extends Resource
 {
     protected static ?string $model = SchoolTerm::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-cog';
 
     protected static ?string $navigationGroup = 'Configuration';
 
