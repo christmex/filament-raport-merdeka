@@ -38,7 +38,7 @@ class TopicSettingResource extends Resource
                 Tables\Columns\TextColumn::make('topic_setting_name')
                     ->searchable(),
                 Tables\Columns\TextInputColumn::make('sort_order')
-                    ->rules(['integer','min:0', 'max:100'])
+                    ->rules(['required','integer','min:0', 'max:100'])
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

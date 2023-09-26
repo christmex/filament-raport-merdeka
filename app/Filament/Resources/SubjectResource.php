@@ -39,7 +39,7 @@ class SubjectResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\ToggleColumn::make('is_curiculum_basic'),
                 Tables\Columns\TextInputColumn::make('sort_order')
-                    ->rules(['integer','min:0', 'max:100'])
+                    ->rules(['required','integer','min:0', 'max:100'])
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
