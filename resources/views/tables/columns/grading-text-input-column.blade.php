@@ -22,29 +22,33 @@
     }"
     x-load-js="[@js(\Filament\Support\Facades\FilamentAsset::getScriptSrc('move-to-another-text-field'))]"
     x-init="
-        Livewire.hook('commit', ({ component, commit, succeed, fail, respond }) => {
-            succeed(({ snapshot, effect }) => {
-                if (component.id !== @js($this->getId())) {
-                    return
-                }
+        () => {
+            Livewire.hook('commit', ({ component, commit, succeed, fail, respond }) => {
+                succeed(({ snapshot, effect }) => {
+                    $nextTick(() => {
+                        if (component.id !== @js($this->getId())) {
+                            return
+                        }
 
-                if (isEditing) {
-                    return
-                }
+                        if (isEditing) {
+                            return
+                        }
 
-                if (! $refs.newState) {
-                    return
-                }
+                        if (! $refs.newState) {
+                            return
+                        }
 
-                let newState = $refs.newState.value
+                        let newState = $refs.newState.value
 
-                if (state === newState) {
-                    return
-                }
+                        if (state === newState) {
+                            return
+                        }
 
-                state = newState
+                        state = newState
+                    })
+                })
             })
-        })
+        }
     "
     {{
         $attributes
@@ -121,3 +125,4 @@
         {{-- format-ignore-end --}}
     </x-filament::input.wrapper>
 </div>
+

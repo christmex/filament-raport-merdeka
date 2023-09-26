@@ -9,18 +9,20 @@ use Filament\Tables\Columns\Column;
 use Filament\Forms\Components\Concerns\HasStep;
 use Filament\Tables\Columns\Contracts\Editable;
 use Filament\Forms\Components\Concerns\HasInputMode;
-use Filament\Forms\Components\Concerns\HasPlaceholder;
 use Filament\Forms\Components\Concerns\HasExtraInputAttributes;
 
 class GradingTextInputColumn extends Column implements Editable
 {
+
     use CanBeValidated;
     use CanUpdateState;
     use HasExtraInputAttributes;
     use HasInputMode;
-    use HasPlaceholder;
     use HasStep;
 
+    /**
+     * @var view-string
+     */
     protected string $view = 'tables.columns.grading-text-input-column';
 
     protected string | Closure | null $type = null;
