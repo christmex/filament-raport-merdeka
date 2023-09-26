@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Tables\Columns\GradingTextInputColumn;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -12,8 +11,10 @@ use Filament\Resources\Resource;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Tables\Columns\GradingTextInputColumn;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AssessmentResource\Pages;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Resources\AssessmentResource\RelationManagers;
 
 class AssessmentResource extends Resource
@@ -51,6 +52,8 @@ class AssessmentResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('student.student_name')
                     // ->description(fn (Assessment $record): string => $record->student->active_classroom_name)
                     ->searchable()
@@ -131,7 +134,8 @@ class AssessmentResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                    ->deselectRecordsAfterCompletion(),
+                        ->deselectRecordsAfterCompletion(),
+                    ExportBulkAction::make()
                 ]),
             ])
             ->emptyStateActions([
