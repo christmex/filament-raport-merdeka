@@ -54,10 +54,10 @@ class ListStudents extends ListRecords
                     }
                 })
             ])
-                ->label('Import')
-                ->icon('heroicon-m-ellipsis-vertical')
-                ->color('success')
-                ->button(),            
+            ->label('Import')
+            ->icon('heroicon-m-ellipsis-vertical')
+            ->color('success')
+            ->button(),            
         ];
     }
 
