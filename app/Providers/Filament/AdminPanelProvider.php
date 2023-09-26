@@ -31,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Green,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -68,9 +68,11 @@ class AdminPanelProvider extends PanelProvider
                 //     // ->url(fn (): string => Settings::getUrl())
                 //     ->icon('heroicon-o-cog-6-tooth'),
             ])
+            // ->brandLogo(asset('logo_basic_digital.svg'))
             ->profile(EditProfile::class)
             // ->topNavigation()
             ->sidebarCollapsibleOnDesktop()
+            // ->spa()
             ;
     }
 }
