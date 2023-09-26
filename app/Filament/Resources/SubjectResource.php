@@ -84,6 +84,7 @@ class SubjectResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
+            ->orderByDesc('created_at')
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
