@@ -99,7 +99,8 @@ class SubjectResource extends Resource
             Forms\Components\TextInput::make('subject_code')
                 ->unique(ignoreRecord: true)
                 ->maxLength(255),
-            Forms\Components\Toggle::make('is_curiculum_basic'),
+            Forms\Components\Toggle::make('is_curiculum_basic')
+                ->onColor('success'),
         ];
     }
 }
