@@ -101,6 +101,7 @@ class SubjectUserResource extends Resource
                     ->relationship('subject', 'subject_name')
                     ->searchable(['subject_name', 'subject_code'])
                     ->preload()
+                    ->default(fn($state) => $state)
                     ->createOptionForm(SubjectResource::getForm())
                     ->editOptionForm(SubjectResource::getForm())
                     // ->visibleOn('create')

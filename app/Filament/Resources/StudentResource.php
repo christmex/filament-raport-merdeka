@@ -163,6 +163,7 @@ class StudentResource extends Resource
                 ->required()
                 ->maxLength(255),
             Forms\Components\TextInput::make('student_nis')
+                ->unique(ignoreRecord: true)
                 ->maxLength(255),
             Forms\Components\TextInput::make('student_nisn')
                 ->unique(ignoreRecord: true)
