@@ -68,11 +68,11 @@ class AdminPanelProvider extends PanelProvider
                 //     // ->url(fn (): string => Settings::getUrl())
                 //     ->icon('heroicon-o-cog-6-tooth'),
             ])
-            // ->brandLogo(asset('logo_basic_digital.svg'))
+            ->brandLogo(asset('logo_basic_digital.svg'))
             ->profile(EditProfile::class)
             // ->topNavigation()
             ->sidebarCollapsibleOnDesktop()
-            // ->spa()
+            ->spa()
             ;
     }
 }
