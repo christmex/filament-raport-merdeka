@@ -148,5 +148,6 @@ class AssessmentResource extends Resource
         return [
             'index' => Pages\ManageAssessments::route('/'),
         ];
-    }    
+    }
+
 }

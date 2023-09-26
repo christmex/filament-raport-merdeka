@@ -3,18 +3,22 @@
 namespace App\Filament\Resources\AssessmentResource\Pages;
 
 use Filament\Actions;
+use App\Models\Student;
 use Filament\Forms\Get;
 use App\Models\Assessment;
 use App\Models\SubjectUser;
+use App\Models\HomeroomTeacher;
 use App\Models\StudentClassroom;
+use App\Imports\AssessmentImport;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\HtmlString;
+use Maatwebsite\Excel\Facades\Excel;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
 use App\Filament\Resources\AssessmentResource;
-use App\Models\HomeroomTeacher;
-use App\Models\Student;
+
 
 class ManageAssessments extends ManageRecords
 {
@@ -23,6 +27,36 @@ class ManageAssessments extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
+            Actions\ActionGroup::make([
+                Actions\Action::make('importAssessment')->color('success')
+                ->form([
+                    \Filament\Forms\Components\FileUpload::make('import_assessment')
+                        ->storeFiles(false)
+                        ->helperText(new HtmlString('Please export the assessment before you upload the file'))
+                        ->columnSpanFull(),
+                ])
+                ->action(function(array $data){
+                    DB::beginTransaction();
+                    try {
+                        Excel::import(new AssessmentImport, $data['import_assessment']);
+                        DB::commit();
+                        Notification::make()
+                            ->success()
+                            ->title('Assessment imported')
+                            ->send();
+                    } catch (\Throwable $th) {
+                        DB::rollback();
+                        Notification::make()
+                            ->danger()
+                            ->title($th->getMessage())
+                            ->send();
+                    }
+                })
+            ])
+            ->label('Import')
+            ->icon('heroicon-m-ellipsis-vertical')
+            ->color('success')
+            ->button(),  
             // Actions\CreateAction::make(),
             // Actions\Action::make('Create Assessment By Student')
             // ->button()
@@ -110,6 +144,7 @@ class ManageAssessments extends ManageRecords
             //     }
             // })
             // ,
+            // ExportAction::make(),
             Actions\Action::make('Create Assessment By Classroom')
             ->button()
             ->form([
