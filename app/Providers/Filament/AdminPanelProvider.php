@@ -12,6 +12,7 @@ use App\Filament\Pages\Auth\EditProfile;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use FilipFonal\FilamentLogManager\FilamentLogManager;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use App\Http\Middleware\EnsureApplicationAlreadySetup;
@@ -79,7 +80,8 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilamentJobsMonitorPlugin::make(),
                 FilamentLogManager::make(),
-                FilamentSpatieLaravelBackupPlugin::make()
+                FilamentSpatieLaravelBackupPlugin::make(),
+                FilamentShieldPlugin::make()
             ])
             ;
     }

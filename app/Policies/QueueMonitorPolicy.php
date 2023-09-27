@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\SchoolSetting;
+use Croustibat\FilamentJobsMonitor\Models\QueueMonitor;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SchoolSettingPolicy
+class QueueMonitorPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class SchoolSettingPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_school::setting');
+        return $user->can('view_any_queue::monitor');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SchoolSetting  $schoolSetting
+     * @param  \Croustibat\FilamentJobsMonitor\Models\QueueMonitor  $queueMonitor
      * @return bool
      */
-    public function view(User $user, SchoolSetting $schoolSetting): bool
+    public function view(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('view_school::setting');
+        return $user->can('view_queue::monitor');
     }
 
     /**
@@ -41,31 +41,31 @@ class SchoolSettingPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_school::setting');
+        return $user->can('create_queue::monitor');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SchoolSetting  $schoolSetting
+     * @param  \Croustibat\FilamentJobsMonitor\Models\QueueMonitor  $queueMonitor
      * @return bool
      */
-    public function update(User $user, SchoolSetting $schoolSetting): bool
+    public function update(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('update_school::setting');
+        return $user->can('update_queue::monitor');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SchoolSetting  $schoolSetting
+     * @param  \Croustibat\FilamentJobsMonitor\Models\QueueMonitor  $queueMonitor
      * @return bool
      */
-    public function delete(User $user, SchoolSetting $schoolSetting): bool
+    public function delete(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('delete_school::setting');
+        return $user->can('delete_queue::monitor');
     }
 
     /**
@@ -76,19 +76,19 @@ class SchoolSettingPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_school::setting');
+        return $user->can('delete_any_queue::monitor');
     }
 
     /**
      * Determine whether the user can permanently delete.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SchoolSetting  $schoolSetting
+     * @param  \Croustibat\FilamentJobsMonitor\Models\QueueMonitor  $queueMonitor
      * @return bool
      */
-    public function forceDelete(User $user, SchoolSetting $schoolSetting): bool
+    public function forceDelete(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('force_delete_school::setting');
+        return $user->can('force_delete_queue::monitor');
     }
 
     /**
@@ -99,19 +99,19 @@ class SchoolSettingPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_school::setting');
+        return $user->can('force_delete_any_queue::monitor');
     }
 
     /**
      * Determine whether the user can restore.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SchoolSetting  $schoolSetting
+     * @param  \Croustibat\FilamentJobsMonitor\Models\QueueMonitor  $queueMonitor
      * @return bool
      */
-    public function restore(User $user, SchoolSetting $schoolSetting): bool
+    public function restore(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('restore_school::setting');
+        return $user->can('restore_queue::monitor');
     }
 
     /**
@@ -122,19 +122,19 @@ class SchoolSettingPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_school::setting');
+        return $user->can('restore_any_queue::monitor');
     }
 
     /**
      * Determine whether the user can replicate.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SchoolSetting  $schoolSetting
+     * @param  \Croustibat\FilamentJobsMonitor\Models\QueueMonitor  $queueMonitor
      * @return bool
      */
-    public function replicate(User $user, SchoolSetting $schoolSetting): bool
+    public function replicate(User $user, QueueMonitor $queueMonitor): bool
     {
-        return $user->can('replicate_school::setting');
+        return $user->can('replicate_queue::monitor');
     }
 
     /**
@@ -145,7 +145,7 @@ class SchoolSettingPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_school::setting');
+        return $user->can('reorder_queue::monitor');
     }
 
 }
