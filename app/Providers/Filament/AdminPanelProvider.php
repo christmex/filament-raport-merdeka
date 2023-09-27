@@ -20,11 +20,8 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-<<<<<<< HEAD
 use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
-=======
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
->>>>>>> addSpatieBackup
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -78,13 +75,10 @@ class AdminPanelProvider extends PanelProvider
             // ->topNavigation()
             ->sidebarCollapsibleOnDesktop()
             ->spa()
-<<<<<<< HEAD
             ->plugins([
-                FilamentJobsMonitorPlugin::make()
+                FilamentJobsMonitorPlugin::make(),
+                FilamentSpatieLaravelBackupPlugin::make()
             ])
-=======
-            ->plugin(FilamentSpatieLaravelBackupPlugin::make())
->>>>>>> addSpatieBackup
             ;
     }
 }

@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "f3ccc17d8de0c9955fa06cd8cc5b1dca",
-=======
     "content-hash": "b5f09f33d71df9c42f359de089c834e4",
->>>>>>> addSpatieBackup
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
