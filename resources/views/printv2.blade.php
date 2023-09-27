@@ -306,15 +306,15 @@
 			<thead>
 				<tr>
 					<th rowspan="2" style="vertical-align: middle;">No</th>
-					<th rowspan="2" style="vertical-align: middle;">Muatan Pelajaran</th>
+					<th rowspan="2" style="vertical-align: middle;">Subjects</th>
                     @foreach($topicSettings as $value)
 					    <td colspan="">{{$value->topic_setting_name}}</td>
                     @endforeach
 				</tr>
 				<tr>
-					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata</div></th>
-					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata</div></th>
-					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata</div></th>
+					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Average</div></th>
+					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Average</div></th>
+					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Average</div></th>
 					
 				</tr>
 				@foreach($dataBasicCur as $value)

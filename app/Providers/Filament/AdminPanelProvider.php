@@ -78,7 +78,16 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->spa()
             ->plugins([
-                FilamentJobsMonitorPlugin::make(),
+                FilamentJobsMonitorPlugin::make()
+                ->label('Job')
+                ->pluralLabel('Jobs')
+                ->enableNavigation(true)
+                ->navigationIcon('heroicon-o-cpu-chip')
+                ->navigationGroup('Settings')
+                ->navigationSort(5)
+                ->navigationCountBadge(true)
+                ->enablePruning(true)
+                ->pruningRetention(7),
                 FilamentLogManager::make(),
                 FilamentSpatieLaravelBackupPlugin::make(),
                 FilamentShieldPlugin::make()
