@@ -20,6 +20,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -73,6 +74,9 @@ class AdminPanelProvider extends PanelProvider
             // ->topNavigation()
             ->sidebarCollapsibleOnDesktop()
             ->spa()
+            ->plugins([
+                FilamentJobsMonitorPlugin::make()
+            ])
             ;
     }
 }
