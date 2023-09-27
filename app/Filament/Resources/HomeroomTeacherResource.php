@@ -17,6 +17,7 @@ use App\Filament\Resources\HomeroomTeacherResource\Pages;
 use App\Filament\Resources\HomeroomTeacherResource\RelationManagers;
 use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class HomeroomTeacherResource extends Resource
 {
@@ -99,9 +100,16 @@ class HomeroomTeacherResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('user.id')
+                    ->label('user ID')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
+                    ->label('user name')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('user.email')
+                    ->label('user email')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('classroom.classroom_name')
                     ->numeric()
                     ->sortable(),
@@ -129,6 +137,7 @@ class HomeroomTeacherResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make()
                 ]),
             ])
             ->emptyStateActions([
