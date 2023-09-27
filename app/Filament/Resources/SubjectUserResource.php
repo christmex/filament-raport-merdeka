@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubjectUserResource\Pages;
 use App\Filament\Resources\SubjectUserResource\RelationManagers;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class SubjectUserResource extends Resource
 {
@@ -120,10 +121,14 @@ class SubjectUserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
-                    ->wrap(true)
+                    ->label('user name')
                     ->searchable()
+                    ->wrap(true)
                     ->sortable(),
+                Tables\Columns\TextColumn::make('user.email')
+                    ->label('user email')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('subject.subject_name')
                     ->numeric()
                     ->sortable(),
@@ -157,6 +162,7 @@ class SubjectUserResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make()
                 ]),
             ])
             ->emptyStateActions([
