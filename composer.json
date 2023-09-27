@@ -12,6 +12,7 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "croustibat/filament-jobs-monitor": "^2.0",
         "filament/filament": "^3.0-stable",
+        "filipfonal/filament-log-manager": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "ibrahimbougaoua/filament-sort-order": "^1.1",
         "laravel/framework": "^10.10",
