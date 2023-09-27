@@ -108,10 +108,10 @@ class SubjectUserResource extends Resource
                     // ->visibleOn('create')
                     ->required(),
                 Forms\Components\TextInput::make('grade_minimum')
-                    ->maxValue(100)
-                    ->minValue(0)
+                    ->maxValue(75)
+                    ->minValue(60)
                     ->numeric()
-                    ->default(75)
+                    ->default(fn($state) => $state ?? 75)
                     ->required(),
             ]);
     }
