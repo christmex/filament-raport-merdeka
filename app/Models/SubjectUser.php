@@ -2,15 +2,29 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SubjectUser extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+
+    
+    /**
+     * Scope a query to only include popular users.
+     */
+    public function scopeOwnSubject(Builder $query): void
+    {
+        // Check if the user it's not super admin with this permission
+        if(!auth()->user()->can('view_any_subject::user')){
+            $query->where('user_id',auth()->id());
+        }
+    }
 
     public function subject() :BelongsTo
     {

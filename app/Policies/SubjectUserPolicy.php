@@ -18,7 +18,8 @@ class SubjectUserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_subject::user');
+        return $user->activeSubjects->count() > 0 || $user->can('view_any_subject::user');
+        // return $user->can('view_any_subject::user');
     }
 
     /**
@@ -53,7 +54,7 @@ class SubjectUserPolicy
      */
     public function update(User $user, SubjectUser $subjectUser): bool
     {
-        return $user->can('update_subject::user');
+        return $user->activeSubjects->count() > 0 || $user->can('update_subject::user');
     }
 
     /**

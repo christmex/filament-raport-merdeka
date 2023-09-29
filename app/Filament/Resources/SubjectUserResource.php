@@ -105,6 +105,7 @@ class SubjectUserResource extends Resource
                     ->default(fn($state) => $state)
                     ->createOptionForm(SubjectResource::getForm())
                     ->editOptionForm(SubjectResource::getForm())
+                    ->visible(fn() => auth()->user()->can('create_subject::user'))
                     // ->visibleOn('create')
                     ->required(),
                 Forms\Components\TextInput::make('grade_minimum')
@@ -184,5 +185,15 @@ class SubjectUserResource extends Resource
             'create' => Pages\CreateSubjectUser::route('/create'),
             'edit' => Pages\EditSubjectUser::route('/{record}/edit'),
         ];
-    }    
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->OwnSubject()
+            // ->withoutGlobalScopes([
+            //     SoftDeletingScope::class,
+            // ])
+            ;
+    }
 }
