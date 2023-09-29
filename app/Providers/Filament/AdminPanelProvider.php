@@ -6,6 +6,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use App\Filament\Pages\Backups;
 use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
 use App\Filament\Pages\Auth\EditProfile;
@@ -89,7 +90,8 @@ class AdminPanelProvider extends PanelProvider
                 ->enablePruning(true)
                 ->pruningRetention(7),
                 FilamentLogManager::make(),
-                FilamentSpatieLaravelBackupPlugin::make(),
+                FilamentSpatieLaravelBackupPlugin::make()
+                ->usingPage(Backups::class),
                 FilamentShieldPlugin::make()
             ])
             ;

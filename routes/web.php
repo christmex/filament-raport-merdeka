@@ -1,14 +1,15 @@
 <?php
 
+use App\Models\User;
 use App\Helpers\Helper;
 use App\Models\Student;
 use App\Models\Assessment;
+use App\Models\SchoolYear;
 use App\Models\TopicSetting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Models\AssessmentMethodSetting;
-use App\Models\SchoolYear;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,9 @@ use App\Models\SchoolYear;
 // });
 
 Route::get('/debug',function(){
+    $user = User::find(auth()->id());
 
+    dd($user->can('download-backup'));
 });
 
 

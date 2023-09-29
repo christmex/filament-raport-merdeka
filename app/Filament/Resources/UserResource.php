@@ -14,14 +14,36 @@ use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 
-class UserResource extends Resource
+class UserResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-user-group';
 
     protected static ?string $navigationGroup = 'Master';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'restore',
+            'restore_any',
+            'replicate',
+            'reorder',
+            'delete',
+            'delete_any',
+            'force_delete',
+            'force_delete_any',
+            'create-backup',
+            'download-backup',
+            'delete-backup',
+        ];
+    }
 
     public static function form(Form $form): Form
     {
@@ -105,6 +127,12 @@ class UserResource extends Resource
                 ->dehydrated(fn (?string $state): bool => filled($state))
                 ->required(fn (string $operation): bool => $operation === 'create')
                 ,
+            // Using Select Component
+            Forms\Components\Select::make('roles')
+            ->relationship('roles', 'name')
+            ->multiple()
+            ->preload()
+            ->searchable()
         ];
     }
 }
