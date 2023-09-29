@@ -5,10 +5,15 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
+use App\Models\SchoolTerm;
+use App\Models\SchoolYear;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Illuminate\Support\HtmlString;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rules\Unique;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -75,6 +80,20 @@ class UserResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                // Tables\Actions\Action::make('addHomeroom')
+                //     ->form([
+                //         \Filament\Forms\Components\Select::make('school_year_id')
+                //             ->live()
+                //             ->options(SchoolYear::all()->pluck('school_year_name','id'))
+                //             ->searchable(['school_year_name'])
+                //             ->preload()
+                //             ->createOptionForm(SchoolYearResource::getForm())
+                //             ->default(fn($state) => $state ?? SchoolYear::activeId())
+                //             ->required(),
+                //     ])
+                //     ->action(function (Model $record, array $data) {
+                //         // dd($data, $record);
+                //     })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -127,12 +146,12 @@ class UserResource extends Resource implements HasShieldPermissions
                 ->dehydrated(fn (?string $state): bool => filled($state))
                 ->required(fn (string $operation): bool => $operation === 'create')
                 ,
-            // Using Select Component
             Forms\Components\Select::make('roles')
-            ->relationship('roles', 'name')
-            ->multiple()
-            ->preload()
-            ->searchable()
+                ->relationship('roles', 'name')
+                ->multiple()
+                ->preload()
+                ->searchable(),
+           
         ];
     }
 }

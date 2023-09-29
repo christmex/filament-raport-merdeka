@@ -29,71 +29,11 @@ class HomeroomTeacherResource extends Resource
 
     protected static ?string $navigationGroup = 'Configuration';
 
+    
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\Select::make('school_year_id')
-                    ->live()
-                    ->relationship('schoolYear', 'school_year_name')
-                    ->searchable(['school_year_name'])
-                    ->preload()
-                    ->createOptionForm(SchoolYearResource::getForm())
-                    ->editOptionForm(SchoolYearResource::getForm())
-                    ->default(fn($state) => $state ?? SchoolYear::activeId())
-                    ->visibleOn('create')
-                    ->required(),
-                Forms\Components\Select::make('school_term_id')
-                    ->live()
-                    ->relationship('schoolTerm', 'school_term_name')
-                    ->searchable(['school_term_name'])
-                    ->preload()
-                    ->createOptionForm(SchoolTermResource::getForm())
-                    ->editOptionForm(SchoolTermResource::getForm())
-                    ->default(fn($state) => $state ?? SchoolTerm::activeId())
-                    ->visibleOn('create')
-                    ->required(),
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->searchable(['name', 'email'])
-                    ->preload()
-                    ->createOptionForm(UserResource::getForm())
-                    ->editOptionForm(UserResource::getForm())
-                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
-                        return $rule->where('school_year_id', $get('school_year_id'))
-                                    ->where('school_term_id', $get('school_term_id'));
-                    },ignoreRecord:true)
-                    // ->visibleOn('create')
-                    // ->rules([
-                    //     fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                    //         $check = HomeroomTeacher::query()
-                    //                 ->where('user_id', $value)
-                    //                 // ->whereNot('user_id', $value)
-                    //                 ->orWhere('classroom_id', $get('classroom_id'))
-                    //                 ->where('school_year_id', $get('school_year_id'))
-                    //                 ->where('school_term_id', $get('school_term_id'))
-                    //                 ->first();
-                            
-                    //         if ($check) {
-                    //             $fail("This user already became homeroon teacher.");
-                    //         }
-                    //     },
-                    // ])
-                    ->required(),
-                Forms\Components\Select::make('classroom_id')
-                    ->live()
-                    ->relationship('classroom', 'classroom_name')
-                    ->searchable(['classroom_name'])
-                    ->preload()
-                    ->createOptionForm(ClassroomResource::getForm())
-                    ->editOptionForm(ClassroomResource::getForm())
-                    ->visibleOn('create')
-                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
-                        return $rule->where('school_year_id', $get('school_year_id'))
-                                    ->where('school_term_id', $get('school_term_id'));
-                    },ignoreRecord:true)
-                    ->required(),
-            ]);
+            ->schema(self::getForm());
     }
 
     public static function table(Table $table): Table
@@ -159,5 +99,71 @@ class HomeroomTeacherResource extends Resource
             'create' => Pages\CreateHomeroomTeacher::route('/create'),
             'edit' => Pages\EditHomeroomTeacher::route('/{record}/edit'),
         ];
-    }    
+    }
+
+    public static function getForm(): array 
+    {
+        return [
+            Forms\Components\Select::make('school_year_id')
+                ->live()
+                ->relationship('schoolYear', 'school_year_name')
+                ->searchable(['school_year_name'])
+                ->preload()
+                ->createOptionForm(SchoolYearResource::getForm())
+                ->editOptionForm(SchoolYearResource::getForm())
+                ->default(fn($state) => $state ?? SchoolYear::activeId())
+                ->visibleOn('create')
+                ->required(),
+            Forms\Components\Select::make('school_term_id')
+                ->live()
+                ->relationship('schoolTerm', 'school_term_name')
+                ->searchable(['school_term_name'])
+                ->preload()
+                ->createOptionForm(SchoolTermResource::getForm())
+                ->editOptionForm(SchoolTermResource::getForm())
+                ->default(fn($state) => $state ?? SchoolTerm::activeId())
+                ->visibleOn('create')
+                ->required(),
+            Forms\Components\Select::make('user_id')
+                ->relationship('user', 'name')
+                ->searchable(['name', 'email'])
+                ->preload()
+                ->createOptionForm(UserResource::getForm())
+                ->editOptionForm(UserResource::getForm())
+                ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                    return $rule->where('school_year_id', $get('school_year_id'))
+                                ->where('school_term_id', $get('school_term_id'));
+                },ignoreRecord:true)
+                // ->visibleOn('create')
+                // ->rules([
+                //     fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
+                //         $check = HomeroomTeacher::query()
+                //                 ->where('user_id', $value)
+                //                 // ->whereNot('user_id', $value)
+                //                 ->orWhere('classroom_id', $get('classroom_id'))
+                //                 ->where('school_year_id', $get('school_year_id'))
+                //                 ->where('school_term_id', $get('school_term_id'))
+                //                 ->first();
+                        
+                //         if ($check) {
+                //             $fail("This user already became homeroon teacher.");
+                //         }
+                //     },
+                // ])
+                ->required(),
+            Forms\Components\Select::make('classroom_id')
+                ->live()
+                ->relationship('classroom', 'classroom_name')
+                ->searchable(['classroom_name'])
+                ->preload()
+                ->createOptionForm(ClassroomResource::getForm())
+                ->editOptionForm(ClassroomResource::getForm())
+                ->visibleOn('create')
+                ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                    return $rule->where('school_year_id', $get('school_year_id'))
+                                ->where('school_term_id', $get('school_term_id'));
+                },ignoreRecord:true)
+                ->required(),
+        ];
+    }
 }
