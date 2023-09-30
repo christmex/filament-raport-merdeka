@@ -14,10 +14,11 @@ use App\Models\SubjectUser;
 use Filament\Resources\Resource;
 use Illuminate\Validation\Rules\Unique;
 use Illuminate\Database\Eloquent\Builder;
+use App\Tables\Columns\GradingTextInputColumn;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubjectUserResource\Pages;
-use App\Filament\Resources\SubjectUserResource\RelationManagers;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use App\Filament\Resources\SubjectUserResource\RelationManagers;
 
 class SubjectUserResource extends Resource
 {
@@ -136,8 +137,10 @@ class SubjectUserResource extends Resource
                 Tables\Columns\TextColumn::make('classroom.classroom_name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('grade_minimum')
+                GradingTextInputColumn::make('grade_minimum')
+                    // ->type('number')
                     ->numeric()
+                    ->rules(['integer','min:60', 'max:75'])
                     ->sortable(),
                 Tables\Columns\TextColumn::make('schoolYear.school_year_name')
                     ->numeric()
