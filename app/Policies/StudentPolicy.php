@@ -54,9 +54,9 @@ class StudentPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function deleteAny(User $usert): bool
+    public function deleteAny(User $user): bool
     {
-        return auth()->user()->email == 'super@sekolahbasic.sch.id';
+        return $user->activeHomeroom->count() > 0;
     }
 
     /**
