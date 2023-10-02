@@ -47,7 +47,8 @@ class StudentPolicy
      */
     public function delete(User $user, Student $student): bool
     {
-        return $user->activeHomeroom->count() > 0 && auth()->user()->email == 'super@sekolahbasic.sch.id';
+        // return $user->activeHomeroom->count() > 0 && auth()->user()->email == 'super@sekolahbasic.sch.id';
+        return $user->activeHomeroom->count() > 0;
     }
 
     /**
@@ -63,7 +64,8 @@ class StudentPolicy
      */
     public function restore(User $user, Student $student): bool
     {
-        return $user->activeHomeroom->count() > 0 && auth()->user()->email == 'super@sekolahbasic.sch.id';
+        // return $user->activeHomeroom->count() > 0 && auth()->user()->email == 'super@sekolahbasic.sch.id';
+        return $user->activeHomeroom->count() > 0;
     }
 
     /**
@@ -71,6 +73,7 @@ class StudentPolicy
      */
     public function forceDelete(User $user, Student $student): bool
     {
-        return $user->activeHomeroom->count() > 0 && auth()->user()->email == 'super@sekolahbasic.sch.id';
+        // return $user->activeHomeroom->count() > 0 && auth()->user()->email == 'super@sekolahbasic.sch.id';
+        return $user->activeHomeroom->count() > 0;
     }
 }
