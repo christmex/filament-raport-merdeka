@@ -37,7 +37,9 @@ class Student extends Model
      */
     public function scopeOwnStudent(Builder $query): void
     {
-        $query->whereIn('id',StudentClassroom::where('homeroom_teacher_id',auth()->user()->activeHomeroom->first()->id)->get()->pluck('student_id')->toArray());
+        if(auth()->user()->activeHomeroom->count()){
+            $query->whereIn('id',StudentClassroom::where('homeroom_teacher_id',auth()->user()->activeHomeroom->first()->id)->get()->pluck('student_id')->toArray());
+        }
     }
  
 
