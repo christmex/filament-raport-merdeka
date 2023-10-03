@@ -137,6 +137,7 @@ class SubjectUserResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('classroom.classroom_name')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 GradingTextInputColumn::make('grade_minimum')
                     ->type('number')
