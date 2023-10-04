@@ -80,7 +80,7 @@ class AssessmentResource extends Resource
                 //     ->sortable(),
                 GradingTextInputColumn::make('grading')
                     ->type('number')
-                    ->rules(['integer','min:0', 'max:100'])
+                    ->rules(['required','integer','min:0', 'max:100'])
                     ->sortable(),
                 // Tables\Columns\TextInputColumn::make('grading')
                 //     ->type('number')

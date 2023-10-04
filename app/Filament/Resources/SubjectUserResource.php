@@ -141,7 +141,7 @@ class SubjectUserResource extends Resource
                     ->sortable(),
                 GradingTextInputColumn::make('grade_minimum')
                     ->type('number')
-                    ->rules(['integer','min:60', 'max:75'])
+                    ->rules(['required','integer','min:60', 'max:75'])
                     ->sortable(),
                 Tables\Columns\TextColumn::make('schoolYear.school_year_name')
                     ->numeric()
