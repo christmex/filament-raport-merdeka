@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\SubjectUser;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -59,19 +60,24 @@ class AssessmentResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('student.active_classroom_name')
+                    ->toggleable()
                     ->label('Classroom')
                     // ->searchable()
                     // ->sortable()
                     ,
                 Tables\Columns\TextColumn::make('assessmentMethodSetting.assessment_method_setting_name')
+                    ->toggleable()
                     ->label('Assessment Method')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topicSetting.topic_setting_name')
+                    ->toggleable()
                     ->label('Topic')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topic_name')
+                    ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('subjectUserThrough.subject_name')
+                    ->toggleable()
                     ->label('Subject')
                     // ->searchable()
                     ,
@@ -112,20 +118,24 @@ class AssessmentResource extends Resource
                     ->preload()
                     ->optionsLimit(5)
                     ->relationship('assessmentMethodSetting', 'assessment_method_setting_name'),
-                SelectFilter::make('subject')
-                    ->multiple()
-                    ->preload()
-                    ->optionsLimit(5)
-                    ->relationship('subjectUserThrough', 'subject_name'),
-                SelectFilter::make('classroom')
-                    ->multiple()
-                    ->preload()
-                    ->optionsLimit(5)
-                    // ->baseQuery(function(Builder $query, $livewire){
-                    //     $query->whereIn('id',$livewire->tableFilters['subject']['values']);
-                    //     // dd();
-                    // })
-                    ->relationship('classroomSubjectUserThrough', 'classroom_name'),
+                
+                // SelectFilter::make('classroom')
+                //     ->multiple()
+                //     ->preload()
+                //     ->optionsLimit(5)
+                //     // ->baseQuery(function(Builder $query, $livewire){
+                //     //     $query->whereIn('id',$livewire->tableFilters['subject']['values']);
+                //     //     // dd();
+                //     // })
+                //     ->relationship('classroomSubjectUserThrough', 'classroom_name'),
+                SelectFilter::make('subject_user_id')
+                    ->label('Subject')
+                    ->options(SubjectUser::with('Subject')->ownSubject()->get()->pluck('subject_user_name','id'))
+                    ->searchable()
+                    // ->relationship('subjectUser', 'id')
+                    // ->preload()
+                    // ->optionsLimit(5)
+                    // ->multiple(),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

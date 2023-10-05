@@ -13,6 +13,18 @@ class SubjectUser extends Model
 
     protected $guarded = [];
 
+    /**
+     * The "booted" method of the model.
+     */
+    // protected static function booted(): void
+    // {
+    //     static::addGlobalScope('OwnSubject', function (Builder $builder) {
+    //         if(!auth()->user()->can('view_any_subject::user')){   
+    //             $builder->where('user_id',auth()->id());
+    //         }
+    //     });
+    // }
+
 
     
     /**
@@ -28,7 +40,8 @@ class SubjectUser extends Model
 
     public function subject() :BelongsTo
     {
-        return $this->belongsTo(Subject::class,'subject_id');
+        // return $this->belongsTo(Subject::class,'subject_id');
+        return $this->belongsTo(Subject::class);
     }
     public function user() :BelongsTo
     {

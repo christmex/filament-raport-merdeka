@@ -5,6 +5,7 @@ use App\Helpers\Helper;
 use App\Models\Student;
 use App\Models\Assessment;
 use App\Models\SchoolYear;
+use App\Models\SubjectUser;
 use App\Models\TopicSetting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,8 @@ use App\Models\AssessmentMethodSetting;
 // });
 
 Route::get('/debug',function(){
+    dd(SubjectUser::with('Subject')->ownSubject()->get()->pluck('Subject.subject_name','id'));
+    dd(Assessment::with('classroomSubjectUserThrough','subjectUserThrough')->get()->pluck('subjectUserThrough.subject_name'));
     $user = User::find(auth()->id());
 
     dd($user->can('download-backup'));
