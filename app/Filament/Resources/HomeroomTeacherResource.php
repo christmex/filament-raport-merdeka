@@ -44,13 +44,16 @@ class HomeroomTeacherResource extends Resource
                     ->label('user ID')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('user.name')
+                    ->searchable()
                     ->label('user name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.email')
+                    ->searchable()
                     ->label('user email')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('classroom.classroom_name')
+                    ->searchable()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('schoolYear.school_year_name')

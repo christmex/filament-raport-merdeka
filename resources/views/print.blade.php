@@ -181,11 +181,7 @@
 		}
 		.logoC{
 			color: #7030A0;
-			font-size: 11.0pt;
 			font-weight: 700;
-			font-style: normal;
-			text-decoration: none;
-			font-family: Calibri, sans-serif;
 		}
 
 		.logoB,
@@ -260,7 +256,7 @@
 	</section>
 
 	<section id="grade">
-		<h3 style="margin: 10px 0 10px">A. Kompetensi Pengetahuan dan Keterampilan</h3>
+		<h3 style="margin: 10px 0 10px">A. Penilaian Sumatif</h3>
 		<table>
 			<thead>
 				<tr>
@@ -296,23 +292,23 @@
 					<tr draggable="true">
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
-						<td>{{$value['topic_1_tes_lisan']}}</td>
-						<td>{{$value['topic_1_penugasan']}}</td>
-						<td>{{$value['topic_1_kinerja']}}</td>
-						<td>{{$value['topic_1_monthly_test']}}</td>
-						<td>{{$value['topic_1_avg']}}</td>
+						<td>{{ $value['topic_1_tes_lisan'] != '' ? number_format($value['topic_1_tes_lisan'],1) : ''}}</td>
+						<td>{{ $value['topic_1_penugasan'] != '' ? number_format($value['topic_1_penugasan'],1) : ''}}</td>
+						<td>{{ $value['topic_1_kinerja'] != '' ? number_format($value['topic_1_kinerja'],1) : ''}}</td>
+						<td>{{ $value['topic_1_monthly_test'] != '' ? number_format($value['topic_1_monthly_test'],1) : ''}}</td>
+						<td>{{ $value['topic_1_avg'] != '' ? number_format($value['topic_1_avg'],1) : ''}}</td>
 
-						<td>{{$value['topic_2_tes_lisan']}}</td>
-						<td>{{$value['topic_2_penugasan']}}</td>
-						<td>{{$value['topic_2_kinerja']}}</td>
-						<td>{{$value['topic_2_monthly_test']}}</td>
-						<td>{{$value['topic_2_avg']}}</td>
+						<td>{{ $value['topic_2_tes_lisan'] != '' ? number_format($value['topic_2_tes_lisan'],1) : ''}}</td>
+						<td>{{ $value['topic_2_penugasan'] != '' ? number_format($value['topic_2_penugasan'],1) : ''}}</td>
+						<td>{{ $value['topic_2_kinerja'] != '' ? number_format($value['topic_2_kinerja'],1) : ''}}</td>
+						<td>{{ $value['topic_2_monthly_test'] != '' ? number_format($value['topic_2_monthly_test'],1) : ''}}</td>
+						<td>{{ $value['topic_2_avg'] != '' ? number_format($value['topic_2_avg'],1) : ''}}</td>
 
-						<td>{{$value['topic_3_tes_lisan']}}</td>
-						<td>{{$value['topic_3_penugasan']}}</td>
-						<td>{{$value['topic_3_kinerja']}}</td>
-						<td>{{$value['topic_3_monthly_test']}}</td>
-						<td>{{$value['topic_3_avg']}}</td>
+						<td>{{ $value['topic_3_tes_lisan'] != '' ? number_format($value['topic_3_tes_lisan'],1) : ''}}</td>
+						<td>{{ $value['topic_3_penugasan'] != '' ? number_format($value['topic_3_penugasan'],1) : ''}}</td>
+						<td>{{ $value['topic_3_kinerja'] != '' ? number_format($value['topic_3_kinerja'],1) : ''}}</td>
+						<td>{{ $value['topic_3_monthly_test'] != '' ? number_format($value['topic_3_monthly_test'],1) : ''}}</td>
+						<td>{{ $value['topic_3_avg'] != '' ? number_format($value['topic_3_avg'],1) : ''}}</td>
 					</tr>
 				@endforeach
 			</thead>

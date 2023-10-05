@@ -58,13 +58,20 @@ class StudentResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
-                Tables\Actions\Action::make('print_progress_report')
-                    ->url(fn (Student $record): string => route('students.print', $record))
-                    ->openUrlInNewTab()
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ForceDeleteAction::make(),
+                    Tables\Actions\RestoreAction::make(),
+                    Tables\Actions\Action::make('print_progress_report')
+                        ->url(fn (Student $record): string => route('students.print', $record))
+                        ->openUrlInNewTab()
+                        ->icon('heroicon-o-printer'),
+                    Tables\Actions\Action::make('detail_progress_report')
+                        ->url(fn (Student $record): string => route('students.print', ['student' => $record,'detailed' => true]))
+                        ->openUrlInNewTab()
+                        ->icon('heroicon-o-eye'),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

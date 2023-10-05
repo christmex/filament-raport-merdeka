@@ -135,7 +135,8 @@ Route::get('/print/{student}', function(Student $student){
         'topic_setting_id',
         // DB::raw('(SELECT is_curiculum_basic FROM subjects) as is_curiculum_basi'), // Replace with your actual condition
         // DB::raw('(SELECT is_curiculum_basic FROM is_curiculum_basic WHERE some_condition) as is_curriculum_basic_column') // Replace with your actual condition
-        DB::raw('MAX(grading) as max_grading')
+        // DB::raw('MAX(grading) as max_grading')
+        DB::raw('AVG(grading) as max_grading')
     )
     ->where('student_id', $student->id)
     ->whereNotNull('grading')
@@ -249,8 +250,11 @@ Route::get('/print/{student}', function(Student $student){
     // dd($dataList,$dataPublicCur,$assessments->where('is_curiculum_basic',true));
 
     $topicSettings = TopicSetting::take(3)->get();
-    return view('printv2',compact('dataPublicCur','dataBasicCur','student','topicSettings'));
-    // return view('printv2',compact('dataList','student','topicSettings'));
+    if(request('detailed')){
+        return view('print',compact('dataList','student','topicSettings'));
+    }else {
+        return view('printv2',compact('dataPublicCur','dataBasicCur','student','topicSettings'));
+    }
 
     dd($dataList, $assessments);
 
