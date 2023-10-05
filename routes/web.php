@@ -30,11 +30,11 @@ use App\Models\AssessmentMethodSetting;
 // });
 
 Route::get('/debug',function(){
-    dd(SubjectUser::with('Subject')->ownSubject()->get()->pluck('Subject.subject_name','id'));
-    dd(Assessment::with('classroomSubjectUserThrough','subjectUserThrough')->get()->pluck('subjectUserThrough.subject_name'));
-    $user = User::find(auth()->id());
+    // dd(SubjectUser::with('Subject')->ownSubject()->get()->pluck('Subject.subject_name','id'));
+    // dd(Assessment::with('classroomSubjectUserThrough','subjectUserThrough')->get()->pluck('subjectUserThrough.subject_name'));
+    // $user = User::find(auth()->id());
 
-    dd($user->can('download-backup'));
+    // dd($user->can('download-backup'));
 });
 
 
