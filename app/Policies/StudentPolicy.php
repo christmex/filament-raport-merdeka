@@ -48,7 +48,8 @@ class StudentPolicy
     public function delete(User $user, Student $student): bool
     {
         // return $user->activeHomeroom->count() > 0 && auth()->user()->email == 'super@sekolahbasic.sch.id';
-        return $user->activeHomeroom->count() > 0;
+        // return $user->activeHomeroom->count() > 0;
+        return $user->can('delete_student');
     }
 
     /**
@@ -56,7 +57,8 @@ class StudentPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->activeHomeroom->count() > 0;
+        // return $user->activeHomeroom->count() > 0;
+        return $user->can('delete_any_student');
     }
 
     /**
