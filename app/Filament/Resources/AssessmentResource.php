@@ -57,10 +57,10 @@ class AssessmentResource extends Resource
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('student.student_name')
                     // ->description(fn (Assessment $record): string => $record->student->active_classroom_name)
-                    ->searchable()
+                    ->searchable(isIndividual: true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('student.active_classroom_name')
-                    ->toggleable()
+                    ->toggleable(isToggledHiddenByDefault:true)
                     ->label('Classroom')
                     // ->searchable()
                     // ->sortable()
@@ -70,12 +70,12 @@ class AssessmentResource extends Resource
                     ->label('Assessment Method')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topicSetting.topic_setting_name')
-                    ->toggleable()
+                    ->toggleable(isToggledHiddenByDefault:true)
                     ->label('Topic')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topic_name')
                     ->toggleable()
-                    ->searchable(),
+                    ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('subjectUserThrough.subject_name')
                     ->toggleable()
                     ->label('Subject')
@@ -104,18 +104,27 @@ class AssessmentResource extends Resource
             ])
             ->deferLoading()
             ->filters([
+                SelectFilter::make('subject_user_id')
+                    ->label('Subject')
+                    ->options(SubjectUser::with('Subject')->ownSubject()->get()->pluck('subject_user_name','id'))
+                    ->searchable()
+                    // ->relationship('subjectUser', 'id')
+                    // ->preload()
+                    // ->optionsLimit(5)
+                    // ->multiple()
+                    ,
                 // SelectFilter::make('student')
                 //     ->multiple()
                 //     ->preload()
                 //     ->optionsLimit(5)
                 //     ->relationship('student', 'student_name'),
                 SelectFilter::make('topic_setting')
-                    ->multiple()
+                    // ->multiple()
                     ->preload()
                     ->optionsLimit(7)
                     ->relationship('topicSetting', 'topic_setting_name'),
                 SelectFilter::make('assessmentMethodSetting')
-                    ->multiple()
+                    // ->multiple()
                     ->preload()
                     ->optionsLimit(5)
                     ->relationship('assessmentMethodSetting', 'assessment_method_setting_name'),
@@ -129,14 +138,7 @@ class AssessmentResource extends Resource
                 //     //     // dd();
                 //     // })
                 //     ->relationship('classroomSubjectUserThrough', 'classroom_name'),
-                SelectFilter::make('subject_user_id')
-                    ->label('Subject')
-                    ->options(SubjectUser::with('Subject')->ownSubject()->get()->pluck('subject_user_name','id'))
-                    ->searchable()
-                    // ->relationship('subjectUser', 'id')
-                    // ->preload()
-                    // ->optionsLimit(5)
-                    // ->multiple(),
+
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
