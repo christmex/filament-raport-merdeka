@@ -102,6 +102,7 @@ class AssessmentResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->deferLoading()
             ->filters([
                 // SelectFilter::make('student')
                 //     ->multiple()
