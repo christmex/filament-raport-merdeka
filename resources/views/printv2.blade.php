@@ -286,9 +286,9 @@
 					<tr draggable="true">
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
-						<td>{{$value['topic_1_avg']}}</td>
-						<td>{{$value['topic_2_avg']}}</td>
-						<td>{{$value['topic_3_avg']}}</td>
+						<td>{{ $value['topic_1_avg'] != '' ? number_format($value['topic_1_avg'],1) : ''}}</td>
+						<td>{{ $value['topic_2_avg'] != '' ? number_format($value['topic_2_avg'],1) : ''}}</td>
+						<td>{{ $value['topic_3_avg'] != '' ? number_format($value['topic_3_avg'],1) : ''}}</td>
 					</tr>
 				@endforeach
 			</thead>

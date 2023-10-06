@@ -49,6 +49,9 @@ class HomeroomTeacherResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.email')
                     ->searchable()
+                    ->copyable()
+                    ->copyMessage('Email address copied')
+                    ->copyMessageDuration(1500)
                     ->label('user email')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
