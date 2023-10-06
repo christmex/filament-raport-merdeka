@@ -292,23 +292,41 @@
 					<tr draggable="true">
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
-						<td>{{ $value['topic_1_tes_lisan'] != '' ? number_format($value['topic_1_tes_lisan'],1) : ''}}</td>
-						<td>{{ $value['topic_1_penugasan'] != '' ? number_format($value['topic_1_penugasan'],1) : ''}}</td>
-						<td>{{ $value['topic_1_kinerja'] != '' ? number_format($value['topic_1_kinerja'],1) : ''}}</td>
-						<td>{{ $value['topic_1_monthly_test'] != '' ? number_format($value['topic_1_monthly_test'],1) : ''}}</td>
-						<td>{{ $value['topic_1_avg'] != '' ? number_format($value['topic_1_avg'],1) : ''}}</td>
+						<td>{{ $value['topic_1_tes_lisan'] != '' ? ($value['topic_1_tes_lisan'] - floor($value['topic_1_tes_lisan']) > 0 ? number_format($value['topic_1_tes_lisan'], 2) : number_format($value['topic_1_tes_lisan'], 0)) : '' }}</td>
+						<td>{{ $value['topic_1_penugasan'] != '' ? ($value['topic_1_penugasan'] - floor($value['topic_1_penugasan']) > 0 ? number_format($value['topic_1_penugasan'], 2) : number_format($value['topic_1_penugasan'], 0)) : '' }}</td>
+						<td>{{ $value['topic_1_kinerja'] != '' ? ($value['topic_1_kinerja'] - floor($value['topic_1_kinerja']) > 0 ? number_format($value['topic_1_kinerja'], 2) : number_format($value['topic_1_kinerja'], 0)) : '' }}</td>
+						<td>{{ $value['topic_1_monthly_test'] != '' ? ($value['topic_1_monthly_test'] - floor($value['topic_1_monthly_test']) > 0 ? number_format($value['topic_1_monthly_test'], 2) : number_format($value['topic_1_monthly_test'], 0)) : '' }}</td>
+						<td>{{ $value['topic_1_avg'] != '' ? ($value['topic_1_avg'] - floor($value['topic_1_avg']) > 0 ? number_format($value['topic_1_avg'], 2) : number_format($value['topic_1_avg'], 0)) : '' }}</td>
 
-						<td>{{ $value['topic_2_tes_lisan'] != '' ? number_format($value['topic_2_tes_lisan'],1) : ''}}</td>
-						<td>{{ $value['topic_2_penugasan'] != '' ? number_format($value['topic_2_penugasan'],1) : ''}}</td>
-						<td>{{ $value['topic_2_kinerja'] != '' ? number_format($value['topic_2_kinerja'],1) : ''}}</td>
-						<td>{{ $value['topic_2_monthly_test'] != '' ? number_format($value['topic_2_monthly_test'],1) : ''}}</td>
-						<td>{{ $value['topic_2_avg'] != '' ? number_format($value['topic_2_avg'],1) : ''}}</td>
+						<td>{{ $value['topic_2_tes_lisan'] != '' ? ($value['topic_2_tes_lisan'] - floor($value['topic_2_tes_lisan']) > 0 ? number_format($value['topic_2_tes_lisan'], 2) : number_format($value['topic_2_tes_lisan'], 0)) : '' }}</td>
+						<td>{{ $value['topic_2_penugasan'] != '' ? ($value['topic_2_penugasan'] - floor($value['topic_2_penugasan']) > 0 ? number_format($value['topic_2_penugasan'], 2) : number_format($value['topic_2_penugasan'], 0)) : '' }}</td>
+						<td>{{ $value['topic_2_kinerja'] != '' ? ($value['topic_2_kinerja'] - floor($value['topic_2_kinerja']) > 0 ? number_format($value['topic_2_kinerja'], 2) : number_format($value['topic_2_kinerja'], 0)) : '' }}</td>
+						<td>{{ $value['topic_2_monthly_test'] != '' ? ($value['topic_2_monthly_test'] - floor($value['topic_2_monthly_test']) > 0 ? number_format($value['topic_2_monthly_test'], 2) : number_format($value['topic_2_monthly_test'], 0)) : '' }}</td>
+						<td>{{ $value['topic_2_avg'] != '' ? ($value['topic_2_avg'] - floor($value['topic_2_avg']) > 0 ? number_format($value['topic_2_avg'], 2) : number_format($value['topic_2_avg'], 0)) : '' }}</td>
 
-						<td>{{ $value['topic_3_tes_lisan'] != '' ? number_format($value['topic_3_tes_lisan'],1) : ''}}</td>
-						<td>{{ $value['topic_3_penugasan'] != '' ? number_format($value['topic_3_penugasan'],1) : ''}}</td>
-						<td>{{ $value['topic_3_kinerja'] != '' ? number_format($value['topic_3_kinerja'],1) : ''}}</td>
-						<td>{{ $value['topic_3_monthly_test'] != '' ? number_format($value['topic_3_monthly_test'],1) : ''}}</td>
-						<td>{{ $value['topic_3_avg'] != '' ? number_format($value['topic_3_avg'],1) : ''}}</td>
+						<td>{{ $value['topic_3_tes_lisan'] != '' ? ($value['topic_3_tes_lisan'] - floor($value['topic_3_tes_lisan']) > 0 ? number_format($value['topic_3_tes_lisan'], 2) : number_format($value['topic_3_tes_lisan'], 0)) : '' }}</td>
+						<td>{{ $value['topic_3_penugasan'] != '' ? ($value['topic_3_penugasan'] - floor($value['topic_3_penugasan']) > 0 ? number_format($value['topic_3_penugasan'], 2) : number_format($value['topic_3_penugasan'], 0)) : '' }}</td>
+						<td>{{ $value['topic_3_kinerja'] != '' ? ($value['topic_3_kinerja'] - floor($value['topic_3_kinerja']) > 0 ? number_format($value['topic_3_kinerja'], 2) : number_format($value['topic_3_kinerja'], 0)) : '' }}</td>
+						<td>{{ $value['topic_3_monthly_test'] != '' ? ($value['topic_3_monthly_test'] - floor($value['topic_3_monthly_test']) > 0 ? number_format($value['topic_3_monthly_test'], 2) : number_format($value['topic_3_monthly_test'], 0)) : '' }}</td>
+						<td>{{ $value['topic_3_avg'] != '' ? ($value['topic_3_avg'] - floor($value['topic_3_avg']) > 0 ? number_format($value['topic_3_avg'], 2) : number_format($value['topic_3_avg'], 0)) : '' }}</td>
+
+						<!-- <td>{{ $value['topic_1_tes_lisan'] != '' ? number_format($value['topic_1_tes_lisan'],2) : ''}}</td>
+						<td>{{ $value['topic_1_penugasan'] != '' ? number_format($value['topic_1_penugasan'],2) : ''}}</td>
+						<td>{{ $value['topic_1_kinerja'] != '' ? number_format($value['topic_1_kinerja'],2) : ''}}</td>
+						<td>{{ $value['topic_1_monthly_test'] != '' ? number_format($value['topic_1_monthly_test'],2) : ''}}</td>
+						<td>{{ $value['topic_1_avg'] != '' ? number_format($value['topic_1_avg'],2) : ''}}</td>
+
+						<td>{{ $value['topic_2_tes_lisan'] != '' ? number_format($value['topic_2_tes_lisan'],2) : ''}}</td>
+						<td>{{ $value['topic_2_penugasan'] != '' ? number_format($value['topic_2_penugasan'],2) : ''}}</td>
+						<td>{{ $value['topic_2_kinerja'] != '' ? number_format($value['topic_2_kinerja'],2) : ''}}</td>
+						<td>{{ $value['topic_2_monthly_test'] != '' ? number_format($value['topic_2_monthly_test'],2) : ''}}</td>
+						<td>{{ $value['topic_2_avg'] != '' ? number_format($value['topic_2_avg'],2) : ''}}</td>
+
+						<td>{{ $value['topic_3_tes_lisan'] != '' ? number_format($value['topic_3_tes_lisan'],2) : ''}}</td>
+						<td>{{ $value['topic_3_penugasan'] != '' ? number_format($value['topic_3_penugasan'],2) : ''}}</td>
+						<td>{{ $value['topic_3_kinerja'] != '' ? number_format($value['topic_3_kinerja'],2) : ''}}</td>
+						<td>{{ $value['topic_3_monthly_test'] != '' ? number_format($value['topic_3_monthly_test'],2) : ''}}</td>
+						<td>{{ $value['topic_3_avg'] != '' ? number_format($value['topic_3_avg'],2) : ''}}</td> -->
 					</tr>
 				@endforeach
 			</thead>

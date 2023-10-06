@@ -286,9 +286,13 @@
 					<tr draggable="true">
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
-						<td>{{ $value['topic_1_avg'] != '' ? number_format($value['topic_1_avg'],1) : ''}}</td>
-						<td>{{ $value['topic_2_avg'] != '' ? number_format($value['topic_2_avg'],1) : ''}}</td>
-						<td>{{ $value['topic_3_avg'] != '' ? number_format($value['topic_3_avg'],1) : ''}}</td>
+						<td>{{ $value['topic_1_avg'] != '' ? ($value['topic_1_avg'] - floor($value['topic_1_avg']) > 0 ? number_format($value['topic_1_avg'], 2) : number_format($value['topic_1_avg'], 0)) : '' }}</td>
+						<td>{{ $value['topic_2_avg'] != '' ? ($value['topic_2_avg'] - floor($value['topic_2_avg']) > 0 ? number_format($value['topic_2_avg'], 2) : number_format($value['topic_2_avg'], 0)) : '' }}</td>
+						<td>{{ $value['topic_3_avg'] != '' ? ($value['topic_3_avg'] - floor($value['topic_3_avg']) > 0 ? number_format($value['topic_3_avg'], 2) : number_format($value['topic_3_avg'], 0)) : '' }}</td>
+
+						<!-- <td>{{ $value['topic_1_avg'] != '' ? number_format($value['topic_1_avg'],2) : ''}}</td>
+						<td>{{ $value['topic_2_avg'] != '' ? number_format($value['topic_2_avg'],2) : ''}}</td>
+						<td>{{ $value['topic_3_avg'] != '' ? number_format($value['topic_3_avg'],2) : ''}}</td> -->
 					</tr>
 				@endforeach
 			</thead>
