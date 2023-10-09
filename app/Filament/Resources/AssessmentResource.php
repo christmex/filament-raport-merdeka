@@ -159,7 +159,8 @@ class AssessmentResource extends Resource
             ])
             ->emptyStateActions([
                 // Tables\Actions\CreateAction::make(),
-            ]);
+            ])
+            ->defaultPaginationPageOption(50);
     }
     
     public static function getPages(): array

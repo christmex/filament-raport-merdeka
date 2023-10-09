@@ -7,10 +7,10 @@ document.addEventListener("keydown", function(event) {
 
         if (event.shiftKey) {
             const previousIndex = currentIndex === 0 ? numberInputs.length - 1 : currentIndex - 1;
-            numberInputs[previousIndex].focus();
+            numberInputs[previousIndex].focus(function() { $(this).select(); });
         } else {
             const nextIndex = currentIndex === numberInputs.length - 1 ? 0 : currentIndex + 1;
-            numberInputs[nextIndex].focus();
+            numberInputs[nextIndex].focus(function() { $(this).select(); });
         }
     }
 
@@ -22,10 +22,10 @@ document.addEventListener("keydown", function(event) {
 
         if (event.shiftKey) {
             const previousIndex = currentIndex === 0 ? numberInputs.length - 1 : currentIndex - 1;
-            numberInputs[previousIndex].focus();
+            numberInputs[previousIndex].focus(function() { $(this).select(); });
         } else {
             const nextIndex = currentIndex === numberInputs.length - 1 ? 0 : currentIndex + 1;
-            numberInputs[nextIndex].focus();
+            numberInputs[nextIndex].focus(function() { $(this).select(); });
         }
     }
 
@@ -37,10 +37,10 @@ document.addEventListener("keydown", function(event) {
 
         if (event.key === "ArrowDown") {
             const nextIndex = currentIndex === numberInputs.length - 1 ? 0 : currentIndex + 1;
-            numberInputs[nextIndex].focus();
+            numberInputs[nextIndex].focus(function() { $(this).select(); });
         } else {
             const previousIndex = currentIndex === 0 ? numberInputs.length - 1 : currentIndex - 1;
-            numberInputs[previousIndex].focus();
+            numberInputs[previousIndex].focus(function() { $(this).select(); });
         }
     }
 });
