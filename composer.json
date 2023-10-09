@@ -9,7 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "aymanalhattami/filament-slim-scrollbar": "^2.0",
         "barryvdh/laravel-dompdf": "^2.0",
         "bezhansalleh/filament-shield": "^3.0",
         "croustibat/filament-jobs-monitor": "^2.0",
