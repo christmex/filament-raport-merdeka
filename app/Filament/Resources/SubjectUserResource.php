@@ -132,11 +132,9 @@ class SubjectUserResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('subject.subject_name')
-                    ->numeric()
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('classroom.classroom_name')
-                    ->numeric()
                     ->searchable()
                     ->sortable(),
                 GradingTextInputColumn::make('grade_minimum')

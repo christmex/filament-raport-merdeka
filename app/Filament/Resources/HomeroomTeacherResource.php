@@ -57,6 +57,9 @@ class HomeroomTeacherResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('classroom.classroom_name')
                     ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('classroom.school_level')
+                    ->label('School Level')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('schoolYear.school_year_name')

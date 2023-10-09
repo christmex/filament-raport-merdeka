@@ -194,8 +194,8 @@ class ManageAssessments extends ManageRecords
                 //     ->preload()
                 // ,
                 TextInput::make('topic_name')
-                ->required(),
-                
+                ->helperText('Ex: Penugasan 1 - Berhitung 1-10')
+                ->required(),  
             ])
             ->action(function (array $data): void {
                 // dd($data);

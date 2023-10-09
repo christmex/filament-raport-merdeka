@@ -56,6 +56,7 @@ class AssessmentResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('student.student_name')
+                    ->label('Student Name')
                     // ->description(fn (Assessment $record): string => $record->student->active_classroom_name)
                     ->searchable(isIndividual: true)
                     ->sortable(),
@@ -142,7 +143,7 @@ class AssessmentResource extends Resource
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

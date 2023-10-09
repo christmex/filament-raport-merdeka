@@ -37,7 +37,8 @@ class SubjectResource extends Resource
                 Tables\Columns\TextColumn::make('subject_code')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\ToggleColumn::make('is_curiculum_basic'),
+                Tables\Columns\ToggleColumn::make('is_curiculum_basic')
+                    ->sortable(),
                 Tables\Columns\TextInputColumn::make('sort_order')
                     ->rules(['required','integer','min:0', 'max:100'])
                     ->sortable(),
