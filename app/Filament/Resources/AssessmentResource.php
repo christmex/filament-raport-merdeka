@@ -56,11 +56,13 @@ class AssessmentResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('student.student_name')
+                    ->wrap()
                     ->label('Student Name')
                     // ->description(fn (Assessment $record): string => $record->student->active_classroom_name)
                     ->searchable(isIndividual: true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('student.active_classroom_name')
+                    ->wrap()
                     ->toggleable(isToggledHiddenByDefault:true)
                     ->label('Classroom')
                     // ->searchable()
@@ -68,14 +70,17 @@ class AssessmentResource extends Resource
                     ,
                 Tables\Columns\TextColumn::make('assessmentMethodSetting.assessment_method_setting_name')
                     ->toggleable()
+                    ->wrap()
                     ->label('Assessment Method')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topicSetting.topic_setting_name')
+                    ->wrap()
                     ->toggleable(isToggledHiddenByDefault:true)
                     ->label('Topic')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('topic_name')
                     ->toggleable()
+                    ->wrap()
                     ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('subjectUserThrough.subject_name')
                     ->toggleable()
