@@ -215,7 +215,7 @@
   				border-spacing: 0 .5em;
 			">
 				<tr>
-					<td>Nama Sekolah</td>
+					<td>School Name</td>
 					<td>:</td>
 					<td class="xl9511880">{{Helper::getSchoolSetting()->school_name_prefix}}
 						<span class="logoB">B</span>
@@ -227,14 +227,14 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Alamat</td>
+					<td>Address</td>
 					<td>:</td>
 					<td>{{Helper::getSchoolSetting()->school_address}}</td>
 				</tr>
 				<tr>
-					<td>Nama peserta didik</td>
+					<td>Student Name</td>
 					<td>:</td>
-					<td>{{$student->student_name}}</td>
+					<td><strong>{{$student->student_name}}</strong></td>
 				</tr>
 				<tr>
 					<td>NIS/NISN</td>
@@ -247,7 +247,7 @@
   				border-spacing: 0 .5em;
 			">
 				<tr>
-					<td>Kelas</td>
+					<td>Class</td>
 					<td>:</td>
 					<td>{{$student->active_classroom_name}}</td>
 				</tr>
@@ -257,7 +257,7 @@
 					<td>{{Helper::getSchoolTermName()}}</td>
 				</tr>
 				<tr>
-					<td>Tahun pelajaran</td>
+					<td>Annual Study</td>
 					<td>:</td>
 					<td>{{Helper::getSchoolYearName()}}</td>
 				</tr>
@@ -286,18 +286,20 @@
 					<tr draggable="true">
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
-						<td>{{ $value['topic_1_avg'] != '' ? ($value['topic_1_avg'] - floor($value['topic_1_avg']) > 0 ? number_format($value['topic_1_avg'], 2) : number_format($value['topic_1_avg'], 0)) : '' }}</td>
+						<!-- <td>{{ $value['topic_1_avg'] != '' ? ($value['topic_1_avg'] - floor($value['topic_1_avg']) > 0 ? number_format($value['topic_1_avg'], 2) : number_format($value['topic_1_avg'], 0)) : '' }}</td>
 						<td>{{ $value['topic_2_avg'] != '' ? ($value['topic_2_avg'] - floor($value['topic_2_avg']) > 0 ? number_format($value['topic_2_avg'], 2) : number_format($value['topic_2_avg'], 0)) : '' }}</td>
-						<td>{{ $value['topic_3_avg'] != '' ? ($value['topic_3_avg'] - floor($value['topic_3_avg']) > 0 ? number_format($value['topic_3_avg'], 2) : number_format($value['topic_3_avg'], 0)) : '' }}</td>
+						<td>{{ $value['topic_3_avg'] != '' ? ($value['topic_3_avg'] - floor($value['topic_3_avg']) > 0 ? number_format($value['topic_3_avg'], 2) : number_format($value['topic_3_avg'], 0)) : '' }}</td> -->
 
-						<!-- <td>{{ $value['topic_1_avg'] != '' ? number_format($value['topic_1_avg'],2) : ''}}</td>
-						<td>{{ $value['topic_2_avg'] != '' ? number_format($value['topic_2_avg'],2) : ''}}</td>
-						<td>{{ $value['topic_3_avg'] != '' ? number_format($value['topic_3_avg'],2) : ''}}</td> -->
+						<td>{{ $value['topic_1_avg'] }}</td>
+						<td>{{ $value['topic_2_avg'] }}</td>
+						<td>{{ $value['topic_3_avg'] }}</td>
 					</tr>
 				@endforeach
 			</thead>
 		</table>
 	</section>
+	@if(App\Models\Subject::where('is_curiculum_basic', true)->get()->count())
+	
     <section id="basic_cur">
         <h3 style="margin: 20px 0 10px">B.
             <span class="logoB">B</span>
@@ -333,6 +335,7 @@
 			</thead>
 		</table>
     </section>
+	@endif
 	<section id="sign" class="flex">
 		<div id="sign_parent">
 			<div class="sign_top">
