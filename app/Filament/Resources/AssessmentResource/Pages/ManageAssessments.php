@@ -157,6 +157,7 @@ class ManageAssessments extends ManageRecords
                     ->relationship('topicSetting','topic_setting_name')
                     ->required()
                     ->searchable()
+                    ->helperText('Topic 1 also called Chapter 1 or bab 1, etc, they are all the same 🤩')
                     ->preload(),
                 Select::make('subject_user_id')
                     ->label('subject')
@@ -194,7 +195,7 @@ class ManageAssessments extends ManageRecords
                 //     ->preload()
                 // ,
                 TextInput::make('topic_name')
-                ->helperText('Ex: Penugasan 1 - Berhitung 1-10')
+                ->helperText('Format : (Assessment Method Setting Name) - (Topic Name) | Example: Penugasan 1 - Berhitung 1-10')
                 ->required(),  
             ])
             ->action(function (array $data): void {
