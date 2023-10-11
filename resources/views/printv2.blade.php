@@ -58,14 +58,18 @@
 			mso-pattern: auto;
 			mso-protection: unlocked hidden;
 			white-space: nowrap;
+			/* background-color: red; */
 
 			/* position: absolute; */
 			position: absolute;
 			left: 0;
 			right: 0;
 			bottom: 0;
+			/* top: 0; */
 			margin: 0 auto;
 			visibility: hidden;
+
+			width: 21cm; /* i add this section cuz the tagline not centered, ,cuz in the body i set the width also; */
 			/* height: 100vh; */
 		}
 		@media print {
@@ -206,7 +210,7 @@
 	</style>
 </head>
 <body>
-	<h1 class="heading_progress_title">Progress Report Peserta Didik</h1>
+	<h1 class="heading_progress_title">Student's Progress Report</h1>
 	<section id="student_details">
 		<div class="flex">
 			<table style="
@@ -307,7 +311,7 @@
             <span class="logoS">S</span>
             <span class="logoI">I</span>
             <span class="logoC">C</span>
-        Curiculum</h3>
+        Ellementary Curiculum</h3>
         <table>
 			<thead>
 				<tr>
