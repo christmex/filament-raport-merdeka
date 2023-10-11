@@ -290,9 +290,9 @@
 						<td>{{ $value['topic_2_avg'] != '' ? ($value['topic_2_avg'] - floor($value['topic_2_avg']) > 0 ? number_format($value['topic_2_avg'], 2) : number_format($value['topic_2_avg'], 0)) : '' }}</td>
 						<td>{{ $value['topic_3_avg'] != '' ? ($value['topic_3_avg'] - floor($value['topic_3_avg']) > 0 ? number_format($value['topic_3_avg'], 2) : number_format($value['topic_3_avg'], 0)) : '' }}</td> -->
 
-						<td>{{ $value['topic_1_avg'] }}</td>
-						<td>{{ $value['topic_2_avg'] }}</td>
-						<td>{{ $value['topic_3_avg'] }}</td>
+						<td>{{ round($value['topic_1_avg']) }}</td>
+						<td>{{ round($value['topic_2_avg']) }}</td>
+						<td>{{ round($value['topic_3_avg']) }}</td>
 					</tr>
 				@endforeach
 			</thead>
@@ -327,9 +327,9 @@
 					<tr draggable="true">
 						<td>{{$loop->iteration}}</td>
 						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
-						<td>{{$value['topic_1_avg']}}</td>
-						<td>{{$value['topic_2_avg']}}</td>
-						<td>{{$value['topic_3_avg']}}</td>
+						<td>{{round($value['topic_1_avg'])}}</td>
+						<td>{{round($value['topic_2_avg'])}}</td>
+						<td>{{round($value['topic_3_avg'])}}</td>
 					</tr>
 				@endforeach
 			</thead>
