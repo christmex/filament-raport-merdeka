@@ -253,7 +253,7 @@
 				<tr>
 					<td>Class</td>
 					<td>:</td>
-					<td>{{$student->active_classroom_name}}</td>
+					<td>{{$student->active_classroom_level}} - {{$student->active_classroom_name}}</td>
 				</tr>
 				<tr>
 					<td>Semester</td>
