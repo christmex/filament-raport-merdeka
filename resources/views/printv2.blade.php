@@ -253,7 +253,7 @@
 				<tr>
 					<td>Class</td>
 					<td>:</td>
-					<td>{{$student->active_classroom_level}} - {{$student->active_classroom_name}}</td>
+					<td>{{Helper::numberToRomawi($student->active_classroom_level)}} - {{$student->active_classroom_name}}</td>
 				</tr>
 				<tr>
 					<td>Semester</td>
@@ -311,7 +311,7 @@
             <span class="logoS">S</span>
             <span class="logoI">I</span>
             <span class="logoC">C</span>
-        Ellementary Curiculum</h3>
+        Elementary Curriculum</h3>
         <table>
 			<thead>
 				<tr>
@@ -325,7 +325,6 @@
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Average</div></th>
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Average</div></th>
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Average</div></th>
-					
 				</tr>
 				@foreach($dataBasicCur as $value)
 					<tr draggable="true">
