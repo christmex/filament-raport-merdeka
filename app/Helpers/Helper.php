@@ -269,5 +269,23 @@ class Helper {
         }
     }
 
+    public static function convertTopicIndoVersion($teks){
+        switch ($teks) {
+            case 'Topic 1':
+                echo "Topik 1";
+                break;
+            case 'Topic 2':
+                echo "Topik 2";
+                break;
+            case 'Topic 3':
+                echo "Topik 3";
+                break;
+            
+            default:
+                echo $teks;
+                break;
+        }
+    }
+
 
 }

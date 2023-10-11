@@ -277,7 +277,7 @@
 					<th rowspan="2" style="vertical-align: middle;">No</th>
 					<th rowspan="2" style="vertical-align: middle;">Muatan Pelajaran</th>
 					@foreach($topicSettings as $value)
-					    <td colspan="">{{$value->topic_setting_name}}</td>
+					    <td colspan="">{{Helper::convertTopicIndoVersion($value->topic_setting_name)}}</td>
                     @endforeach
 				</tr>
 				<tr>
