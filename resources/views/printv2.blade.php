@@ -363,6 +363,7 @@
 		</div>
 	</section>
 	<section id="sign_principle" style="text-align:center; margin: 5% auto 0">
+	
 		<div class="sign_top">
 			<p>Mengetahui</p>
 			<p>Kepala Sekolah</p>
@@ -370,7 +371,7 @@
 
 		<div class="border_sign" style="margin-top: 100px">
 			<!-- <p style="text-decoration:underline">Rudi wanro situmorang</p> -->
-			<p style="text-decoration:underline">{{Helper::getSchoolSetting()->school_principal_name}}</p>
+			<p style="text-decoration:underline;text-decoration-thickness: 0; text-underline-offset: 8px;">{{Helper::getSchoolSetting()->school_principal_name}}</p>
 			<!-- <hr> -->
 		</div>
 	</section>
