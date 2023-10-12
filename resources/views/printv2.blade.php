@@ -50,7 +50,7 @@
 			mso-ignore: padding;
 			color: black;
 			font-size: 16.0pt;
-			font-weight: 400;
+			font-weight: bold;
 			font-style: normal;
 			text-decoration: none;
 			font-family: "Cooper Black", serif;
