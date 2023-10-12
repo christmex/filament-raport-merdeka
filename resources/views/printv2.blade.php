@@ -22,6 +22,10 @@
 		.border_sign {
 			/* margin-top: 100px; */
 		}
+
+		.border_sign hr {
+			border : 1px solid black;
+		}
 		.border_sign > p{
 			font-weight: bold;
 		}
@@ -238,7 +242,7 @@
 				<tr>
 					<td>Student Name</td>
 					<td>:</td>
-					<td><strong>{{$student->student_name}}</strong></td>
+					<td><strong>{{Str::title($student->student_name)}}</strong></td>
 				</tr>
 				<tr>
 					<td>NIS/NISN</td>
@@ -371,7 +375,7 @@
 
 		<div class="border_sign" style="margin-top: 100px">
 			<!-- <p style="text-decoration:underline">Rudi wanro situmorang</p> -->
-			<p style="text-decoration:underline;text-decoration-thickness: 0; text-underline-offset: 8px;">{{Helper::getSchoolSetting()->school_principal_name}}</p>
+			<p style="text-decoration:underline;text-decoration-thickness: 1px; text-underline-offset: 8px;">{{Helper::getSchoolSetting()->school_principal_name}}</p>
 			<!-- <hr> -->
 		</div>
 	</section>
