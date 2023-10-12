@@ -64,7 +64,7 @@
 			position: absolute;
 			left: 0;
 			right: 0;
-			bottom: -100px;
+			bottom: 0;
 			/* top: 0; */
 			margin: 0 auto;
 			visibility: hidden;
@@ -284,18 +284,79 @@
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata</div></th>
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata</div></th>
 					<th class="rotate-td bc-browser bc-browser-chrome"><div class="bc-head-txt-label bc-head-icon-chrome">Rata-rata</div></th>
+					
 				</tr>
+				@php
+					$divided = 0;
+					$valTopic1 = 0;
+					$valTopic2 = 0;
+					$valTopic3 = 0;
+					$loopIteration = 0;
+					$subjectName = '';
+				@endphp
 				@foreach($dataPublicCur as $value)
+					@if($subjectName == 'Ilmu')
+						<tr>
+							<td>{{$loopIteration}}</td>
+							<td style="text-align: left; padding: 5px">{{$subjectName}}</td>
+							<td>{{ round($valTopic1 / $divided) != 0 ? round($valTopic1 / $divided) : '-' }}</td>
+							<td>{{ round($valTopic2 / $divided) != 0 ? round($valTopic2 / $divided) : '-' }}</td>
+							<td>{{ round($valTopic3 / $divided) != 0 ? round($valTopic3 / $divided) : '-' }}</td>
+							<!-- Reset Value  -->
+							@php 
+								
+							@endphp
+						</tr>
+					@endif
 					<tr draggable="true">
-						<td>{{$loop->iteration}}</td>
-						<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
-						<!-- <td>{{ $value['topic_1_avg'] != '' ? ($value['topic_1_avg'] - floor($value['topic_1_avg']) > 0 ? number_format($value['topic_1_avg'], 2) : number_format($value['topic_1_avg'], 0)) : '' }}</td>
-						<td>{{ $value['topic_2_avg'] != '' ? ($value['topic_2_avg'] - floor($value['topic_2_avg']) > 0 ? number_format($value['topic_2_avg'], 2) : number_format($value['topic_2_avg'], 0)) : '' }}</td>
-						<td>{{ $value['topic_3_avg'] != '' ? ($value['topic_3_avg'] - floor($value['topic_3_avg']) > 0 ? number_format($value['topic_3_avg'], 2) : number_format($value['topic_3_avg'], 0)) : '' }}</td> -->
+						@if(Str::contains($value['subject_name'],'Ilmu'))
+							@if($loopIteration == 0)
+								@php 
+									$loopIteration = $loop->iteration;
+									$subjectName = 'Ilmu';
+								@endphp
+							@endif
 
-						<td>{{ round($value['topic_1_avg']) != 0 ? round($value['topic_1_avg']) : '-' }}</td>
-						<td>{{ round($value['topic_2_avg']) != 0 ? round($value['topic_2_avg']) : '-' }}</td>
-						<td>{{ round($value['topic_3_avg']) != 0 ? round($value['topic_3_avg']) : '-' }}</td>
+							@php 
+								$divided++;
+								$valTopic1 += round($value['topic_1_avg']) != 0 ? round($value['topic_1_avg']) : 0;
+								$valTopic2 += round($value['topic_2_avg']) != 0 ? round($value['topic_2_avg']) : 0;
+								$valTopic3 += round($value['topic_3_avg']) != 0 ? round($value['topic_3_avg']) : 0;
+							@endphp
+
+							@if($loop->last)
+								@if($subjectName == 'Ilmu')
+									<td>{{$loopIteration}}</td>
+									<td style="text-align: left; padding: 5px">{{$subjectName}}</td>
+									<td>{{ round($valTopic1 / $divided) != 0 ? round($valTopic1 / $divided) : '-' }}</td>
+									<td>{{ round($valTopic2 / $divided) != 0 ? round($valTopic2 / $divided) : '-' }}</td>
+									<td>{{ round($valTopic3 / $divided) != 0 ? round($valTopic3 / $divided) : '-' }}</td>
+									<!-- Reset Value  -->
+									@php 
+										
+									@endphp
+								@endif
+							@endif
+						@else
+							<td>
+								@if($loopIteration) 
+									{{ $loopIteration }}
+									@php 
+										$loopIteration++;
+									@endphp
+								@else 
+									{{$loop->iteration}}
+								@endif
+							</td>
+							<td style="text-align: left; padding: 5px">{{$value['subject_name']}}</td>
+							<!-- <td>{{ $value['topic_1_avg'] != '' ? ($value['topic_1_avg'] - floor($value['topic_1_avg']) > 0 ? number_format($value['topic_1_avg'], 2) : number_format($value['topic_1_avg'], 0)) : '' }}</td>
+							<td>{{ $value['topic_2_avg'] != '' ? ($value['topic_2_avg'] - floor($value['topic_2_avg']) > 0 ? number_format($value['topic_2_avg'], 2) : number_format($value['topic_2_avg'], 0)) : '' }}</td>
+							<td>{{ $value['topic_3_avg'] != '' ? ($value['topic_3_avg'] - floor($value['topic_3_avg']) > 0 ? number_format($value['topic_3_avg'], 2) : number_format($value['topic_3_avg'], 0)) : '' }}</td> -->
+
+							<td>{{ round($value['topic_1_avg']) != 0 ? round($value['topic_1_avg']) : '-' }}</td>
+							<td>{{ round($value['topic_2_avg']) != 0 ? round($value['topic_2_avg']) : '-' }}</td>
+							<td>{{ round($value['topic_3_avg']) != 0 ? round($value['topic_3_avg']) : '-' }}</td>
+						@endif
 					</tr>
 				@endforeach
 			</thead>
