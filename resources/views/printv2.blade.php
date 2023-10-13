@@ -356,7 +356,7 @@
 		</div>
 		<div id="sign_main_teacher">
 			<div class="sign_top">
-				<p>Batam, {{Helper::getSchoolSetting()->school_progress_report_date}}</p>
+				<p>Batam, {!!Helper::getSchoolSetting()->school_progress_report_date!!}</p>
 				<p>Wali Kelas</p>
 			</div>
 
