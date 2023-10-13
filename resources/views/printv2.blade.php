@@ -257,7 +257,7 @@
 				<tr>
 					<td>Class</td>
 					<td>:</td>
-					<td>{{Helper::numberToRomawi($student->active_classroom_level)}} - {{$student->active_classroom_name}}</td>
+					<td>{{Helper::numberToRomawi($student->active_classroom_level)}} {{$student->active_classroom_name}}</td>
 				</tr>
 				<tr>
 					<td>Semester</td>
