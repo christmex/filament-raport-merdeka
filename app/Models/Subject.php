@@ -13,8 +13,8 @@ class Subject extends Model
 
     protected $guarded = [];
 
-    public function setSubjectNameAttribute($value)
-    {
-        $this->attributes['subject_name'] = ucwords($value);
-    }
+    // public function setSubjectNameAttribute($value)
+    // {
+    //     $this->attributes['subject_name'] = ucwords($value);
+    // }
 }
