@@ -46,6 +46,9 @@
 - [ ] di menu student yang di pegang oleh main teacher, nanti main teacher bisa pilih tahun ajaran kapan dan semester berapayang ingin di tampilkan studentnya, buat sebuah filter, ini ada hubungannya sama task yang di atas ini
 - [ ] saat nambah guru bisa sekalian nambha mapel nya, bgitu juga sebaliknya, jika nambah mapel; bisa sebaliknyua
 
+
+
+
 There is 3 ways to use laravel global scope
 
 1. Create new laravel global scope in new class and use it in the specific model

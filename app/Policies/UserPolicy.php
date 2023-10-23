@@ -141,26 +141,4 @@ class UserPolicy
     {
         return $user->can('reorder_user');
     }
-
-    /**
-     * Determine whether the user can download posts.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function downloadBackup(User $user)
-    {
-        return $user->can('download-backup');
-    }
-
-    /**
-     * Determine whether the user can delete posts.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function deleteBackup(User $user)
-    {
-        return $user->can('delete-backup');
-    }
 }
