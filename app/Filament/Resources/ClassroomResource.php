@@ -33,6 +33,7 @@ class ClassroomResource extends Resource
                 Tables\Columns\TextColumn::make('classroom_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('school_level'),
+                Tables\Columns\ToggleColumn::make('is_moving_class'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -111,6 +112,7 @@ class ClassroomResource extends Resource
                     12 => 12,
                 ])
                 ->required(),
+            Forms\Components\Toggle::make('is_moving_class')
         ];
     }
 }

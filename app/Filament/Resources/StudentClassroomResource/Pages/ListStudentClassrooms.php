@@ -44,12 +44,13 @@ class ListStudentClassrooms extends ListRecords
                         ->createOptionForm(SchoolTermResource::getForm())
                         ->editOptionForm(SchoolTermResource::getForm())
                         ->default(fn($state) => $state ?? SchoolTerm::activeId())
-                        ->required(),
+                        ->required()
+                        ->helperText('This function is to sync data, before we use the homeroom_teacher_id in student_classroom table now we move the school_year and school_term and classoom_id in student_classroom table direcly, so we dont longer use homeroom_teacher table'),
                 ])
                 ->action(function(array $data){
                     DB::beginTransaction();
                     try {
-                        $studentClassrooms = StudentClassroom::with('homeroomTeacher')->get();
+                        $studentClassrooms = StudentClassroom::with('homeroomTeacher')->where('homeroom_teacher_id','!=',NULL)->get();
                         foreach ($studentClassrooms as $studentClassroom) {
                             $studentClassroom->school_term_id = $data['school_term_id'];
                             $studentClassroom->school_year_id = $data['school_year_id'];

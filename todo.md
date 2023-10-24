@@ -45,7 +45,7 @@
 - [ ] add sebuah tombol jika tahun ajaran atau semester yang aktif sudah beda dengan data yang ada, maka ada tombol untuk menambahkan data tersebut sesuai dengan tahun ajaran baru, semisal di menu subject user dan homeroom teacher, jadi saat perpindahan tahun ajaran atau semester, kita tidak usah buat baru input, tapi tinggal klik tombol inline atau pub bulk, untuk tambah ke database dengan data yang sama namun tahun ajaraun atau semester yang sesuai dengan yang sedang aktif sekarang, fitur ini ada hubungannya sama fitur naik kelas siswa, begitu juga dengan siswa
 - [ ] di menu student yang di pegang oleh main teacher, nanti main teacher bisa pilih tahun ajaran kapan dan semester berapayang ingin di tampilkan studentnya, buat sebuah filter, ini ada hubungannya sama task yang di atas ini
 - [ ] saat nambah guru bisa sekalian nambha mapel nya, bgitu juga sebaliknya, jika nambah mapel; bisa sebaliknyua
-
+- [ ] dikarenakan studentbisa punya beberapa kelas, jadi saat di print kelasnya kadang tidak mengambil kelas yang sebenarnya, semisal ada mathhew 1 dan matthew 1 - maths, nah harusnya yg tampil matthew 1 bukan matthew 1 - maths di raport
 
 
 

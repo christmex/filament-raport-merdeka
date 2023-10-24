@@ -12,6 +12,10 @@ class Classroom extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'is_moving_class' => 'boolean',
+    ];
+
     public function setClassroomNameAttribute($value)
     {
         $this->attributes['classroom_name'] = ucwords($value);

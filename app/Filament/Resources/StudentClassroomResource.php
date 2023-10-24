@@ -94,7 +94,7 @@ class StudentClassroomResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\BulkAction::make('promoted_students')
+                    Tables\Actions\BulkAction::make('movingClass')
                     ->form([
                         \Filament\Forms\Components\Select::make('school_year_id')
                             ->relationship('schoolYear', 'school_year_name')
