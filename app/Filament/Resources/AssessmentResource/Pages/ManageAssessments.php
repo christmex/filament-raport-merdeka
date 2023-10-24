@@ -228,7 +228,10 @@ class ManageAssessments extends ManageRecords
                     // dd($value,$getHomeroomTeacherIds);
 
                     $getCLassroomStudentIds = StudentClassroom::query()
-                    ->whereIn('homeroom_teacher_id',$getHomeroomTeacherIds)
+                    // ->whereIn('homeroom_teacher_id',$getHomeroomTeacherIds)
+                    ->where('classroom_id',$value->classroom_id)
+                    ->where('school_year_id',$value->school_year_id)
+                    ->where('school_term_id',$value->school_term_id)
                     ->get()
                     ->pluck('student_id')
                     ->toArray();

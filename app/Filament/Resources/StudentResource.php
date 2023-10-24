@@ -39,7 +39,8 @@ class StudentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('student_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('activeStudentClassrooms.homeroomTeacher.classroom.classroom_name')
+                // Tables\Columns\TextColumn::make('activeStudentClassrooms.homeroomTeacher.classroom.classroom_name')
+                Tables\Columns\TextColumn::make('activeStudentClassrooms.classroom.classroom_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('student_nis')
                     ->searchable(),

@@ -38,7 +38,17 @@ class Student extends Model
     public function scopeOwnStudent(Builder $query): void
     {
         if(auth()->user()->activeHomeroom->count()){
-            $query->whereIn('id',StudentClassroom::where('homeroom_teacher_id',auth()->user()->activeHomeroom->first()->id)->get()->pluck('student_id')->toArray());
+            // dd(auth()->user()->activeHomeroom, $query);
+            // $query->whereHas("acti", function (Builder $query) {
+            // $query->where('school_year_id',auth()->user()->activeHomeroom->school_year_id)
+            //     ->where('school_term_id',auth()->user()->activeHomeroom->school_year_id)
+            //     ->where('classroom_id',auth()->user()->activeHomeroom->classroom_id);
+            
+            // dd(auth()->user()->activeHomeroom);
+            $query->whereIn('id',StudentClassroom::where('school_year_id',auth()->user()->activeHomeroom->first()->school_year_id)
+            ->where('school_term_id',auth()->user()->activeHomeroom->first()->school_term_id)
+            ->where('classroom_id',auth()->user()->activeHomeroom->first()->classroom_id)
+            ->get()->pluck('student_id')->toArray());
         }
     }
  
@@ -58,9 +68,13 @@ class Student extends Model
     }   
 
 
-    public function classrooms(): BelongsToMany
+    // public function classrooms(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Classroom::class,'student_classrooms','student_id','classroom_id');
+    // }
+    public function classrooms(): HasMany
     {
-        return $this->belongsToMany(Classroom::class,'student_classrooms','student_id','classroom_id');
+        return $this->HasMany(StudentClassroom::class);
     }
 
     public function activeClassroom()
@@ -86,13 +100,15 @@ class Student extends Model
     public function getActiveClassroomNameAttribute()
     {
         // return 'as';
-        return $this->activeStudentClassrooms->first()->homeroomTeacher->classroom->classroom_name;
+        // return $this->activeStudentClassrooms->first()->homeroomTeacher->classroom->classroom_name;
+        return $this->activeStudentClassrooms->first()->classroom->classroom_name;
     }
 
     public function getActiveClassroomLevelAttribute()
     {
         // return 'as';
-        return $this->activeStudentClassrooms->first()->homeroomTeacher->classroom->school_level;
+        // return $this->activeStudentClassrooms->first()->homeroomTeacher->classroom->school_level;
+        return $this->activeStudentClassrooms->first()->classroom->school_level;
     }
 
     public function getStudentNameWithClassroomAttribute()
