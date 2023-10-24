@@ -20,16 +20,16 @@ class StudentClassroom extends Model
     {
         return $this->belongsTo(HomeroomTeacher::class);
     }
-    // public function schoolYear() :BelongsTo
-    // {
-    //     return $this->belongsTo(SchoolYear::class);
-    // }
-    // public function schoolTerm() :BelongsTo
-    // {
-    //     return $this->belongsTo(SchoolTerm::class);
-    // }
-    // public function classroom() :BelongsTo
-    // {
-    //     return $this->belongsTo(Classroom::class);
-    // }
+    public function schoolYear() :BelongsTo
+    {
+        return $this->belongsTo(SchoolYear::class);
+    }
+    public function schoolTerm() :BelongsTo
+    {
+        return $this->belongsTo(SchoolTerm::class);
+    }
+    public function classroom() :BelongsTo
+    {
+        return $this->belongsTo(Classroom::class);
+    }
 }
