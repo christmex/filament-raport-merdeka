@@ -101,7 +101,15 @@ class Student extends Model
     {
         // return 'as';
         // return $this->activeStudentClassrooms->first()->homeroomTeacher->classroom->classroom_name;
-        return $this->activeStudentClassrooms->first()->classroom->classroom_name;
+        // dd($this->activeStudentClassrooms);
+
+        $activeClassroom = $this->activeStudentClassrooms->first(function ($activeSubject) {
+            return $activeSubject->classroom->is_moving_class === false;
+        });
+        // dd($activeClassroom);
+
+        return $activeClassroom->first()->classroom->classroom_name;
+        // return $this->activeClassroom->where('is_moving_class',0)->first()->classroom_name;
     }
 
     public function getActiveClassroomLevelAttribute()
@@ -114,6 +122,7 @@ class Student extends Model
     public function getStudentNameWithClassroomAttribute()
     {
         // return 'as';
+        
         return $this->student_name.' - '.$this->active_classroom_name;
     }
 }

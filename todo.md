@@ -46,7 +46,7 @@
 - [ ] di menu student yang di pegang oleh main teacher, nanti main teacher bisa pilih tahun ajaran kapan dan semester berapayang ingin di tampilkan studentnya, buat sebuah filter, ini ada hubungannya sama task yang di atas ini
 - [ ] saat nambah guru bisa sekalian nambha mapel nya, bgitu juga sebaliknya, jika nambah mapel; bisa sebaliknyua
 - [ ] dikarenakan studentbisa punya beberapa kelas, jadi saat di print kelasnya kadang tidak mengambil kelas yang sebenarnya, semisal ada mathhew 1 dan matthew 1 - maths, nah harusnya yg tampil matthew 1 bukan matthew 1 - maths di raport
-
+- [ ] bug di bagian hitung rata", tolong di perbaiki lagi script untukhitung rata" ini disebabkan karna matthew 1 dan matthew 1 - maths
 
 
 There is 3 ways to use laravel global scope
