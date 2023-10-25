@@ -125,4 +125,9 @@ class Student extends Model
         
         return $this->student_name.' - '.$this->active_classroom_name;
     }
+
+    public function religion():BelongsTo
+    {
+        return $this->belongsTo(Religion::class);
+    }
 }

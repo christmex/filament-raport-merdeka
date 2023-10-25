@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Models\StudentClassroom;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\DB;
+use Filament\Forms\Components\Tabs;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -46,6 +47,63 @@ class StudentResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('student_nisn')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('born_place')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('born_date')
+                    ->searchable()
+                    ->date()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('religion.name')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('status_in_family')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('sibling_order_in_family')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('address')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('phone')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('previous_education')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('father_name')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('mother_name')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('parent_address')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('parent_phone')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('father_job')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('mother_job')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('guardian_name')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('guardian_address')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('guardian_phone')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('guardian_job')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -167,15 +225,48 @@ class StudentResource extends Resource
     public static function getForm(): array 
     {
         return [
-            Forms\Components\TextInput::make('student_name')
-                ->required()
-                ->maxLength(255),
-            Forms\Components\TextInput::make('student_nis')
-                ->unique(ignoreRecord: true)
-                ->maxLength(255),
-            Forms\Components\TextInput::make('student_nisn')
-                ->unique(ignoreRecord: true)
-                ->maxLength(255),
+            Tabs::make('Label')
+            ->tabs([
+                Tabs\Tab::make('Student Details')
+                    ->schema([
+                        Forms\Components\TextInput::make('student_name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('student_nis')
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('student_nisn')
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(255),
+            
+                        Forms\Components\TextInput::make('born_place')->maxLength(255),
+                        Forms\Components\DatePicker::make('born_date'),
+                        Forms\Components\Select::make('religion_id')
+                            ->relationship('religion','name'),
+                        Forms\Components\TextInput::make('status_in_family')->maxLength(255)->placeholder('Ex: Anak'),
+                        Forms\Components\TextInput::make('sibling_order_in_family')->integer()->minValue(1)->placeholder('Ex: 1'),
+                        Forms\Components\Textarea::make('address'),
+                        Forms\Components\TextInput::make('phone')->tel(),
+                        Forms\Components\TextInput::make('previous_education')->maxLength(255),
+                    ]),
+                Tabs\Tab::make('Parent Details')
+                    ->schema([
+                        Forms\Components\TextInput::make('father_name')->maxLength(255),
+                        Forms\Components\TextInput::make('mother_name')->maxLength(255),
+                        Forms\Components\Textarea::make('parent_address'),
+                        Forms\Components\TextInput::make('parent_phone')->tel(),
+                        Forms\Components\TextInput::make('father_job')->maxLength(255),
+                        Forms\Components\TextInput::make('mother_job')->maxLength(255),
+                    ]),
+                Tabs\Tab::make('Guardian Details')
+                    ->schema([
+                        Forms\Components\TextInput::make('guardian_name')->maxLength(255),
+                        Forms\Components\Textarea::make('guardian_address'),
+                        Forms\Components\TextInput::make('guardian_phone')->tel(),
+                        Forms\Components\TextInput::make('guardian_job')->maxLength(255),
+                    ]),
+            ])->columnSpanFull(),
+
         ];
     }
 
