@@ -47,7 +47,7 @@
 - [ ] saat nambah guru bisa sekalian nambha mapel nya, bgitu juga sebaliknya, jika nambah mapel; bisa sebaliknyua
 - [ ] dikarenakan studentbisa punya beberapa kelas, jadi saat di print kelasnya kadang tidak mengambil kelas yang sebenarnya, semisal ada mathhew 1 dan matthew 1 - maths, nah harusnya yg tampil matthew 1 bukan matthew 1 - maths di raport
 - [ ] bug di bagian hitung rata", tolong di perbaiki lagi script untukhitung rata" ini disebabkan karna matthew 1 dan matthew 1 - maths
-
+- [ ] nanti di dashboard dibuat pilihan school year dan school term, supaya bisa milih, mau bekerjadi data yang mana, namun secara default menggunakan school year dan term yg active, nanti klau user milih ganti di dashboard maka simpan di session, kemudian, di global boot custom function yang akan kita buatkitacek apakah ada session yang aktif? klau ada pakai, kalau tidak gunakan school year dan term yang aktif
 
 There is 3 ways to use laravel global scope
 

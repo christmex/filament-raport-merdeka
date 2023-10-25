@@ -130,4 +130,15 @@ class Student extends Model
     {
         return $this->belongsTo(Religion::class);
     }
+
+    public function extracurriculars():HasMany
+    {
+        return $this->HasMany(StudentExtracurricular::class);
+    }
+
+    public function activeExtracurriculars()
+    {
+        return $this->extracurriculars()->where('school_year_id', SchoolYear::active())
+        ->where('school_term_id', SchoolTerm::active())->latest();
+    }
 }

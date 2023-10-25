@@ -5,16 +5,21 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Student;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use App\Models\Classroom;
 use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
 use Filament\Tables\Table;
 use Illuminate\Http\Request;
+use App\Models\Extracurricular;
 use App\Models\StudentClassroom;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Tabs;
+use App\Models\StudentExtracurricular;
+use Filament\Forms\Components\Repeater;
+use Illuminate\Validation\Rules\Unique;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -43,6 +48,10 @@ class StudentResource extends Resource
                 // Tables\Columns\TextColumn::make('activeStudentClassrooms.homeroomTeacher.classroom.classroom_name')
                 Tables\Columns\TextColumn::make('activeStudentClassrooms.classroom.classroom_name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('activeExtracurriculars.extracurricular.name')
+                    ->listWithLineBreaks(),
+                Tables\Columns\TextColumn::make('activeExtracurriculars.description')
+                    ->listWithLineBreaks(),
                 Tables\Columns\TextColumn::make('student_nis')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('student_nisn')
@@ -122,6 +131,28 @@ class StudentResource extends Resource
                     Tables\Actions\DeleteAction::make(),
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
+                    // Tables\Actions\Action::make('add_description_extracurricular')
+                    //     ->form([
+                    //         Repeater::make('extracurriculars')
+                    //             ->relationship()
+                    //             ->schema([
+                    //                 // Forms\Components\Select::make('school_year_id')
+                    //                 //     ->relationship('schoolYear', 'school_year_name')
+                    //                 //     ->required(),
+                    //                 Forms\Components\Select::make('extracurricular_id')
+                    //                     ->relationship('extracurricular', 'name')
+                    //                     ->required(),
+                    //             ])
+                    //             ->mutateRelationshipDataBeforeFillUsing(function (array $data): array {
+                    //                 // dd($livewire);
+                    //                 $data['extracurricular_id'] = 1;
+                             
+                    //                 return $data;
+                    //             })
+                    //     ])
+                    //     ->action(function(){
+
+                    //     }),
                     Tables\Actions\Action::make('print_progress_report')
                         ->url(fn (Student $record): string => route('students.print', $record))
                         ->openUrlInNewTab()
@@ -137,7 +168,53 @@ class StudentResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
-                    // Tables\Actions\BulkAction::make(''),
+                    Tables\Actions\BulkAction::make('add_extracurricular')
+                    ->form([
+                        Forms\Components\Select::make('school_year_id')
+                            ->options(SchoolYear::all()->pluck('school_year_name','id'))
+                            ->searchable(['school_year_name'])
+                            ->preload()
+                            ->default(fn($state) => $state ?? SchoolYear::activeId())
+                            ->required(),
+                        Forms\Components\Select::make('school_term_id')
+                            ->options(SchoolTerm::all()->pluck('school_term_name','id'))
+                            ->searchable(['school_term_name'])
+                            ->preload()
+                            ->default(fn($state) => $state ?? SchoolTerm::activeId())
+                            ->required(),
+                        Forms\Components\Select::make('extracurricular_id')
+                            ->options(Extracurricular::all()->pluck('name','id'))
+                            ->searchable(['name'])
+                            ->preload()
+                            ->required(),
+                    ])
+                    ->action(function(array $data, $livewire){
+                        // dd($data, $livewire->selectedTableRecords);
+                            DB::beginTransaction();
+                            try {
+                                foreach ($livewire->selectedTableRecords as $key => $value) {
+                                    StudentExtracurricular::firstOrCreate([
+                                        'student_id' => $value,
+                                        'extracurricular_id' => $data['extracurricular_id'],
+                                        'school_year_id' => $data['school_year_id'],
+                                        'school_term_id' => $data['school_term_id'],
+                                    ]);
+                                }
+                                DB::commit();
+                                Notification::make()
+                                    ->success()
+                                    ->title('Success')
+                                    ->send();
+                            } catch (\Throwable $th) {
+                                DB::rollback();
+                                Notification::make()
+                                    ->danger()
+                                    ->title($th->getMessage())
+                                    ->send();
+                            }
+
+                    })
+                    ->deselectRecordsAfterCompletion(),
                     // Tables\Actions\BulkAction::make('promoted_students')
                     //     ->form([
                     //         Forms\Components\Select::make('school_year_id')
@@ -199,7 +276,7 @@ class StudentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ExtracurricularsRelationManager::class,
         ];
     }
     
