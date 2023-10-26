@@ -135,6 +135,14 @@ class Student extends Model
     {
         return $this->HasMany(StudentExtracurricular::class);
     }
+    public function absence():HasMany
+    {
+        return $this->HasMany(Studentabsence::class);
+    }
+    public function activeAbsence():HasMany
+    {
+        return $this->HasMany(Studentabsence::class);
+    }
 
     public function activeExtracurriculars()
     {
