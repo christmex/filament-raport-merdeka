@@ -108,7 +108,8 @@ class Student extends Model
         });
         // dd($activeClassroom);
 
-        return $activeClassroom->first()->classroom->classroom_name;
+        // return $activeClassroom;
+        return $activeClassroom->classroom->classroom_name;
         // return $this->activeClassroom->where('is_moving_class',0)->first()->classroom_name;
     }
 

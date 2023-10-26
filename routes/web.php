@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\StudentSemesterEvaluation;
 use App\Models\User;
 use App\Helpers\Helper;
 use App\Models\Student;
@@ -30,6 +31,8 @@ use App\Models\AssessmentMethodSetting;
 // });
 
 Route::get('/debug',function(){
+    dd(Student::find(93)->active_classroom_name);
+    // dd(StudentSemesterEvaluation::first()->student->active_classroom_name);
     // dd(SubjectUser::with('Subject')->ownSubject()->get()->pluck('Subject.subject_name','id'));
     // dd(Assessment::with('classroomSubjectUserThrough','subjectUserThrough')->get()->pluck('subjectUserThrough.subject_name'));
     // $user = User::find(auth()->id());
