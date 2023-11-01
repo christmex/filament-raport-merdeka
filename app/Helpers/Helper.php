@@ -346,5 +346,14 @@ class Helper {
         }
     }
 
+    public static function countFinalGrade($avg, $pas, $avgDiv, $pasDiv){
+        $result = $avg*$avgDiv;
+        if($pas){
+            $result +=$pas*$pasDiv;
+        }
+
+        return $result;
+    }
+
 
 }

@@ -170,11 +170,12 @@
 			</thead>
 			<tbody>
 				@foreach($newData as $key => $value)
-				<tr draggable="true">
-					<td>{{$loop->index}}</td>
+				<!-- <tr draggable="true"> -->
+				<tr>
+					<td>{{$loop->iteration}}</td>
 					<td style="text-align: left; padding: 5px">{{$key}}</td>
 					<td>{{$value['KKM']}}</td>
-					<td>{{$value['AVG']}}</td>
+					<td>{{Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv)}}</td>
 					<td style="text-align: left; padding: 5px; word-wrap: break-word;">lorem10asdkjasdkajsndkasndkasjdnjkasndjkasndjkasndjkasndjkasndjkasndjkasnjkdnasjkdnajksdnjkasdnjkasdna<br><br>asdgasjdgashjdgjasdghjasgdjhasgd</td>
 				</tr>
 				@endforeach
@@ -251,7 +252,15 @@
 	
 		<div class="sign_top">
 			<p>Mengetahui</p>
-			<p>Kepala Sekolah</p>
+			<p>Kepala Sekolah
+				{{Helper::getSchoolSetting()->school_name_prefix}}
+				<span class="logoB">B</span>
+				<span class="logoA">A</span>
+				<span class="logoS">S</span>
+				<span class="logoI">I</span>
+				<span class="logoC">C</span>
+				<span class="font511880">{{Helper::getSchoolSetting()->school_name_suffix}}</span>
+			</p>
 		</div>
 
 		<div class="border_sign" style="margin-top: 100px">

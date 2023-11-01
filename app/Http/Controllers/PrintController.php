@@ -51,20 +51,27 @@ class PrintController extends Controller
         // Count avg based on the $data
         $newData = Helper::calculateAverage($data);
 
-        // Set the KKM
-        foreach ($newData as $key => $value) {
-            $newData[$key]['KKM'] = $data[$key]['KKM'];
-        }
+        dd($data);
 
         // GET THE PAS 
         $StudentSemesterEvaluation = StudentSemesterEvaluation::with('subjectUserThrough')->where('student_id',$student->id)->whereIn('subject_user_id',array_unique($assessments->pluck('subject_user_id')->toArray()))->get();
         
 
-        $finalData = [];
+        // Set the KKM
+        foreach ($newData as $key => $value) {
+            $newData[$key]['KKM'] = $data[$key]['KKM'];
+            $newData[$key]['PAS'] = null;
 
-        
+            if($StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()){
+                $newData[$key]['PAS'] =$StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()->grading;
+            }
+        }
 
-        return view('print-raport',compact('student','newData'));
+        $avgDiv = (80/100);
+        $PASDiv = (20/100);
+
+        // dd($newData);
+        return view('print-raport',compact('student','newData','avgDiv','PASDiv'));
 
 
         
