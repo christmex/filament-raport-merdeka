@@ -49,6 +49,11 @@
 - [ ] bug di bagian hitung rata", tolong di perbaiki lagi script untukhitung rata" ini disebabkan karna matthew 1 dan matthew 1 - maths
 - [ ] nanti di dashboard dibuat pilihan school year dan school term, supaya bisa milih, mau bekerjadi data yang mana, namun secara default menggunakan school year dan term yg active, nanti klau user milih ganti di dashboard maka simpan di session, kemudian, di global boot custom function yang akan kita buatkitacek apakah ada session yang aktif? klau ada pakai, kalau tidak gunakan school year dan term yang aktif
 
+
+
+IMPORTANT
+- di bagian student semester evaluation hanya bisa  sekali saja membuat penilain PAS, tidak bolehlebih dari 1, lakukanbpengecekan saat pembuatan, silahkan ditanya apakah bisa buat 2 PAS?
+
 There is 3 ways to use laravel global scope
 
 1. Create new laravel global scope in new class and use it in the specific model

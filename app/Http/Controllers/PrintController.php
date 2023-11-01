@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\Assessment;
 use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
+use App\Models\StudentSemesterEvaluation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -54,6 +55,14 @@ class PrintController extends Controller
         foreach ($newData as $key => $value) {
             $newData[$key]['KKM'] = $data[$key]['KKM'];
         }
+
+        // GET THE PAS 
+        $StudentSemesterEvaluation = StudentSemesterEvaluation::with('subjectUserThrough')->where('student_id',$student->id)->whereIn('subject_user_id',array_unique($assessments->pluck('subject_user_id')->toArray()))->get();
+        
+
+        $finalData = [];
+
+        
 
         return view('print-raport',compact('student','newData'));
 

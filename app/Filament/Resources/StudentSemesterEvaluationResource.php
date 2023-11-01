@@ -42,7 +42,7 @@ class StudentSemesterEvaluationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('student.student_name')
-                    ->numeric()
+                    ->searchable(isIndividual:true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('student.active_classroom_name')
                     ->wrap()
