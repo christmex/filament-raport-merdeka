@@ -9,6 +9,65 @@ use App\Models\SchoolYear;
 class Helper {
 
     public static $superUserEmail = 'super@sekolahbasic.sch.id';
+
+    public static function findValueByNestedKey($array, $searchKey) {
+        foreach ($array as $key => $value) {
+            if ($key === $searchKey) {
+                return $value;
+            }
+    
+            if (is_array($value)) {
+                $result = self::findValueByNestedKey($value, $searchKey);
+                if ($result !== null) {
+                    return $result;
+                }
+            }
+        }
+    
+        return null; // Key not found in the nested array
+    }
+
+    public static function calculateAverage($data) {
+        $averages = [];
+
+        // Iterasi melalui semua mata pelajaran (misalnya, 'Maths', 'Science', dll.)
+        foreach ($data as $subject => $topics) {
+            $totalSum = 0;
+            $totalCount = 0;
+
+            // Iterasi melalui semua topik dalam mata pelajaran
+            foreach ($topics as $topic => $subTopics) {
+                // Tambahkan validasi untuk melewatkan jika topik adalah 'KKM'
+                if ($topic === 'KKM') {
+                    $averages[$subject]['KKM'] = $subTopics;
+                    continue;
+                }
+
+
+                // Iterasi melalui semua subtopik dalam topik
+                foreach ($subTopics as $subTopic => $values) {
+                    if (isset($values['grading'])) {
+                        // Jika 'grading' ada, tambahkan ke totalSum
+                        $totalSum += (float)$values['grading'];
+                        $totalCount++;
+                    }
+                }
+            }
+    
+            // Menghindari pembagian oleh nol
+            if ($totalCount === 0) {
+                $average = 0;
+            } else {
+                $average = round($totalSum / $totalCount); // Memasukkan fungsi round di sini
+            }
+    
+            // Simpan rata-rata dalam array dengan nama mata pelajaran sebagai kunci
+            $averages[$subject] = ['AVG'=> $average];
+        }
+    
+        return $averages;
+    }
+    
     
     public static function searchValueOnKey($array, $keyToSearch, $valueToFind) {
         foreach ($array as $subArray) {

@@ -142,12 +142,23 @@ class Student extends Model
     }
     public function activeAbsence():HasMany
     {
-        return $this->HasMany(Studentabsence::class);
+        return $this->absence()->where('school_year_id', SchoolYear::active())
+        ->where('school_term_id', SchoolTerm::active())->latest();
     }
 
     public function activeExtracurriculars()
     {
         return $this->extracurriculars()->where('school_year_id', SchoolYear::active())
         ->where('school_term_id', SchoolTerm::active())->latest();
+    }
+
+    public function forRaport(){
+        // $activeClassroom = $this->activeStudentClassrooms->first(function ($activeSubject) {
+        //     return $activeSubject->classroom->is_moving_class === false;
+        // });
+        // // dd($activeClassroom);
+
+        // // return $activeClassroom;
+        // return $activeClassroom->classroom->classroom_name;
     }
 }

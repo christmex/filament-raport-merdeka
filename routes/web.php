@@ -3,6 +3,7 @@
 use App\Models\StudentSemesterEvaluation;
 use App\Models\User;
 use App\Helpers\Helper;
+use App\Http\Controllers\PrintController;
 use App\Models\Student;
 use App\Models\Assessment;
 use App\Models\SchoolYear;
@@ -40,7 +41,29 @@ Route::get('/debug',function(){
     // dd($user->can('download-backup'));
 });
 
+Route::get('/print-raport/{student}',[PrintController::class,'print_raport'])->name('students.print-raport');
 
+// Route::get('/print-raport/{student}',function(Student $student){
+//     if(auth()->guest()){
+//         abort(404,'Login First');
+//     }
+
+//     return view('print-raport',compact('student'));
+//     // return Pdf::loadFile(public_path().'/myfile.html')->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
+
+//     // $viewPath = view('print-raport')->getPath();
+
+//     // $pdf = Pdf::loadFile($viewPath)->stream('download.pdf');
+
+
+//     // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,609.4488,935.433), 'portrait');
+//     // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,612.283,935.433), 'portrait');//convert mm to point 216 mm
+//     $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,612.283,935.433), 'portrait');//convert mm to point
+//     // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,595.28,935.433), 'portrait');//convert mm to point
+//     return $pdf->stream('print-raport.pdf');
+
+
+// })->name('students.print-raport');
 
 Route::get('/print/{student}', function(Student $student){
     if(auth()->guest()){

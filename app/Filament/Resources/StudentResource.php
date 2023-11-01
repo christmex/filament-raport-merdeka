@@ -157,10 +157,15 @@ class StudentResource extends Resource
                         ->url(fn (Student $record): string => route('students.print', $record))
                         ->openUrlInNewTab()
                         ->icon('heroicon-o-printer'),
+                    
                     Tables\Actions\Action::make('detail_progress_report')
                         ->url(fn (Student $record): string => route('students.print', ['student' => $record,'detailed' => true]))
                         ->openUrlInNewTab()
                         ->icon('heroicon-o-eye'),
+                    Tables\Actions\Action::make('print_raport')
+                        ->url(fn (Student $record): string => route('students.print-raport', $record))
+                        ->openUrlInNewTab()
+                        ->icon('heroicon-o-printer'),
                 ])
             ])
             ->bulkActions([
