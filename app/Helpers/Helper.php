@@ -347,6 +347,11 @@ class Helper {
     }
 
     public static function countFinalGrade($avg, $pas, $avgDiv, $pasDiv){
+
+        if(empty($avgDiv) || empty($pasDiv)){
+            return "Set DIV";
+        }
+        
         $result = $avg*$avgDiv;
         if($pas){
             $result +=$pas*$pasDiv;

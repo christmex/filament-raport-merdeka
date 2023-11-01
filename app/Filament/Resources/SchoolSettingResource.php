@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SchoolSettingResource\Pages;
-use App\Filament\Resources\SchoolSettingResource\RelationManagers;
-use App\Models\SchoolSetting;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Get;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\SchoolSetting;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\SchoolSettingResource\Pages;
+use App\Filament\Resources\SchoolSettingResource\RelationManagers;
 
 class SchoolSettingResource extends Resource
 {
@@ -41,6 +42,18 @@ class SchoolSettingResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('school_progress_report_date')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('sumatif_avg')
+                    ->numeric()
+                    ->live()
+                    ->suffix('%')
+                    ->minValue(0)
+                    ->maxValue(fn(Get $get)=> 100 - $get('pas_avg')),
+                Forms\Components\TextInput::make('pas_avg')
+                    ->numeric()
+                    ->minValue(0)
+                    ->live()
+                    ->suffix('%')
+                    ->maxValue(fn(Get $get)=> 100 - $get('sumatif_avg')),
                 // Forms\Components\TextInput::make('school_principal_signature')
                 //     ->maxLength(255),
             ]);

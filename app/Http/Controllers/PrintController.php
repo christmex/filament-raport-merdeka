@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
+use App\Models\SchoolSetting;
 use App\Models\Student;
 use App\Models\Assessment;
 use App\Models\SchoolTerm;
@@ -51,7 +52,7 @@ class PrintController extends Controller
         // Count avg based on the $data
         $newData = Helper::calculateAverage($data);
 
-        dd($data);
+        
 
         // GET THE PAS 
         $StudentSemesterEvaluation = StudentSemesterEvaluation::with('subjectUserThrough')->where('student_id',$student->id)->whereIn('subject_user_id',array_unique($assessments->pluck('subject_user_id')->toArray()))->get();
@@ -67,10 +68,12 @@ class PrintController extends Controller
             }
         }
 
-        $avgDiv = (80/100);
-        $PASDiv = (20/100);
+        dd($data, $newData);
 
-        // dd($newData);
+        $getSchoolSettings = SchoolSetting::first();
+        $avgDiv = ($getSchoolSettings->sumatif_avg/100);
+        $PASDiv = ($getSchoolSettings->pas_avg/100);
+
         return view('print-raport',compact('student','newData','avgDiv','PASDiv'));
 
 
