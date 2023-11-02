@@ -52,7 +52,7 @@ class PrintController extends Controller
         // Count avg based on the $data
         $newData = Helper::calculateAverage($data);
 
-        
+        $avgPerTopic = Helper::calculateAvgTopic($data);
 
         // GET THE PAS 
         $StudentSemesterEvaluation = StudentSemesterEvaluation::with('subjectUserThrough')->where('student_id',$student->id)->whereIn('subject_user_id',array_unique($assessments->pluck('subject_user_id')->toArray()))->get();
@@ -68,7 +68,17 @@ class PrintController extends Controller
             }
         }
 
-        dd($data, $newData);
+        $minMaxArray = [];
+
+        foreach ($avgPerTopic as $subject => $topics) {
+            
+            $newData[$subject]['minMax'] = [
+                Helper::getKeyByValue($topics, min($topics)) => min($topics),
+                Helper::getKeyByValue($topics, max($topics)) => max($topics)
+            ];
+        }
+
+        dd($newData);
 
         $getSchoolSettings = SchoolSetting::first();
         $avgDiv = ($getSchoolSettings->sumatif_avg/100);

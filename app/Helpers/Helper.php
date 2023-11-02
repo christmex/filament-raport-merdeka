@@ -27,6 +27,16 @@ class Helper {
         return null; // Key not found in the nested array
     }
 
+    public static function getKeyByValue($array, $value) {
+        foreach ($array as $key => $element) {
+            if ($element === $value) {
+                return $key;
+            }
+        }
+        return null; // Return null if the value is not found in the array
+    }
+    
+
     public static function calculateAverage($data) {
         $averages = [];
 
@@ -65,6 +75,43 @@ class Helper {
             $averages[$subject] = ['AVG'=> $average];
         }
     
+        return $averages;
+    }
+
+    public static function calculateAvgTopic($data){
+        $averages = [];
+
+        foreach ($data as $subject => $topics) {
+            $subjectAverages = [];
+            $kkm = 0;
+            
+            foreach ($topics as $topic => $subTopics) {
+                if ($topic === 'KKM') {
+                    $kkm = is_array($subTopics) ? (float)$subTopics['grading'] : (float)$subTopics;
+                    continue;
+                }
+
+                $totalSum = 0;
+                $totalCount = 0;
+
+                foreach ($subTopics as $subTopic => $values) {
+                    if (isset($values['grading'])) {
+                        $totalSum += (float)$values['grading'];
+                        $totalCount++;
+                    }
+                }
+
+                if ($totalCount > 0) {
+                    $topicAverage = round($totalSum / $totalCount);
+                    $subjectAverages[$topic] = $topicAverage;
+                }
+            }
+
+            if (!empty($subjectAverages) && $kkm > 0) {
+                $averages[$subject] = $subjectAverages;
+            }
+        }
+
         return $averages;
     }
     
