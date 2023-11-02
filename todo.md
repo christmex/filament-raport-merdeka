@@ -54,6 +54,10 @@
 IMPORTANT
 - [ ] di bagian student semester evaluation hanya bisa  sekali saja membuat penilain PAS, tidak bolehlebih dari 1, lakukanbpengecekan saat pembuatan, silahkan ditanya apakah bisa buat 2 PAS?
 
+
+HOWTO
+php artisan shield:generate --resource=SubjectDescriptionResource -> for creating permission and policy file for SubjectDescriptionResource
+
 There is 3 ways to use laravel global scope
 
 1. Create new laravel global scope in new class and use it in the specific model
