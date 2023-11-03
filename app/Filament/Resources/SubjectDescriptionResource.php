@@ -10,6 +10,7 @@ use Filament\Tables\Table;
 use App\Models\SubjectUser;
 use Filament\Resources\Resource;
 use App\Models\SubjectDescription;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubjectDescriptionResource\Pages;
@@ -92,7 +93,14 @@ class SubjectDescriptionResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('subject_user_id')
+                    ->label('Subject')
+                    ->options(SubjectUser::with('Subject')->ownSubject()->get()->pluck('subject_user_name','id'))
+                    ->searchable(),
+                SelectFilter::make('topic_setting')
+                    ->preload()
+                    ->optionsLimit(7)
+                    ->relationship('topicSetting', 'topic_setting_name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
