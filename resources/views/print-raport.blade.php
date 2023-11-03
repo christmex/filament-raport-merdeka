@@ -98,6 +98,11 @@
 			-webkit-print-color-adjust:exact !important;
   			print-color-adjust:exact !important;
 		}
+		@media print {
+			#fase {
+				border: none
+			}
+		}
 		/* Global class */
 	</style>
 </head>
@@ -146,6 +151,11 @@
 					<td>Semester</td>
 					<td>:</td>
 					<td>{{Helper::getSchoolTermName()}}</td>
+				</tr>
+				<tr>
+					<td>Fase</td>
+					<td>:</td>
+					<td><input type="text" id="fase" style="display:block;width:10px" value="A"></td>
 				</tr>
 				<tr>
 					<td>Annual Study</td>
