@@ -52,6 +52,10 @@ class Helper {
                     $averages[$subject]['KKM'] = $subTopics;
                     continue;
                 }
+                if($topic === 'subject_user_id'){
+                    // $averages[$subject]['subject_user_id'] = $subTopics;
+                    continue;
+                }
 
 
                 // Iterasi melalui semua subtopik dalam topik
@@ -84,10 +88,14 @@ class Helper {
         foreach ($data as $subject => $topics) {
             $subjectAverages = [];
             $kkm = 0;
+            $subject_user_id = 0;
             
             foreach ($topics as $topic => $subTopics) {
                 if ($topic === 'KKM') {
                     $kkm = is_array($subTopics) ? (float)$subTopics['grading'] : (float)$subTopics;
+                    continue;
+                }
+                if($topic === 'subject_user_id'){
                     continue;
                 }
 

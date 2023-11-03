@@ -176,7 +176,29 @@
 					<td style="text-align: left; padding: 5px">{{$key}}</td>
 					<td>{{$value['KKM']}}</td>
 					<td>{{Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv)}}</td>
-					<td style="text-align: left; padding: 5px; word-wrap: break-word;">lorem10asdkjasdkajsndkasndkasjdnjkasndjkasndjkasndjkasndjkasndjkasndjkasnjkdnasjkdnajksdnjkasdnjkasdna<br><br>asdgasjdgashjdgjasdghjasgdjhasgd</td>
+					<td style="text-align: left; padding: 5px; word-wrap: break-word;">
+						@php 
+							$desc = '';
+						@endphp
+						@foreach($value['minMax_topic_id'] as $MixMaxKey => $MixMaxValue)
+							@php
+								$check = $subjectDescription->where('topic_setting_id',$MixMaxKey)
+								->where('subject_user_id', $value['subject_user_id'])
+								->where('range_start', '<=', $MixMaxValue)
+								->where('range_end', '>=', $MixMaxValue)
+								->first();
+								if($check != null){
+									if($desc != ''){
+										$desc .= $check->description;
+									}else {
+										$desc .= $check->description."<br><br>";
+									}
+								}
+							@endphp
+						@endforeach
+						
+						{!! Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $desc) !!}
+					</td>
 				</tr>
 				@endforeach
 			</tbody>

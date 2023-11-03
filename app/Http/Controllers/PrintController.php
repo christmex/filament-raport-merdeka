@@ -9,6 +9,7 @@ use App\Models\Assessment;
 use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
 use App\Models\StudentSemesterEvaluation;
+use App\Models\SubjectDescription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -45,23 +46,24 @@ class PrintController extends Controller
         // Group By Subject
         $activeData = [];
         foreach ($assessments as $key => $value) {
-            $data[$value->subjectUserThrough->subject_name][$value->topicSetting->topic_setting_name][$value->assessmentMethodSetting->assessment_method_setting_name] = ['grading' => $value->max_grading];
+            $data[$value->subjectUserThrough->subject_name][$value->topicSetting->id][$value->assessmentMethodSetting->assessment_method_setting_name] = ['grading' => $value->max_grading];
             $data[$value->subjectUserThrough->subject_name]['KKM'] = $value->subjectUser->grade_minimum;
+            $data[$value->subjectUserThrough->subject_name]['subject_user_id'] = $value->subject_user_id;
         }
-
+        
         // Count avg based on the $data
         $newData = Helper::calculateAverage($data);
-
+        
         $avgPerTopic = Helper::calculateAvgTopic($data);
 
         // GET THE PAS 
         $StudentSemesterEvaluation = StudentSemesterEvaluation::with('subjectUserThrough')->where('student_id',$student->id)->whereIn('subject_user_id',array_unique($assessments->pluck('subject_user_id')->toArray()))->get();
-        
-
+  
         // Set the KKM
         foreach ($newData as $key => $value) {
             $newData[$key]['KKM'] = $data[$key]['KKM'];
             $newData[$key]['PAS'] = null;
+            $newData[$key]['subject_user_id'] = $data[$key]['subject_user_id'] ;
 
             if($StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()){
                 $newData[$key]['PAS'] =$StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()->grading;
@@ -72,19 +74,51 @@ class PrintController extends Controller
 
         foreach ($avgPerTopic as $subject => $topics) {
             
-            $newData[$subject]['minMax'] = [
+            $newData[$subject]['minMax_topic_id'] = [
                 Helper::getKeyByValue($topics, min($topics)) => min($topics),
                 Helper::getKeyByValue($topics, max($topics)) => max($topics)
             ];
         }
 
-        dd($newData);
+        
+              
+                
+        // dd($newData);
+
+        
 
         $getSchoolSettings = SchoolSetting::first();
         $avgDiv = ($getSchoolSettings->sumatif_avg/100);
         $PASDiv = ($getSchoolSettings->pas_avg/100);
 
-        return view('print-raport',compact('student','newData','avgDiv','PASDiv'));
+        $topicSettingIds = [];
+        foreach ($newData as $key => $value) {
+            foreach ($value['minMax_topic_id'] as $subKey => $subValue) {
+                $topicSettingIds[] = $subKey;
+            }
+        }
+        
+        $subjectUserIds = [];
+        foreach ($newData as $key => $value) {
+            $subjectUserIds[] = $value['subject_user_id'];
+        }
+
+
+        $subjectDescription = SubjectDescription::query()
+        ->whereIn('topic_setting_id',array_unique($topicSettingIds))
+        ->whereIn('subject_user_id',array_unique($subjectUserIds))
+        ->get();
+
+        // dd($subjectDescription);
+        // dd($subjectDescription->where('id',3)
+        // ->where('range_start', '<=', 84)
+        // ->where('range_end', '>=', 84)
+        // ->first());
+        // dd(array_unique($topicSettingIds));
+
+        
+
+        return view('print-raport',compact('student','newData','avgDiv','PASDiv','subjectDescription'));
 
 
         
