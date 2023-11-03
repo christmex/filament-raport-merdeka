@@ -184,12 +184,47 @@ class ManageAssessments extends ManageRecords
                             return Student::whereIn('id',$studentIds)->get()->pluck('student_name','id');
                         }
                     })
+                    // ->default(fn (CheckboxList $component): array => dd($component))
                     ->searchable()
                     ->bulkToggleable()
                     ->columns(3),
+                TextInput::make('topic_name')
+                    ->helperText('Format : (Assessment Method Setting Name) - (Topic Name) | Example: Penugasan 1 - Berhitung 1-10')
+                    ->required(),  
             ])
             ->button()
             ->color('info')
+            ->action(function (array $data): void {
+                $dataArray = [];
+                $getCLassroomStudentIds = $data['student_id'];
+
+                if(!count($getCLassroomStudentIds)){
+                    Notification::make()
+                        ->warning()
+                        ->title('Whopps, cant do that :(')
+                        ->body("No student selected")
+                        ->send();
+                }else {
+                    for($i=0; $i < count($getCLassroomStudentIds); $i++) {
+                        $dataArray[] = [
+                            'student_id' => $getCLassroomStudentIds[$i],
+                            'assessment_method_setting_id' => $data['assessment_method_setting_id'],
+                            'topic_setting_id' => $data['topic_setting_id'],
+                            'subject_user_id' => $data['subject_user_id'],
+                            'topic_name' => $data['topic_name'],
+                        ];
+                    }
+    
+                    if(DB::table('assessments')->insertOrIgnore($dataArray)){
+                        Notification::make()
+                            ->success()
+                            ->title('yeayy, success!')
+                            ->body('Successfully added data')
+                            ->send();
+                    }
+                }
+
+            })
             ,
             Actions\Action::make('Create Bulk Assessment By Classroom')
             ->button()
@@ -213,39 +248,12 @@ class ManageAssessments extends ManageRecords
                     ->multiple()
                     ->selectablePlaceholder(false)
                     ->preload(),
-                
-                // Select::make('classroom_id')
-                //     ->options(fn (Get $get): array => match ($get('category')) {
-                //         'web' => [
-                //             'frontend_web' => 'Frontend development',
-                //             'backend_web' => 'Backend development',
-                //         ],
-                //         'mobile' => [
-                //             'ios_mobile' => 'iOS development',
-                //             'android_mobile' => 'Android development',
-                //         ],
-                //         'design' => [
-                //             'app_design' => 'Panel design',
-                //             'marketing_website_design' => 'Marketing website design',
-                //         ],
-                //         default => [],
-                //     })
-
-                //     // ->options(function(Get $get){
-                //     //     $getSubjectId = SubjectUser::where('id', $get('subject_user_id'))->first()->subject_id;
-                //     //     auth()->user()->activeSubjects->where('subject_id',$getSubjectId);
-
-                //     // })
-                //     ->required()
-                //     ->searchable()
-                //     ->preload()
-                // ,
                 TextInput::make('topic_name')
                 ->helperText('Format : (Assessment Method Setting Name) - (Topic Name) | Example: Penugasan 1 - Berhitung 1-10')
                 ->required(),  
             ])
             ->action(function (array $data): void {
-                // dd($data);
+                
                 $dataArray = [];
                 $selectSubjectUser = SubjectUser::with('classroom')->whereIn('id',$data['subject_user_id'])->get();
                 foreach ($selectSubjectUser as $key => $value) {
