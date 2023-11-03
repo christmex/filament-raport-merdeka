@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Resources\Pages\ManageRecords;
 use App\Filament\Resources\AssessmentResource;
 
@@ -145,7 +146,52 @@ class ManageAssessments extends ManageRecords
             // })
             // ,
             // ExportAction::make(),
+
             Actions\Action::make('Create Assessment By Classroom')
+            ->form([
+                Select::make('assessment_method_setting_id')
+                    ->relationship('assessmentMethodSetting','assessment_method_setting_name')
+                    ->required()
+                    ->searchable()
+                    ->preload(),
+                Select::make('topic_setting_id')
+                    ->relationship('topicSetting','topic_setting_name')
+                    ->required()
+                    ->searchable()
+                    ->helperText('Topic 1 also called Chapter 1 or bab 1, etc, they are all the same 🤩')
+                    ->preload(),
+                Select::make('subject_user_id')
+                    ->label('subject')
+                    ->options(SubjectUser::with('subject')->whereIn('id',auth()->user()->activeSubjects->pluck('id')->toArray())->get()->pluck('subject_user_name', 'id'))
+                    ->required()
+                    ->searchable()
+                    ->live()
+                    ->selectablePlaceholder(false)
+                    ->preload(),
+                CheckboxList::make('student_id')
+                    ->label('Students')
+                    ->options(function(Get $get){
+                        $selectSubjectUser = SubjectUser::with('classroom')->where('id',$get('subject_user_id'))->first();
+                        if($selectSubjectUser){
+                            $studentIds = StudentClassroom::query()
+                            ->where('classroom_id',$selectSubjectUser->classroom_id)
+                            ->where('school_year_id',$selectSubjectUser->school_year_id)
+                            ->where('school_term_id',$selectSubjectUser->school_term_id)
+                            ->get()
+                            ->pluck('student_id')
+                            ->toArray();
+    
+                            return Student::whereIn('id',$studentIds)->get()->pluck('student_name','id');
+                        }
+                    })
+                    ->searchable()
+                    ->bulkToggleable()
+                    ->columns(3),
+            ])
+            ->button()
+            ->color('info')
+            ,
+            Actions\Action::make('Create Bulk Assessment By Classroom')
             ->button()
             ->form([
                 Select::make('assessment_method_setting_id')
@@ -165,9 +211,9 @@ class ManageAssessments extends ManageRecords
                     ->required()
                     ->searchable()
                     ->multiple()
-                    // ->live()
                     ->selectablePlaceholder(false)
                     ->preload(),
+                
                 // Select::make('classroom_id')
                 //     ->options(fn (Get $get): array => match ($get('category')) {
                 //         'web' => [
@@ -215,15 +261,15 @@ class ManageAssessments extends ManageRecords
 
                     // why did i perform this stupid action?
                     // i want to select the homeroom teacher's id, so i can select the studentClassroom based on the homeroom teacher id, but the quistion is why i use where user_id in that condition? please find out again, for now it work fine
-                    $getHomeroomTeacherIds = HomeroomTeacher::query()
-                    ->where('classroom_id',$value->classroom_id)
-                    ->where('school_year_id',$value->school_year_id)
-                    ->where('school_term_id',$value->school_term_id)
-                    // ->where('user_id',auth()->id()) //i comment this because it wont select if the subject teacher not the homeroom teacher, please review this later 
-                    ->get()
-                    ->pluck('id')
-                    ->toArray()
-                    ;
+                    // $getHomeroomTeacherIds = HomeroomTeacher::query()
+                    // ->where('classroom_id',$value->classroom_id)
+                    // ->where('school_year_id',$value->school_year_id)
+                    // ->where('school_term_id',$value->school_term_id)
+                    // // ->where('user_id',auth()->id()) //i comment this because it wont select if the subject teacher not the homeroom teacher, please review this later 
+                    // ->get()
+                    // ->pluck('id')
+                    // ->toArray()
+                    // ;
 
                     // dd($value,$getHomeroomTeacherIds);
 
