@@ -56,7 +56,12 @@ IMPORTANT
 
 
 HOWTO
-php artisan shield:generate --resource=SubjectDescriptionResource -> for creating permission and policy file for SubjectDescriptionResource
+1. git fetch origin && git merge origin/main
+2. composer2 install
+3. php artisan migrate
+4. php artisan shield:generate --resource=SubjectDescriptionResource,StudentDescriptionResource,StudentSemesterEvaluationResource,ReligionResource,ExtracurricularResource,StudentClassroomResource -> for creating permission and policy file for SubjectDescriptionResource
+5. git restore .
+6. after we finish open the aplication then login with super admin, then go to the student classroom menu, and click student sync
 
 There is 3 ways to use laravel global scope
 

@@ -223,7 +223,7 @@
 					<td style="width: 20px">5.</td>
 					<td style="width:300px">{{Str::title('Agama')}}</td>
 					<td style="width: 5px">:</td>
-					<td>{{Str::title($student->religion->name)}}</td>
+					<td> @if($student->religion != null) {{Str::title($student->religion->name)}} @else - @endif</td>
 				</tr>
 				<tr>
 					<td style="width: 20px">6.</td>
@@ -477,6 +477,7 @@
 		</table>
 	</section>
 
+	@if($student->activeExtracurriculars->count())
 	<section id="extracurricular" style="margin-top:20px;">
 		<table>
 			<thead>
@@ -497,7 +498,9 @@
 			</tbody>
 		</table>
 	</section>
+	@endif
 
+	@if($student->activeAbsence->count())
 	<section id="absence" style="margin-top:20px;">
 		<h3 style="margin: 10px 0 10px">Ketidakhadiran</h3>
 		<table>
@@ -517,6 +520,7 @@
 			</tbody>
 		</table>
 	</section>
+	@endif
 
 	<section id="sign" style="margin-top: 50px" >
 		<div id="sign_parent" style="float:left;width:30%;">
