@@ -465,8 +465,6 @@
 									}else {
 										$desc .= $check->description."<br><br>";
 									}
-								}else {
-									$desc .= "loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem";
 								}
 							@endphp
 						@endforeach
@@ -489,11 +487,13 @@
 				</tr>
 			</thead>
 			<tbody>
+				@foreach($student->activeExtracurriculars as $value)
 				<tr draggable="true">
-					<td>1</td>
-					<td style="text-align: left; padding: 5px">Modern Dance</td>
-					<td style="text-align: left; padding: 5px">asss</td>
+					<td>{{$loop->iteration}}</td>
+					<td style="text-align: left; padding: 5px">{{$value->extracurricular->name}}</td>
+					<td style="text-align: left; padding: 5px">{{$value->description}}</td>
 				</tr>
+				@endforeach
 			</tbody>
 		</table>
 	</section>
@@ -510,9 +510,9 @@
 			</thead>
 			<tbody>
 				<tr draggable="true">
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
+					<td>{{$student->activeAbsence->first()->sick}}</td>
+					<td>{{$student->activeAbsence->first()->permission}}</td>
+					<td>{{$student->activeAbsence->first()->other}}</td>
 				</tr>
 			</tbody>
 		</table>
