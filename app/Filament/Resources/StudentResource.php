@@ -166,6 +166,10 @@ class StudentResource extends Resource
                         ->url(fn (Student $record): string => route('students.print-raport', $record))
                         ->openUrlInNewTab()
                         ->icon('heroicon-o-printer'),
+                    Tables\Actions\Action::make('print_raport_cover')
+                        ->url(fn (Student $record): string => route('students.print-raport-cover', $record))
+                        ->openUrlInNewTab()
+                        ->icon('heroicon-o-printer'),
                 ])
             ])
             ->bulkActions([
@@ -324,6 +328,11 @@ class StudentResource extends Resource
             
                         Forms\Components\TextInput::make('born_place')->maxLength(255),
                         Forms\Components\DatePicker::make('born_date'),
+                        Forms\Components\Select::make('sex')
+                        ->options([
+                            0 => 'Perempuan',
+                            1 => 'Laki-Laki'
+                        ]),
                         Forms\Components\Select::make('religion_id')
                             ->relationship('religion','name'),
                         Forms\Components\TextInput::make('status_in_family')->maxLength(255)->placeholder('Ex: Anak'),

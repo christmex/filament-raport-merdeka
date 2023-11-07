@@ -41,6 +41,7 @@ Route::get('/debug',function(){
     // dd($user->can('download-backup'));
 });
 
+Route::get('/print-raport-cover/{student}',[PrintController::class,'print_raport_cover'])->name('students.print-raport-cover');
 Route::get('/print-raport/{student}',[PrintController::class,'print_raport'])->name('students.print-raport');
 
 // Route::get('/print-raport/{student}',function(Student $student){

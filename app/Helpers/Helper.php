@@ -10,6 +10,9 @@ class Helper {
 
     public static $superUserEmail = 'super@sekolahbasic.sch.id';
 
+    public static function getSex($id){
+        return $id == 0 ? "Perempuan" : "Laki-laki";
+    }
     public static function findValueByNestedKey($array, $searchKey) {
         foreach ($array as $key => $value) {
             if ($key === $searchKey) {

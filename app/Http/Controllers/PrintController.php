@@ -3,18 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
-use App\Models\SchoolSetting;
 use App\Models\Student;
 use App\Models\Assessment;
 use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
-use App\Models\StudentSemesterEvaluation;
-use App\Models\SubjectDescription;
 use Illuminate\Http\Request;
+use App\Models\SchoolSetting;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\SubjectDescription;
 use Illuminate\Support\Facades\DB;
+use App\Models\StudentSemesterEvaluation;
 
 class PrintController extends Controller
 {
+    public function print_raport_cover(Student $student){
+        if(auth()->guest()){
+            abort(404,'Login First');
+        }
+
+        $pdf = Pdf::loadView('print-raport-cover', compact('student'))->setPaper(array(0,0,612.283,935.433), 'portrait');//convert mm to point
+        return $pdf->stream('print-raport-cover.pdf');
+        // return $pdf->render();
+
+        return view('print-raport-cover',compact('student'));
+    }
     public function print_raport(Student $student){
         if(auth()->guest()){
             abort(404,'Login First');
@@ -116,9 +128,19 @@ class PrintController extends Controller
         // ->first());
         // dd(array_unique($topicSettingIds));
 
-        
+        // $pdf = Pdf::loadView('print-raport-cover', compact('student'))->setPaper(array(0,0,612.283,935.433), 'portrait');//convert mm to point
+        // // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,595.28,935.433), 'portrait');//convert mm to point
+        // return $pdf->stream('print-raport-cover.pdf');
 
-        return view('print-raport',compact('student','newData','avgDiv','PASDiv','subjectDescription'));
+        
+        
+        // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,609.4488,935.433), 'portrait');
+        // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,612.283,935.433), 'portrait');//convert mm to point 216 mm
+        $pdf = Pdf::loadView('print-raport', compact('student','newData','avgDiv','PASDiv','subjectDescription'))->setPaper(array(0,0,609.449,935.433), 'portrait');//convert mm to point
+        // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,595.28,935.433), 'portrait');//convert mm to point
+        return $pdf->stream('print-raport.pdf');
+
+        // return view('print-raport',compact('student','newData','avgDiv','PASDiv','subjectDescription'));
 
 
         

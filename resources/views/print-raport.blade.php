@@ -9,10 +9,13 @@
 		.page-break {
 			page-break-after: always;
 		}
-		.heading_progress_title {
+		.heading_progress_title,
+		.heading_progress_title_cover {
 			text-align: center;
-			background-color: #FCD5B4;
 			margin-top: 0;
+		}
+		.heading_progress_title {
+			background-color: #FCD5B4;
 		}
 
 
@@ -85,6 +88,16 @@
 		}
 		/* GRADESECTION */
 
+		
+        /* TUTWURI LOGO */
+        #tutwuri_logo, 
+        #student_name {
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+        }
+        /* TUTWURI LOGO */
+
 		/* Global class */
 		table {
 			width: 100%;
@@ -92,21 +105,270 @@
 			border-collapse: collapse;
 			
 		}
-		@page { margin: 21px 0 21px ; }
+		@page {
+            margin: 21px 0;
+            size: 215mm 330mm;
+        }
 		body { 
 			margin: 21px 21px 21px ; 
 			-webkit-print-color-adjust:exact !important;
   			print-color-adjust:exact !important;
+			size: 215mm 330mm;
 		}
+		img {
+            width: 250px;
+            height: 250px;
+            margin: 50px auto!important;
+        }
+        p {
+            margin: 10px auto!important;
+        }
 		@media print {
 			#fase {
 				border: none
 			}
+            footer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+            body {
+                size: 215mm 330mm;
+            }
 		}
+		table#details_ {
+			border-collapse:separate; 
+  			border-spacing: 0 .5em;
+		}
+
+		#fase {
+			border: none
+		}
+		footer {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			text-align: center;
+			padding: 10px;
+		}
+
 		/* Global class */
 	</style>
 </head>
 <body>
+
+	<h1 class="heading_progress_title_cover">RAPOR PESERTA DIDIK</h1>
+	<h1 class="heading_progress_title_cover">
+        {{Helper::getSchoolSetting()->school_name_prefix}}
+        <span class="logoB">B</span>
+        <span class="logoA">A</span>
+        <span class="logoS">S</span>
+        <span class="logoI">I</span>
+        <span class="logoC">C</span>
+        <span class="font511880">{{Helper::getSchoolSetting()->school_name_suffix}}</span>
+    </h1>
+
+    <div style="text-align: center;">
+        <img src="{{asset('tutwuri.png')}}" alt="" id="tutwuri_logo">
+    </div>
+
+    <p id="student_name">Nama Peserta Didik :</p>
+    <h1 class="heading_progress_title_cover">{{Str::title($student->student_name)}}</h1>
+
+    <section style="margin-bottom: 20px; margin-top: 40px">
+        <p id="student_name">NIS / NISN</p>
+        <h1 class="heading_progress_title_cover">{{$student->student_nis}}/{{$student->student_nisn}}</h1>
+    </section>
+    <div style="text-align: center;">
+        <img src="{{asset('logo_basic.jpg')}}" alt="" id="tutwuri_logo">
+    </div>
+
+	<footer class="heading_progress_title_cover"><h2>Kementerian Pendidikan dan Kebudayaan<br>Republik Indonesia</h2></footer>
+
+	<div class="page-break"></div>
+
+	<h1 class="heading_progress_title">Identitas Peserta Didik</h1>
+	<section id="student_details">
+		<div style="float: left; width: 100%;">
+			<table id="details_">
+				<tr>
+					<td style="width: 20px">1.</td>
+					<td style="width:300px">{{Str::title('Nama lengkap peserta didik')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{Str::title($student->student_name)}}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">2.</td>
+					<td style="width:300px">NIS/NISN</td>
+					<td style="width: 5px">:</td>
+					<td>{{$student->student_nis}}/{{$student->student_nisn}}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">3.</td>
+					<td style="width:300px">{{Str::title('tempat, tanggal lahir')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{Str::title($student->born_place)}}, {{Str::title($student->born_date)}}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">4.</td>
+					<td style="width:300px">{{Str::title('jenis kelamin')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty($student->sex) ? Str::title(Helper::getSex($student->sex)) : "-"}}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">5.</td>
+					<td style="width:300px">{{Str::title('Agama')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{Str::title($student->religion->name)}}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">6.</td>
+					<td style="width:300px">{{Str::title('Status dalam keluarga')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{Str::title($student->status_in_family)}}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">7.</td>
+					<td style="width:300px">{{Str::title('Anak ke')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{Str::title($student->sibling_order_in_family)}}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">8.</td>
+					<td style="width:300px">{{Str::title('Alamat peserta didik')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{Str::title($student->address)}}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">9.</td>
+					<td style="width:300px">{{Str::title('nomor telepon rumah/HP')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{Str::title($student->phone)}}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">10.</td>
+					<td style="width:300px">{{Str::title('pendidikan sebelumnya')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{Str::title($student->previous_education)}}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">11.</td>
+					<td style="width:300px">{{Str::title('orang tua')}}</td>
+					<td style="width: 5px"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">a. {{Str::title('Nama ayah')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty(Str::title($student->father_name)) ? Str::title($student->father_name) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">b. {{Str::title('Nama ibu')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty(Str::title($student->mother_name)) ? Str::title($student->mother_name) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">c. {{Str::title('alamat')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty(Str::title($student->parent_address)) ? Str::title($student->parent_address) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">c. {{Str::title('nomor telepon/HP')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty(Str::title($student->parent_phone)) ? Str::title($student->parent_phone) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">12.</td>
+					<td style="width:300px">{{Str::title('pekerjaan orang tua')}}</td>
+					<td style="width: 5px"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">a. {{Str::title('ayah')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty(Str::title($student->father_job)) ? Str::title($student->father_job) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">b. {{Str::title('ibu')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty(Str::title($student->mother_job)) ? Str::title($student->mother_job) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">13.</td>
+					<td style="width:300px">{{Str::title('wali peserta didik')}}</td>
+					<td style="width: 5px"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">a. {{Str::title('nama wali')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty(Str::title($student->guardian_name)) ? Str::title($student->guardian_name) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">b. {{Str::title('nomor telepon/HP')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty(Str::title($student->guardian_phone)) ? Str::title($student->guardian_phone) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">c. {{Str::title('Alamat')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty(Str::title($student->guardian_address)) ? Str::title($student->guardian_address) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">d. {{Str::title('Pekerjaan')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty(Str::title($student->guardian_job)) ? Str::title($student->guardian_job) : "-"  }}</td>
+				</tr>
+				
+			</table>
+		</div>
+	</section>
+	<div style="clear: both;"></div>
+	<section id="student_photo" style="float:right; margin-right: 100px;margin-top: 30px">
+		<div style="display: inline-block;border:1px solid black;width: 120px;height: 150px;text-align:center; line-height: 100px;margin-right: 10px">
+			Pas foto
+			3 x4
+		</div>
+		<section id="sign_principle" style="margin: 5% auto 0; display:inline-block">
+			<div class="sign_top">
+				<p>Batam, {!!Helper::getSchoolSetting()->school_progress_report_date!!} </p>
+				<p>Kepala Sekolah
+					{{Helper::getSchoolSetting()->school_name_prefix}}
+					<span class="logoB">B</span>
+					<span class="logoA">A</span>
+					<span class="logoS">S</span>
+					<span class="logoI">I</span>
+					<span class="logoC">C</span>
+					<span class="font511880">{{Helper::getSchoolSetting()->school_name_suffix}}</span>
+				</p>
+			</div>
+
+			<div class="border_sign" style="margin-top: 60px">
+				<p style="text-decoration:underline;text-decoration-thickness: 1px; text-underline-offset: 8px;">{{Helper::getSchoolSetting()->school_principal_name}}</p>
+			</div>
+		</section>
+	</section>
+	<div style="clear: both;"></div>
+	<footer class=""><h2>Vision : To Know God and God is Known</h2></footer>
+
+
+
+	<div class="page-break"></div>
+	<!--  -->
 	<h1 class="heading_progress_title">Laporan Hasil Belajar Siswa</h1>
 	<section id="student_details">
 		<div style="float: left; width: 70%;">
@@ -155,7 +417,7 @@
 				<tr>
 					<td>Fase</td>
 					<td>:</td>
-					<td><input type="text" id="fase" style="display:block;width:10px" value="A"></td>
+					<td><input type="text" id="fase" style="display:block;width:10px" value="{{request('fase','A')}}"></td>
 				</tr>
 				<tr>
 					<td>Annual Study</td>
@@ -203,6 +465,8 @@
 									}else {
 										$desc .= $check->description."<br><br>";
 									}
+								}else {
+									$desc .= "loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem";
 								}
 							@endphp
 						@endforeach
@@ -263,7 +527,7 @@
 
 			<div class="border_sign">
 				<p style="visibility:hidden">parentsign</p>
-				<hr style="margin-top:-15px;display: block">
+				<hr style="margin-top:-10px;display: block">
 			</div>
 		</div>
 		<div id="sign_main_teacher" style="float:right;width:auto;">
@@ -274,7 +538,7 @@
 
 			<div class="border_sign">
 				<p>{{auth()->user()->name}}</p>
-				<hr style="margin-top:-15px;display: block">
+				<hr style="margin-top:-10px;display: block">
 			</div>
 		</div>
 	</section>
@@ -301,6 +565,9 @@
 			<!-- <hr> -->
 		</div>
 	</section>
+
+	
+	<footer class=""><h2>Vision : To Know God and God is Known</h2></footer>
 
 	<!-- <div class="page-break"></div> -->
 	
