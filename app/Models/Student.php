@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\StudentAbsence;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -138,7 +139,7 @@ class Student extends Model
     }
     public function absence():HasMany
     {
-        return $this->HasMany(Studentabsence::class);
+        return $this->HasMany(StudentAbsence::class);
     }
     public function activeAbsence():HasMany
     {
