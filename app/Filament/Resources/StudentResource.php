@@ -22,6 +22,7 @@ use Filament\Forms\Components\Repeater;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Enums\ActionsPosition;
 use Illuminate\Database\Eloquent\Collection;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -166,12 +167,12 @@ class StudentResource extends Resource
                         ->url(fn (Student $record): string => route('students.print-raport', $record))
                         ->openUrlInNewTab()
                         ->icon('heroicon-o-printer'),
-                    Tables\Actions\Action::make('print_raport_cover')
-                        ->url(fn (Student $record): string => route('students.print-raport-cover', $record))
-                        ->openUrlInNewTab()
-                        ->icon('heroicon-o-printer'),
+                    // Tables\Actions\Action::make('print_raport_cover')
+                    //     ->url(fn (Student $record): string => route('students.print-raport-cover', $record))
+                    //     ->openUrlInNewTab()
+                    //     ->icon('heroicon-o-printer'),
                 ])
-            ])
+            ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
