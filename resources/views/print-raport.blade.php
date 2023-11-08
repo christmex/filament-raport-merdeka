@@ -417,7 +417,7 @@
 				<tr>
 					<td>Fase</td>
 					<td>:</td>
-					<td><input type="text" id="fase" style="display:block;width:10px" value="{{request('fase','A')}}"></td>
+					<td><input type="text" id="fase" style="display:block;width:10px" value="{{Str::upper(request('fase','A'))}}"></td>
 				</tr>
 				<tr>
 					<td>Annual Study</td>
@@ -476,6 +476,10 @@
 			</tbody>
 		</table>
 	</section>
+
+	@if(request('newPageAfterFirstTabel'))
+	<div class="page-break"></div>
+	@endif
 
 	@if($student->activeExtracurriculars->count())
 	<section id="extracurricular" style="margin-top:20px;">

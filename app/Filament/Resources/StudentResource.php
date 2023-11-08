@@ -164,8 +164,16 @@ class StudentResource extends Resource
                         ->openUrlInNewTab()
                         ->icon('heroicon-o-eye'),
                     Tables\Actions\Action::make('print_raport')
-                        ->url(fn (Student $record): string => route('students.print-raport', $record))
-                        ->openUrlInNewTab()
+                        ->form([
+                            Forms\Components\TextInput::make('fase')
+                                ->required(),
+                            Forms\Components\Toggle::make('newPageAfterFirstTabel'),
+                        ])
+                        ->action(function(array $data, Student $record){
+                            return redirect()->route('students.print-raport', [$record->id, 'fase' => $data['fase'],'newPageAfterFirstTabel'=>$data['newPageAfterFirstTabel']]);
+                        })
+                        // ->url(fn (Student $record): string => route('students.print-raport', $record))
+                        // ->openUrlInNewTab()
                         ->icon('heroicon-o-printer'),
                     // Tables\Actions\Action::make('print_raport_cover')
                     //     ->url(fn (Student $record): string => route('students.print-raport-cover', $record))
