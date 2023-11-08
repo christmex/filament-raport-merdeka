@@ -62,6 +62,9 @@ class PrintController extends Controller
             $data[$value->subjectUserThrough->subject_name]['KKM'] = $value->subjectUser->grade_minimum;
             $data[$value->subjectUserThrough->subject_name]['subject_user_id'] = $value->subject_user_id;
         }
+
+        // dd($data);
+        // dd($assessments->whereIn('subject_user_id',[78,46])->toArray());
         
         // Count avg based on the $data
         $newData = Helper::calculateAverage($data);
