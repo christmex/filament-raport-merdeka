@@ -26,6 +26,7 @@ use Filament\Tables\Enums\ActionsPosition;
 use Illuminate\Database\Eloquent\Collection;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Resources\StudentResource\RelationManagers;
 
 class StudentResource extends Resource
@@ -183,6 +184,7 @@ class StudentResource extends Resource
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    ExportBulkAction::make(),
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
