@@ -10,6 +10,24 @@ class Helper {
 
     public static $superUserEmail = 'super@sekolahbasic.sch.id';
 
+    public static function predicate($avg, $kkm){
+        $A = 100-(100 - $kkm)/3 ;
+        $B = $A-(100-$kkm)/3 ;
+        $C = $B-(100-$kkm)/3-0.5;
+
+        if ($avg > $A) {
+            $result = "Amat Baik";
+        } elseif ($avg > $B) {
+            $result = "Baik";
+        } elseif ($avg > $C) {
+            $result = "Cukup";
+        } else {
+            $result = "Kurang";
+        }
+
+        return $result;
+    }
+
     public static function getSex($id){
         return $id == 0 ? "Perempuan" : "Laki-laki";
     }
@@ -59,6 +77,9 @@ class Helper {
                     // $averages[$subject]['subject_user_id'] = $subTopics;
                     continue;
                 }
+                if($topic === 'is_curiculum_basic'){
+                    continue;
+                }
 
 
                 // Iterasi melalui semua subtopik dalam topik
@@ -99,6 +120,10 @@ class Helper {
                     continue;
                 }
                 if($topic === 'subject_user_id'){
+                    continue;
+                }
+
+                if($topic === 'is_curiculum_basic'){
                     continue;
                 }
 

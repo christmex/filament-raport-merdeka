@@ -167,6 +167,7 @@ class StudentResource extends Resource
                     Tables\Actions\Action::make('print_raport')
                         ->form([
                             Forms\Components\TextInput::make('fase')
+                                ->default('A')
                                 ->required(),
                             Forms\Components\Toggle::make('newPageAfterFirstTabel'),
                         ])

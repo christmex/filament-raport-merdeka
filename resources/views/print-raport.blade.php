@@ -441,7 +441,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($newData as $key => $value)
+				@foreach($schoolCurriculum as $key => $value)
 				<!-- <tr draggable="true"> -->
 				<tr>
 					<td>{{$loop->iteration}}</td>
@@ -452,30 +452,89 @@
 						@php 
 							$desc = '';
 						@endphp
+						
 						@foreach($value['minMax_topic_id'] as $MixMaxKey => $MixMaxValue)
 							@php
-								$check = $subjectDescription->where('topic_setting_id',$MixMaxKey)
+								$check = $subjectDescription
+								->where('topic_setting_id',$MixMaxKey)
 								->where('subject_user_id', $value['subject_user_id'])
-								->where('range_start', '<=', $MixMaxValue)
-								->where('range_end', '>=', $MixMaxValue)
 								->first();
 								if($check != null){
 									if($desc != ''){
-										$desc .= $check->description;
+										$desc .= Str::replace('[STUDENT_PREDICATE]', Helper::predicate($MixMaxValue,$value['KKM']), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 									}else {
-										$desc .= $check->description."<br><br>";
+										$desc .= Str::replace('[STUDENT_PREDICATE]', Helper::predicate($MixMaxValue,$value['KKM']), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br><br>";
 									}
 								}
 							@endphp
 						@endforeach
 						
-						{!! Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $desc) !!}
+
+						{!! $desc !!}
 					</td>
 				</tr>
 				@endforeach
 			</tbody>
 		</table>
 	</section>
+
+	@if(count($basicCurriculum))
+	<section id="grade" style="margin-top:20px;">
+		<h3 style="margin: 10px 0 10px">
+            <span class="logoB">B</span>
+            <span class="logoA">A</span>
+            <span class="logoS">S</span>
+            <span class="logoI">I</span>
+            <span class="logoC">C</span>
+        Elementary Curriculum</h3>
+		<table>
+			<thead>
+				<tr>
+					<th style="vertical-align: middle;width: 5%">No</th>
+					<th style="vertical-align: middle;width: 30%">Mata Pelajaran</th>
+					<th style="vertical-align: middle;width: 10%">KKM</th>
+					<th style="vertical-align: middle;width: 15%">Nilai Akhir</th>
+					<th style="vertical-align: middle;width: 40%">Deskripsi</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($basicCurriculum as $key => $value)
+				<!-- <tr draggable="true"> -->
+				<tr>
+					<td>{{$loop->iteration}}</td>
+					<td style="text-align: left; padding: 5px">{{$key}}</td>
+					<td>{{$value['KKM']}}</td>
+					<td>{{Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv)}}</td>
+					<td style="text-align: left; padding: 5px; word-wrap: break-word;">
+						@php 
+							$desc = '';
+						@endphp
+						
+						@foreach($value['minMax_topic_id'] as $MixMaxKey => $MixMaxValue)
+							@php
+								$check = $subjectDescription
+								->where('topic_setting_id',$MixMaxKey)
+								->where('subject_user_id', $value['subject_user_id'])
+								->first();
+								if($check != null){
+									if($desc != ''){
+										$desc .= Str::replace('[STUDENT_PREDICATE]', Helper::predicate($MixMaxValue,$value['KKM']), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+									}else {
+										$desc .= Str::replace('[STUDENT_PREDICATE]', Helper::predicate($MixMaxValue,$value['KKM']), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br><br>";
+									}
+								}
+							@endphp
+						@endforeach
+						
+
+						{!! $desc !!}
+					</td>
+				</tr>
+				@endforeach
+			</tbody>
+		</table>
+	</section>
+	@endif
 
 	@if(request('newPageAfterFirstTabel') && ($student->activeExtracurriculars->count() || $student->activeAbsence->count()))
 	<div class="page-break"></div>

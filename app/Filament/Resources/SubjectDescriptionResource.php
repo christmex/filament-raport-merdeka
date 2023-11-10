@@ -20,7 +20,9 @@ class SubjectDescriptionResource extends Resource
 {
     protected static ?string $model = SubjectDescription::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-hand-thumb-up';
+
+    protected static ?string $navigationGroup = 'Configuration';
 
     public static function form(Form $form): Form
     {
@@ -39,22 +41,23 @@ class SubjectDescriptionResource extends Resource
                     ->searchable()
                     ->helperText('Topic 1 also called Chapter 1 or bab 1, etc, they are all the same 🤩')
                     ->preload(),
-                Forms\Components\TextInput::make('range_start')
-                    ->numeric()
-                    ->minValue(0)
-                    ->maxValue(100)
-                    ->required(),
-                Forms\Components\TextInput::make('range_end')
-                    ->numeric()
-                    ->minValue(0)
-                    ->maxValue(100)
-                    ->required(),
+                // Forms\Components\TextInput::make('range_start')
+                //     ->numeric()
+                //     ->minValue(0)
+                //     ->maxValue(100)
+                //     ->required(),
+                // Forms\Components\TextInput::make('range_end')
+                //     ->numeric()
+                //     ->minValue(0)
+                //     ->maxValue(100)
+                //     ->required(),
                 // Forms\Components\TextInput::make('topic_name')
                 //     ->maxLength(255),
                 // Forms\Components\TextInput::make('predicate')
                 //     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->helperText('Please use [STUDENT_NAME] when you want to mention the student name and [STUDENT_PREDICATE] if you want mention the predicate'),
             ]);
     }
 
@@ -69,18 +72,18 @@ class SubjectDescriptionResource extends Resource
                 Tables\Columns\TextColumn::make('topicSetting.topic_setting_name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextInputColumn::make('range_start')
-                    ->type('number')
-                    ->rules(['required','integer','min:0', 'max:100']),
-                Tables\Columns\TextInputColumn::make('range_end')
-                    ->type('number')
-                    ->rules(['required','integer','min:0', 'max:100']),
-                Tables\Columns\TextColumn::make('topic_name')
-                    ->searchable()
-                    ->toggleable(),
-                Tables\Columns\TextColumn::make('predicate')
-                    ->searchable()
-                    ->toggleable(),
+                // Tables\Columns\TextInputColumn::make('range_start')
+                //     ->type('number')
+                //     ->rules(['required','integer','min:0', 'max:100']),
+                // Tables\Columns\TextInputColumn::make('range_end')
+                //     ->type('number')
+                //     ->rules(['required','integer','min:0', 'max:100']),
+                // Tables\Columns\TextColumn::make('topic_name')
+                //     ->searchable()
+                //     ->toggleable(),
+                // Tables\Columns\TextColumn::make('predicate')
+                //     ->searchable()
+                //     ->toggleable(),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

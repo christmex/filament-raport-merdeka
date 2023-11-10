@@ -33,25 +33,25 @@ class ManageSubjectDescriptions extends ManageRecords
                     ->searchable()
                     ->helperText('Topic 1 also called Chapter 1 or bab 1, etc, they are all the same 🤩')
                     ->preload(),
-                \Filament\Forms\Components\TextInput::make('range_start')
-                    ->numeric()
-                    ->minValue(0)
-                    ->maxValue(100)
-                    ->required(),
-                \Filament\Forms\Components\TextInput::make('range_end')
-                    ->numeric()
-                    ->minValue(0)
-                    ->maxValue(100)
-                    ->required(),
-                \Filament\Forms\Components\TextInput::make('topic_name')
-                    ->placeholder('optional')
-                    ->maxLength(255),
-                \Filament\Forms\Components\TextInput::make('predicate')
-                    ->placeholder('optional')
-                    ->maxLength(255),
+                // \Filament\Forms\Components\TextInput::make('range_start')
+                //     ->numeric()
+                //     ->minValue(0)
+                //     ->maxValue(100)
+                //     ->required(),
+                // \Filament\Forms\Components\TextInput::make('range_end')
+                //     ->numeric()
+                //     ->minValue(0)
+                //     ->maxValue(100)
+                //     ->required(),
+                // \Filament\Forms\Components\TextInput::make('topic_name')
+                //     ->placeholder('optional')
+                //     ->maxLength(255),
+                // \Filament\Forms\Components\TextInput::make('predicate')
+                //     ->placeholder('optional')
+                //     ->maxLength(255),
                 \Filament\Forms\Components\Textarea::make('description')
                     ->columnSpanFull()
-                    ->helperText('Please use [STUDENT_NAME] when you want to mention the student name'),
+                    ->helperText('Please use [STUDENT_NAME] when you want to mention the student name and [STUDENT_PREDICATE] if you want mention the predicate'),
             ])
             ->action(function(array $data){
                 $dataArray = [];
@@ -61,10 +61,10 @@ class ManageSubjectDescriptions extends ManageRecords
                     $dataArray[] = [
                         'subject_user_id' => $value,
                         'topic_setting_id' => $data['topic_setting_id'],
-                        'range_start' => $data['range_start'],
-                        'range_end' => $data['range_end'],
-                        'topic_name' => $data['topic_name'],
-                        'predicate' => $data['predicate'],
+                        // 'range_start' => $data['range_start'],
+                        // 'range_end' => $data['range_end'],
+                        // 'topic_name' => $data['topic_name'],
+                        // 'predicate' => $data['predicate'],
                         'description' => $data['description'],
                     ];
                 }   

@@ -40,6 +40,7 @@ class PrintController extends Controller
         ->join('subjects', 'subject_users.subject_id', '=', 'subjects.id') // Inner join another_table inside subject_users
     
         ->select(
+            'subjects.is_curiculum_basic',
             'subject_user_id',
             'assessment_method_setting_id',
             'topic_setting_id',
@@ -49,7 +50,7 @@ class PrintController extends Controller
         ->where('subject_users.school_year_id', SchoolYear::active())
         ->where('subject_users.school_term_id', SchoolTerm::active())
         ->whereNotNull('grading')
-        ->groupBy( 'assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
+        ->groupBy( 'subjects.is_curiculum_basic','assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
         ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
         ->orderByDesc('max_grading') // Order by the maximum grading
         ->withoutGlobalScope('subjectUser')
@@ -61,6 +62,7 @@ class PrintController extends Controller
             $data[$value->subjectUserThrough->subject_name][$value->topicSetting->id][$value->assessmentMethodSetting->assessment_method_setting_name] = ['grading' => $value->max_grading];
             $data[$value->subjectUserThrough->subject_name]['KKM'] = $value->subjectUser->grade_minimum;
             $data[$value->subjectUserThrough->subject_name]['subject_user_id'] = $value->subject_user_id;
+            $data[$value->subjectUserThrough->subject_name]['is_curiculum_basic'] = $value->is_curiculum_basic;
         }
 
         // dd($data);
@@ -83,6 +85,7 @@ class PrintController extends Controller
             $newData[$key]['KKM'] = $data[$key]['KKM'];
             $newData[$key]['PAS'] = null;
             $newData[$key]['subject_user_id'] = $data[$key]['subject_user_id'] ;
+            $newData[$key]['is_curiculum_basic'] = $data[$key]['is_curiculum_basic'] ;
 
             if($StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()){
                 $newData[$key]['PAS'] =$StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()->grading;
@@ -119,10 +122,29 @@ class PrintController extends Controller
 
 
         $subjectDescription = SubjectDescription::query()
+        ->with('subjectUser')
         ->whereIn('topic_setting_id',array_unique($topicSettingIds))
         ->whereIn('subject_user_id',array_unique($subjectUserIds))
         ->withoutGlobalScope('subjectUser')
         ->get();
+
+        // dd($newData);
+        $basicCurriculum = [];
+        foreach ($newData as $key => $value) { 
+            if($newData[$key]['is_curiculum_basic']){
+                $basicCurriculum[$key] = $newData[$key];
+            }
+        }
+
+        $schoolCurriculum = [];
+        foreach ($newData as $key => $value) { 
+            if($newData[$key]['is_curiculum_basic'] == 0){
+                $schoolCurriculum[$key] = $newData[$key];
+            }
+        }
+
+        // dd($basicCurriculum,$schoolCurriculum, $newData);
+        // return view('print-raport',compact('student','basicCurriculum','schoolCurriculum','avgDiv','PASDiv','subjectDescription'));
 
     
         // ->where('range_start', '<=', 84)
@@ -137,11 +159,11 @@ class PrintController extends Controller
         
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,609.4488,935.433), 'portrait');
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,612.283,935.433), 'portrait');//convert mm to point 216 mm
-        $pdf = Pdf::loadView('print-raport', compact('student','newData','avgDiv','PASDiv','subjectDescription'))->setPaper(array(0,0,609.449,935.433), 'portrait');//convert mm to point
+        $pdf = Pdf::loadView('print-raport', compact('student','basicCurriculum','schoolCurriculum','avgDiv','PASDiv','subjectDescription'))->setPaper(array(0,0,609.449,935.433), 'portrait');//convert mm to point
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,595.28,935.433), 'portrait');//convert mm to point
         return $pdf->stream('print-raport.pdf');
 
-        // return view('print-raport',compact('student','newData','avgDiv','PASDiv','subjectDescription'));
+        
 
 
         
