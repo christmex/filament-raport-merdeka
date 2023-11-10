@@ -477,7 +477,7 @@
 		</table>
 	</section>
 
-	@if(request('newPageAfterFirstTabel'))
+	@if(request('newPageAfterFirstTabel') && ($student->activeExtracurriculars->count() || $student->activeAbsence->count()))
 	<div class="page-break"></div>
 	@endif
 
