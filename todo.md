@@ -55,6 +55,7 @@
 
 IMPORTANT
 - [x] di bagian student semester evaluation hanya bisa  sekali saja membuat penilain PAS, tidak bolehlebih dari 1, lakukanbpengecekan saat pembuatan, silahkan ditanya apakah bisa buat 2 PAS?  -> hanya bisa 1 nilai assessment
+- [x] ada bug saat  print raport, description  tidak muncul, contoh matematika dimatthew 1 (sudah solve di query  di tambah withoutGlobalScope)
 
 
 HOWTO

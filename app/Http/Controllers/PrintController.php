@@ -87,6 +87,7 @@ class PrintController extends Controller
 
         $minMaxArray = [];
 
+
         foreach ($avgPerTopic as $subject => $topics) {
             
             $newData[$subject]['minMax_topic_id'] = [
@@ -95,12 +96,6 @@ class PrintController extends Controller
             ];
         }
 
-        
-              
-                
-        // dd($newData);
-
-        
 
         $getSchoolSettings = SchoolSetting::first();
         $avgDiv = ($getSchoolSettings->sumatif_avg/100);
@@ -122,10 +117,10 @@ class PrintController extends Controller
         $subjectDescription = SubjectDescription::query()
         ->whereIn('topic_setting_id',array_unique($topicSettingIds))
         ->whereIn('subject_user_id',array_unique($subjectUserIds))
+        ->withoutGlobalScope('subjectUser')
         ->get();
 
-        // dd($subjectDescription);
-        // dd($subjectDescription->where('id',3)
+    
         // ->where('range_start', '<=', 84)
         // ->where('range_end', '>=', 84)
         // ->first());
@@ -135,7 +130,6 @@ class PrintController extends Controller
         // // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,595.28,935.433), 'portrait');//convert mm to point
         // return $pdf->stream('print-raport-cover.pdf');
 
-        
         
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,609.4488,935.433), 'portrait');
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,612.283,935.433), 'portrait');//convert mm to point 216 mm
