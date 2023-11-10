@@ -72,7 +72,11 @@ class PrintController extends Controller
         $avgPerTopic = Helper::calculateAvgTopic($data);
 
         // GET THE PAS 
-        $StudentSemesterEvaluation = StudentSemesterEvaluation::with('subjectUserThrough')->where('student_id',$student->id)->whereIn('subject_user_id',array_unique($assessments->pluck('subject_user_id')->toArray()))->get();
+        $StudentSemesterEvaluation = StudentSemesterEvaluation::with('subjectUserThrough')
+        ->where('student_id',$student->id)
+        ->whereIn('subject_user_id',array_unique($assessments->pluck('subject_user_id')->toArray()))
+        ->withoutGlobalScope('subjectUser')
+        ->get();
   
         // Set the KKM
         foreach ($newData as $key => $value) {
