@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\SubjectDescriptionResource\Pages;
 
+use App\Models\SubjectDescription;
 use Filament\Actions;
 use App\Models\SubjectUser;
 use Illuminate\Support\Facades\DB;
@@ -51,6 +52,7 @@ class ManageSubjectDescriptions extends ManageRecords
                 //     ->maxLength(255),
                 \Filament\Forms\Components\Textarea::make('description')
                     ->columnSpanFull()
+                    ->required()
                     ->helperText('Please use [STUDENT_NAME] when you want to mention the student name and [STUDENT_PREDICATE] if you want mention the predicate'),
             ])
             ->action(function(array $data){
@@ -67,15 +69,32 @@ class ManageSubjectDescriptions extends ManageRecords
                         // 'predicate' => $data['predicate'],
                         'description' => $data['description'],
                     ];
-                }   
-                
-                if(DB::table('subject_descriptions')->insertOrIgnore($dataArray)){
-                    Notification::make()
-                        ->success()
-                        ->title('yeayy, success!')
-                        ->body('Successfully added data')
-                        ->send();
                 }
+
+                $check = SubjectDescription::with('subjectUserThrough')->where('topic_setting_id',$data['topic_setting_id'])
+                ->whereIn('subject_user_id', $data['subject_user_id'])->get();
+                if($check->count()){
+                    $names ='';
+
+                        foreach ($check as $key => $value) {
+                            $names .= $value->subjectUserThrough->subject_name."<br>";
+                        }
+                        
+                        Notification::make()
+                        ->danger()
+                        ->title('Failed! data exist with selected subject and topic')
+                        ->body($names)
+                        ->send();
+                }else {
+                    if(DB::table('subject_descriptions')->insertOrIgnore($dataArray)){
+                        Notification::make()
+                            ->success()
+                            ->title('yeayy, success!')
+                            ->body('Successfully added data')
+                            ->send();
+                    }
+                }
+                
             }),
         ];
     }

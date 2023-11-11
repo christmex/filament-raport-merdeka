@@ -10,6 +10,7 @@ use Filament\Tables\Table;
 use App\Models\SubjectUser;
 use Filament\Resources\Resource;
 use App\Models\SubjectDescription;
+use Illuminate\Validation\Rules\Unique;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -34,13 +35,21 @@ class SubjectDescriptionResource extends Resource
                     ->required()
                     ->searchable()
                     ->selectablePlaceholder(false)
-                    ->preload(),
+                    ->preload()
+                    ->live()
+                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                        return $rule->where('topic_setting_id', $get('topic_setting_id'));
+                    },ignoreRecord:true),
                 Forms\Components\Select::make('topic_setting_id')
                     ->relationship('topicSetting','topic_setting_name')
                     ->required()
+                    ->live()
                     ->searchable()
                     ->helperText('Topic 1 also called Chapter 1 or bab 1, etc, they are all the same 🤩')
-                    ->preload(),
+                    ->preload()
+                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                        return $rule->where('subject_user_id', $get('subject_user_id'));
+                    },ignoreRecord:true),
                 // Forms\Components\TextInput::make('range_start')
                 //     ->numeric()
                 //     ->minValue(0)
@@ -57,6 +66,7 @@ class SubjectDescriptionResource extends Resource
                 //     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull()
+                    ->required()
                     ->helperText('Please use [STUDENT_NAME] when you want to mention the student name and [STUDENT_PREDICATE] if you want mention the predicate'),
             ]);
     }
