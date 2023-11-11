@@ -432,7 +432,7 @@ class Helper {
     public static function countFinalGrade($avg, $pas, $avgDiv, $pasDiv){
 
         if(empty($avgDiv) || empty($pasDiv)){
-            return "Set DIV";
+            return "Kontak adm untuk setting alokasi bobot di menu school setting";
         }
         
         $result = $avg*$avgDiv;
