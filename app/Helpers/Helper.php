@@ -16,7 +16,7 @@ class Helper {
         $C = $B-(100-$kkm)/3-0.5;
 
         if ($avg > $A) {
-            $result = "Amat Baik";
+            $result = "Sangat Baik";
         } elseif ($avg > $B) {
             $result = "Baik";
         } elseif ($avg > $C) {

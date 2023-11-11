@@ -98,8 +98,10 @@ class PrintController extends Controller
         foreach ($avgPerTopic as $subject => $topics) {
             
             $newData[$subject]['minMax_topic_id'] = [
-                Helper::getKeyByValue($topics, min($topics)) => min($topics),
-                Helper::getKeyByValue($topics, max($topics)) => max($topics)
+                // Helper::getKeyByValue($topics, min($topics)) => min($topics),
+                // Helper::getKeyByValue($topics, max($topics)) => max($topics)
+                Helper::getKeyByValue($topics, max($topics)) => max($topics),
+                Helper::getKeyByValue($topics, min($topics)) => min($topics)
             ];
         }
 
