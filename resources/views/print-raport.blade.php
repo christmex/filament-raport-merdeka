@@ -116,8 +116,8 @@
 			size: 215mm 330mm;
 		}
 		img {
-            width: 250px;
-            height: 250px;
+            width: 200px;
+            height: 200px;
             margin: 50px auto!important;
         }
         p {
@@ -160,8 +160,7 @@
 	</style>
 </head>
 <body>
-
-	<h1 class="heading_progress_title_cover">RAPOR PESERTA DIDIK</h1>
+	<h1 class="heading_progress_title_cover" style="margin-top:50px">RAPOR PESERTA DIDIK</h1>
 	<h1 class="heading_progress_title_cover">
         {{Helper::getSchoolSetting()->school_name_prefix}}
         <span class="logoB">B</span>
@@ -187,7 +186,7 @@
         <img src="{{asset('logo_basic.jpg')}}" alt="" id="tutwuri_logo">
     </div>
 
-	<footer class="heading_progress_title_cover"><h2>Kementerian Pendidikan dan Kebudayaan<br>Republik Indonesia</h2></footer>
+	<footer class="heading_progress_title_cover" style="bottom: 50px;"><h2>Kementerian Pendidikan dan Kebudayaan<br>Republik Indonesia</h2></footer>
 
 	<div class="page-break"></div>
 

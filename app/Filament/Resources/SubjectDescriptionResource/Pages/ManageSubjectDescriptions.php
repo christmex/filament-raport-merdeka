@@ -53,6 +53,7 @@ class ManageSubjectDescriptions extends ManageRecords
                 \Filament\Forms\Components\Textarea::make('description')
                     ->columnSpanFull()
                     ->required()
+                    ->default('Ananda [STUDENT_NAME] [STUDENT_PREDICATE] dalam ...')
                     ->helperText('Please use [STUDENT_NAME] when you want to mention the student name and [STUDENT_PREDICATE] if you want mention the predicate'),
             ])
             ->action(function(array $data){
