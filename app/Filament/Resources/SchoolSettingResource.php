@@ -41,6 +41,7 @@ class SchoolSettingResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('school_progress_report_date')
+                    ->label('Print Date')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('sumatif_avg')
                     ->numeric()
@@ -56,6 +57,40 @@ class SchoolSettingResource extends Resource
                     ->maxValue(fn(Get $get)=> 100 - $get('sumatif_avg')),
                 // Forms\Components\TextInput::make('school_principal_signature')
                 //     ->maxLength(255),
+                Forms\Components\TextInput::make('npsn')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('nis_nss_nds')
+                    ->label('NIS/NSS/NDS')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('telp')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('postal_code')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('village')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('subdistrict')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('city')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('province')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('website')
+                    ->required()
+                    ->default('https://')
+                    ->url()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('email')
+                    ->required()
+                    ->email()
+                    ->maxLength(255),
             ]);
     }
 
