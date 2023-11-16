@@ -42,10 +42,10 @@ class ExtracurricularsRelationManager extends RelationManager
                     ->searchable(['name'])
                     ->preload()
                     ->live()
-                    ->required()
-                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get){
                         return $rule->where('school_year_id', $get('school_year_id'))
                                     ->where('school_term_id', $get('school_term_id'))
+                                    ->where('student_id', $this->ownerRecord)
                                     ->where('extracurricular_id', $get('extracurricular_id'));
                     },ignoreRecord:true),
                 Forms\Components\Textarea::make('description'),

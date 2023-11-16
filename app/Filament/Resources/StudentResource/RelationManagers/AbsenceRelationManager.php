@@ -4,10 +4,12 @@ namespace App\Filament\Resources\StudentResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Tables;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
 use Filament\Tables\Table;
+use Illuminate\Validation\Rules\Unique;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -33,6 +35,11 @@ class AbsenceRelationManager extends RelationManager
                     ->preload()
                     ->live()
                     ->default(fn($state) => $state ?? SchoolTerm::activeId())
+                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get){
+                        return $rule->where('school_year_id', $get('school_year_id'))
+                                    ->where('school_term_id', $get('school_term_id'))
+                                    ->where('student_id', $this->ownerRecord);
+                    },ignoreRecord:true)
                     ->required(),
                 Forms\Components\TextInput::make('sick')->integer()->minValue(0)->default(0),
                 Forms\Components\TextInput::make('permission')->integer()->minValue(0)->default(0),
