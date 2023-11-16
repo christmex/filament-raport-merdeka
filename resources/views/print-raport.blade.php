@@ -160,15 +160,18 @@
 	</style>
 </head>
 <body>
+	@php 
+		$getSchoolSetting = App\Models\SchoolSetting::first();
+	@endphp
 	<h1 class="heading_progress_title_cover" style="margin-top:50px">RAPOR PESERTA DIDIK</h1>
 	<h1 class="heading_progress_title_cover">
-        {{Helper::getSchoolSetting()->school_name_prefix}}
+        {{$getSchoolSetting->school_name_prefix}}
         <span class="logoB">B</span>
         <span class="logoA">A</span>
         <span class="logoS">S</span>
         <span class="logoI">I</span>
         <span class="logoC">C</span>
-        <span class="font511880">{{Helper::getSchoolSetting()->school_name_suffix}}</span>
+        <span class="font511880">{{$getSchoolSetting->school_name_suffix}}</span>
     </h1>
 
     <div style="text-align: center;">
@@ -187,6 +190,96 @@
     </div>
 
 	<footer class="heading_progress_title_cover" style="bottom: 50px;"><h2>Kementerian Pendidikan dan Kebudayaan<br>Republik Indonesia</h2></footer>
+
+	<div class="page-break"></div>
+
+	<h1 class="heading_progress_title_cover" style="margin-top:50px">RAPOR PESERTA DIDIK</h1>
+	<h1 class="heading_progress_title_cover">
+		{{$getSchoolSetting->school_name_prefix}}
+		<span class="logoB">B</span>
+		<span class="logoA">A</span>
+		<span class="logoS">S</span>
+		<span class="logoI">I</span>
+		<span class="logoC">C</span>
+		<span class="font511880">{{$getSchoolSetting->school_name_suffix}}</span>
+	</h1>
+
+	<section id="student_details" style="margin-top: 100px">
+		<div style="float: left; width: 100%;">
+			<table id="details_">
+				<tr>
+					<td style="width:300px">{{Str::title('Nama Sekolah')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->school_name_prefix}}
+						<span class="logoB">B</span>
+						<span class="logoA">A</span>
+						<span class="logoS">S</span>
+						<span class="logoI">I</span>
+						<span class="logoC">C</span>
+						<span class="font511880">{{$getSchoolSetting->school_name_suffix}}</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width:300px">{{Str::title('NPSN')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->npsn}}</td>
+				</tr>
+				<tr>
+					<td style="width:300px">NIS/NSS/NDS</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->nis_nss_nds}}</td>
+				</tr>
+				<tr>
+					<td style="width:300px">Alamat Sekolah</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->school_address}}</td>
+				</tr>
+				<tr>
+					<td style="width:300px">Telp</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->telp}}</td>
+				</tr>
+				<tr>
+					<td style="width:300px">Kode Pos</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->postal_code}}</td>
+				</tr>
+				<tr>
+					<td style="width:300px">Desa/Kelurahan</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->village}}</td>
+				</tr>
+				<tr>
+					<td style="width:300px">Kecamatan</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->subdistrict}}</td>
+				</tr>
+				<tr>
+					<td style="width:300px">Kota/Kabupaten</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->city}}</td>
+				</tr>
+				<tr>
+					<td style="width:300px">Provinsi</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->province}}</td>
+				</tr>
+				<tr>
+					<td style="width:300px">Website</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->website}}</td>
+				</tr>
+				<tr>
+					<td style="width:300px">Email</td>
+					<td style="width: 5px">:</td>
+					<td>{{$getSchoolSetting->email}}</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+	<div style="clear: both;"></div>
+
+	<footer class=""><h2>Vision : To Know God and God is Known</h2></footer>
 
 	<div class="page-break"></div>
 
@@ -344,20 +437,20 @@
 		</div>
 		<section id="sign_principle" style="margin: 5% auto 0; display:inline-block">
 			<div class="sign_top">
-				<p>Batam, {!!Helper::getSchoolSetting()->school_progress_report_date!!} </p>
+				<p>Batam, {!!$getSchoolSetting->school_progress_report_date!!} </p>
 				<p>Kepala Sekolah
-					{{Helper::getSchoolSetting()->school_name_prefix}}
+					{{$getSchoolSetting->school_name_prefix}}
 					<span class="logoB">B</span>
 					<span class="logoA">A</span>
 					<span class="logoS">S</span>
 					<span class="logoI">I</span>
 					<span class="logoC">C</span>
-					<span class="font511880">{{Helper::getSchoolSetting()->school_name_suffix}}</span>
+					<span class="font511880">{{$getSchoolSetting->school_name_suffix}}</span>
 				</p>
 			</div>
 
 			<div class="border_sign" style="margin-top: 60px">
-				<p style="text-decoration:underline;text-decoration-thickness: 1px; text-underline-offset: 8px;">{{Helper::getSchoolSetting()->school_principal_name}}</p>
+				<p style="text-decoration:underline;text-decoration-thickness: 1px; text-underline-offset: 8px;">{{$getSchoolSetting->school_principal_name}}</p>
 			</div>
 		</section>
 	</section>
@@ -375,19 +468,19 @@
 				<tr>
 					<td style="width: 100px">School Name</td>
 					<td style="width: 5px">:</td>
-					<td>{{Helper::getSchoolSetting()->school_name_prefix}}
+					<td>{{$getSchoolSetting->school_name_prefix}}
 						<span class="logoB">B</span>
 						<span class="logoA">A</span>
 						<span class="logoS">S</span>
 						<span class="logoI">I</span>
 						<span class="logoC">C</span>
-						<span class="font511880">{{Helper::getSchoolSetting()->school_name_suffix}}</span>
+						<span class="font511880">{{$getSchoolSetting->school_name_suffix}}</span>
 					</td>
 				</tr>
 				<tr>
 					<td>Address</td>
 					<td style="width: 5px">:</td>
-					<td>{{Helper::getSchoolSetting()->school_address}}</td>
+					<td>{{$getSchoolSetting->school_address}}</td>
 				</tr>
 				<tr>
 					<td>Student Name</td>
@@ -610,7 +703,7 @@
 		</div>
 		<div id="sign_main_teacher" style="float:right;width:auto;">
 			<div class="sign_top" style="margin-bottom:80px">
-				<p>Batam, {!!Helper::getSchoolSetting()->school_progress_report_date!!}</p>
+				<p>Batam, {!!$getSchoolSetting->school_progress_report_date!!}</p>
 				<p>Wali Kelas</p>
 			</div>
 
@@ -627,19 +720,19 @@
 		<div class="sign_top">
 			<p>Mengetahui</p>
 			<p>Kepala Sekolah
-				{{Helper::getSchoolSetting()->school_name_prefix}}
+				{{$getSchoolSetting->school_name_prefix}}
 				<span class="logoB">B</span>
 				<span class="logoA">A</span>
 				<span class="logoS">S</span>
 				<span class="logoI">I</span>
 				<span class="logoC">C</span>
-				<span class="font511880">{{Helper::getSchoolSetting()->school_name_suffix}}</span>
+				<span class="font511880">{{$getSchoolSetting->school_name_suffix}}</span>
 			</p>
 		</div>
 
 		<div class="border_sign" style="margin-top: 100px">
 			<!-- <p style="text-decoration:underline">Rudi wanro situmorang</p> -->
-			<p style="text-decoration:underline;text-decoration-thickness: 1px; text-underline-offset: 8px;">{{Helper::getSchoolSetting()->school_principal_name}}</p>
+			<p style="text-decoration:underline;text-decoration-thickness: 1px; text-underline-offset: 8px;">{{$getSchoolSetting->school_principal_name}}</p>
 			<!-- <hr> -->
 		</div>
 	</section>
