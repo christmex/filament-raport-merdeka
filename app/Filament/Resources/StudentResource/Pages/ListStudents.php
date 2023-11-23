@@ -3,13 +3,20 @@
 namespace App\Filament\Resources\StudentResource\Pages;
 
 use Filament\Actions;
+use App\Helpers\Helper;
+use App\Models\Student;
+use App\Models\Assessment;
 use Filament\Tables\Table;
+use App\Models\SchoolSetting;
 use App\Imports\StudentImport;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\StudentClassroom;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Filament\Notifications\Notification;
+use App\Models\StudentSemesterEvaluation;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StudentResource;
@@ -57,7 +64,16 @@ class ListStudents extends ListRecords
             ->label('Import')
             ->icon('heroicon-m-ellipsis-vertical')
             ->color('success')
-            ->button(),            
+            ->button(), 
+            
+            Actions\Action::make('reportSheet')
+            ->url(route('students.print-report-sheet'))
+            ->openUrlInNewTab()
+            // ->action(function(){
+            //     return redirect()->route('students.print-report-sheet');
+            // })
+            ->color('info')
+            ->button(), 
         ];
     }
 
