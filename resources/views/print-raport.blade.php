@@ -509,7 +509,7 @@
 				<tr>
 					<td>Fase</td>
 					<td>:</td>
-					<td><input type="text" id="fase" style="display:block;width:10px" value="{{Str::upper(request('fase','A'))}}"></td>
+					<td><input type="text" id="fase" style="display:block;width:10px" value="{{Str::upper($student->active_classroom_fase)}}"></td>
 				</tr>
 				<tr>
 					<td>Annual Study</td>
@@ -589,10 +589,10 @@
 			<thead>
 				<tr>
 					<th style="vertical-align: middle;width: 5%">No</th>
-					<th style="vertical-align: middle;width: 30%">Mata Pelajaran</th>
+					<th style="vertical-align: middle;width: 30%">Subjects</th>
 					<th style="vertical-align: middle;width: 10%">KKM</th>
-					<th style="vertical-align: middle;width: 15%">Nilai Akhir</th>
-					<th style="vertical-align: middle;width: 40%">Deskripsi</th>
+					<th style="vertical-align: middle;width: 15%">Filan Score</th>
+					<th style="vertical-align: middle;width: 40%">Descriptions</th>
 				</tr>
 			</thead>
 			<tbody>

@@ -32,6 +32,7 @@ class ClassroomResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('classroom_name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('fase'),
                 Tables\Columns\TextColumn::make('school_level'),
                 Tables\Columns\ToggleColumn::make('is_moving_class'),
                 Tables\Columns\TextColumn::make('created_at')
@@ -96,6 +97,10 @@ class ClassroomResource extends Resource
                 ->placeholder('Ex: Caleb 1 | Abraham IPS 1')
                 ->unique(ignoreRecord: true)
                 ->maxLength(255),
+            Forms\Components\TextInput::make('fase')
+                ->required()
+                ->maxLength(255)
+                ->placeholder('Ex: A|B|C|D etc'),
             Forms\Components\Select::make('school_level')
                 ->options([
                     1 => 1,

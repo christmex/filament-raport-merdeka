@@ -113,6 +113,13 @@ class Student extends Model
         return $activeClassroom->classroom->classroom_name;
         // return $this->activeClassroom->where('is_moving_class',0)->first()->classroom_name;
     }
+    public function getActiveClassroomFaseAttribute()
+    {
+        $activeClassroom = $this->activeStudentClassrooms->first(function ($activeSubject) {
+            return $activeSubject->classroom->is_moving_class === false;
+        });
+        return $activeClassroom->classroom->fase;
+    }
 
     public function getActiveClassroomLevelAttribute()
     {
