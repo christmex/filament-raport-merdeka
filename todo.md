@@ -66,6 +66,7 @@ IMPORTANT
 - [x] random character description, pelajari di print-report-character
 - [ ] make assessment and student evaluation pagination, load 1 first then maximal 10.
 - [x] import student details
+- [ ] report sheet, harus link ke raport karakter.
 
 
 HOWTO
