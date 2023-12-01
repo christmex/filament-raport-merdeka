@@ -65,6 +65,7 @@ IMPORTANT
 - [ ] every teacher can see the report sheet.
 - [x] random character description, pelajari di print-report-character
 - [ ] make assessment and student evaluation pagination, load 1 first then maximal 10.
+- [x] import student details
 
 
 HOWTO

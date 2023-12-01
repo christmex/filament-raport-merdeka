@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\StudentResource\Pages;
 
+use App\Imports\StudentImportAfterExport;
 use Filament\Actions;
 use App\Helpers\Helper;
 use App\Models\Student;
@@ -35,31 +36,55 @@ class ListStudents extends ListRecords
                 // Actions\Action::make('download_template')
                 // ->url(asset('storage/student.xlsx'))->color('info'),
 
+                Actions\Action::make('importStudentAfterExport')->color('success')
+                    ->form([
+                        \Filament\Forms\Components\FileUpload::make('importStudentAfterExport')
+                            ->storeFiles(false)
+                            ->helperText(new HtmlString('Please before you import, export the excel first'))
+                            ->columnSpanFull(),
+                    ])
+                    ->action(function(array $data){
+                        DB::beginTransaction();
+                        try {
+                            Excel::import(new StudentImportAfterExport, $data['importStudentAfterExport']);
+                            DB::commit();
+                            Notification::make()
+                                ->success()
+                                ->title('Student imported')
+                                ->send();
+                        } catch (\Throwable $th) {
+                            DB::rollback();
+                            Notification::make()
+                                ->danger()
+                                ->title($th->getMessage())
+                                ->send();
+                        }
+                    }),
                 Actions\Action::make('importStudent')->color('success')
-                ->form([
-                    \Filament\Forms\Components\FileUpload::make('import_student')
-                        ->storeFiles(false)
-                        // ->helperText(new HtmlString('Download the excel template \'<strong><a href="'..'">here</a><strong>'))
-                        ->helperText(new HtmlString('Please download the excel file to use our format before you upload the file, or ask your admin level'))
-                        ->columnSpanFull(),
-                ])
-                ->action(function(array $data){
-                    DB::beginTransaction();
-                    try {
-                        Excel::import(new StudentImport, $data['import_student']);
-                        DB::commit();
-                        Notification::make()
-                            ->success()
-                            ->title('Student imported')
-                            ->send();
-                    } catch (\Throwable $th) {
-                        DB::rollback();
-                        Notification::make()
-                            ->danger()
-                            ->title($th->getMessage())
-                            ->send();
-                    }
-                })
+                    ->form([
+                        \Filament\Forms\Components\FileUpload::make('import_student')
+                            ->storeFiles(false)
+                            // ->helperText(new HtmlString('Download the excel template \'<strong><a href="'..'">here</a><strong>'))
+                            ->helperText(new HtmlString('Please download the excel file to use our format before you upload the file, or ask your admin level'))
+                            ->columnSpanFull(),
+                    ])
+                    ->action(function(array $data){
+                        DB::beginTransaction();
+                        try {
+                            Excel::import(new StudentImport, $data['import_student']);
+                            DB::commit();
+                            Notification::make()
+                                ->success()
+                                ->title('Student imported')
+                                ->send();
+                        } catch (\Throwable $th) {
+                            DB::rollback();
+                            Notification::make()
+                                ->danger()
+                                ->title($th->getMessage())
+                                ->send();
+                        }
+                    })
             ])
             ->label('Import')
             ->icon('heroicon-m-ellipsis-vertical')

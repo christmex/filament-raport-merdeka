@@ -23,13 +23,13 @@ class Helper {
         $C = $B-(100-$kkm)/3-0.5;
 
         if ($avg > $A) {
-            $result = $inEnglish ? 'Showing' :"Menunjukkan kemampuan memahami konsep";
+            $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
         } elseif ($avg > $B) {
-            $result = $inEnglish ? 'Showing' :"Menunjukkan kemampuan memahami konsep";
+            $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
         } elseif ($avg > $C) {
-            $result = $inEnglish ? 'Need ' :"Perlu bimbingan";
+            $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
         } else {
-            $result = $inEnglish ? 'Need ' :"Perlu bimbingan";
+            $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
         }
 
         return $result;
@@ -42,6 +42,18 @@ class Helper {
     public static function getSex($id){
         return $id == 0 ? "Perempuan" : "Laki-laki";
     }
+    
+    public static function getSexByName($name){
+        if($name == "Perempuan"){
+            return 0;
+        }elseif($name == "Laki-laki"){
+            return 1;
+        }else {
+            return null;
+        }
+        // return $name == "Perempuan" ? 0  : 1;
+    }
+
     public static function findValueByNestedKey($array, $searchKey) {
         foreach ($array as $key => $value) {
             if ($key === $searchKey) {

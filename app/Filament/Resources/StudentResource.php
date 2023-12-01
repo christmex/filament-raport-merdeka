@@ -21,11 +21,14 @@ use App\Models\StudentExtracurricular;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Notifications\Notification;
+use pxlrbt\FilamentExcel\Columns\Column;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Enums\ActionsPosition;
 use Illuminate\Database\Eloquent\Collection;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Resources\StudentResource\RelationManagers;
 
@@ -184,11 +187,39 @@ class StudentResource extends Resource
                         ->url(fn (Student $record): string => route('students.print-report-character', $record))
                         ->openUrlInNewTab()
                         ->icon('heroicon-o-printer'),
+                        ExportAction::make()->exports([
+                            ExcelExport::make()->withColumns([
+                                Column::make('id'),
+                                Column::make('student_name'),
+                                Column::make('student_nis'),
+                                Column::make('student_nisn'),
+                                Column::make('born_place'),
+                                Column::make('born_date'),
+                                Column::make('sex'),
+                                Column::make('religion_id'),
+                                Column::make('status_in_family'),
+                                Column::make('sibling_order_in_family'),
+                                Column::make('address'),
+                                Column::make('phone'),
+                                Column::make('previous_education'),
+                                Column::make('father_name'),
+                                Column::make('mother_name'),
+                                Column::make('parent_address'),
+                                Column::make('parent_phone'),
+                                Column::make('father_job'),
+                                Column::make('mother_job'),
+                                Column::make('guardian_name'),
+                                Column::make('guardian_phone'),
+                                Column::make('guardian_address'),
+                                Column::make('guardian_job'),
+                            ])
+                            ->withNamesAsHeadings(),
+                        ]),
                 ])
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    ExportBulkAction::make(),
+                    // ExportBulkAction::make(),
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
