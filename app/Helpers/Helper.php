@@ -10,6 +10,13 @@ class Helper {
 
     public static $superUserEmail = 'super@sekolahbasic.sch.id';
 
+    public static function getDefaultMetaForSchoolSetting(){
+        return [
+            "show_fase" => "1",
+            "show_top_kkm" => "0"
+        ];
+    }
+
     public static function predicate($avg, $kkm, $inEnglish = false){
         $A = 100-(100 - $kkm)/3 ;
         $B = $A-(100-$kkm)/3 ;

@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\SchoolSetting;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Tabs;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SchoolSettingResource\Pages;
@@ -28,69 +29,81 @@ class SchoolSettingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('school_name_prefix')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('school_name_suffix')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('school_address')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('school_principal_name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('school_progress_report_date')
-                    ->label('Print Date')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('sumatif_avg')
-                    ->numeric()
-                    ->live()
-                    ->suffix('%')
-                    ->minValue(0)
-                    ->maxValue(fn(Get $get)=> 100 - $get('pas_avg')),
-                Forms\Components\TextInput::make('pas_avg')
-                    ->numeric()
-                    ->minValue(0)
-                    ->live()
-                    ->suffix('%')
-                    ->maxValue(fn(Get $get)=> 100 - $get('sumatif_avg')),
-                // Forms\Components\TextInput::make('school_principal_signature')
-                //     ->maxLength(255),
-                Forms\Components\TextInput::make('npsn')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('nis_nss_nds')
-                    ->label('NIS/NSS/NDS')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('telp')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('postal_code')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('village')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('subdistrict')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('city')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('province')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('website')
-                    ->required()
-                    ->default('https://')
-                    ->url()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->required()
-                    ->email()
-                    ->maxLength(255),
+                Tabs::make('Tabs')
+                    ->tabs([
+                        Tabs\Tab::make('School')
+                            ->schema([
+                                Forms\Components\TextInput::make('school_name_prefix')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('school_name_suffix')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('school_address')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('school_principal_name')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('school_progress_report_date')
+                                    ->label('Print Date')
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('sumatif_avg')
+                                    ->numeric()
+                                    ->live()
+                                    ->suffix('%')
+                                    ->minValue(0)
+                                    ->maxValue(fn(Get $get)=> 100 - $get('pas_avg')),
+                                Forms\Components\TextInput::make('pas_avg')
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->live()
+                                    ->suffix('%')
+                                    ->maxValue(fn(Get $get)=> 100 - $get('sumatif_avg')),
+                                // Forms\Components\TextInput::make('school_principal_signature')
+                                //     ->maxLength(255),
+                                Forms\Components\TextInput::make('npsn')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('nis_nss_nds')
+                                    ->label('NIS/NSS/NDS')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('telp')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('postal_code')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('village')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('subdistrict')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('city')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('province')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('website')
+                                    ->required()
+                                    ->default('https://')
+                                    ->url()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('email')
+                                    ->required()
+                                    ->email()
+                                    ->maxLength(255),
+                            ]),
+                        Tabs\Tab::make('Meta')
+                            ->schema([
+                                Forms\Components\KeyValue::make('meta')
+                            ]),
+                    ])
+                    ->contained(false)
+                    ->columnSpanFull()
             ]);
     }
 

@@ -59,18 +59,19 @@ IMPORTANT
 - [x] buat versi inggris di subject description
 - [ ] buat contoh result saat guru membuat subject description, supaya bisa membayangkan contoh output di raport
 - [ ] character report bisa pilih anak yg mana dan karakter yang mana saat membuat caharctr raport
-- [ ] show or hide fase in print raport
-- [ ] show or hide kkm in print raport
+- [x] show or hide fase in print raport ->meta name = show_fase, set 0 if u dont want to show the fase
+- [x] show or hide kkm in print raport -> meta name = show_top_kkm, set 0 if you want to show kkm in table, set the global kkm if you want to show top kkm
 - [x] nilai akhir bulat di raport
 - [ ] every teacher can see the report sheet.
 - [x] random character description, pelajari di print-report-character
+- [ ] make assessment and student evaluation pagination, load 1 first then maximal 10.
 
 
 HOWTO
 1. git fetch origin && git merge origin/main
 2. composer2 install
 3. php artisan migrate
-4. php artisan shield:generate --resource=SubjectDescriptionResource,StudentDescriptionResource,StudentSemesterEvaluationResource,ReligionResource,ExtracurricularResource,StudentClassroomResource,AspectResource,HabitResource,CharacterReportResource,RangeCharacterDescriptionResource,CharacterDescriptionResource -> for creating permission and policy file for SubjectDescriptionResource
+4. php artisan shield:generate --resource=SubjectDescriptionResource,StudentDescriptionResource,StudentSemesterEvaluationResource,ReligionResource,ExtracurricularResource,StudentClassroomResource,AspectResource,HabitResource,CharacterReportResource,RangeCharacterDescriptionResource,CharacterDescriptionResource,RaportConfigResource -> for creating permission and policy file for SubjectDescriptionResource
 5. git restore .
 6. after we finish open the aplication then login with super admin, then go to the student classroom menu, and click student sync
 7. agar description tampil, guru harus membuat semua description  untuk tiap topic

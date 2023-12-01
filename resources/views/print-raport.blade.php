@@ -506,11 +506,24 @@
 					<td>:</td>
 					<td>{{Helper::getSchoolTermName()}}</td>
 				</tr>
-				<tr>
-					<td>Fase</td>
-					<td>:</td>
-					<td><input type="text" id="fase" style="display:block;width:10px" value="{{Str::upper($student->active_classroom_fase)}}"></td>
-				</tr>
+				@if(!empty($getSchoolSetting->meta['show_fase']))
+					@if($getSchoolSetting->meta['show_fase'])
+						<tr>
+							<td>Fase</td>
+							<td>:</td>
+							<td><input type="text" id="fase" style="display:block;width:10px" value="{{Str::upper($student->active_classroom_fase)}}"></td>
+						</tr>
+					@endif
+				@endif
+				@if(!empty($getSchoolSetting->meta['show_top_kkm']))
+					@if($getSchoolSetting->meta['show_top_kkm'])
+					<tr>
+						<td>KKM</td>
+						<td>:</td>
+						<td>{{$getSchoolSetting->meta['show_top_kkm']}}</td>
+					</tr>
+					@endif
+				@endif
 				<tr>
 					<td>School Year</td>
 					<td>:</td>
@@ -527,7 +540,11 @@
 				<tr>
 					<th style="vertical-align: middle;width: 5%">No</th>
 					<th style="vertical-align: middle;width: 30%">Mata Pelajaran</th>
-					<th style="vertical-align: middle;width: 10%">KKM</th>
+					@if(isset($getSchoolSetting->meta['show_top_kkm']))
+						@if(!$getSchoolSetting->meta['show_top_kkm'])
+						<th style="vertical-align: middle;width: 10%">KKM</th>
+						@endif
+					@endif
 					<th style="vertical-align: middle;width: 15%">Nilai Akhir</th>
 					<th style="vertical-align: middle;width: 40%">Deskripsi</th>
 				</tr>
@@ -538,7 +555,11 @@
 				<tr>
 					<td>{{$loop->iteration}}</td>
 					<td style="text-align: left; padding: 5px">{{$key}}</td>
-					<td>{{$value['KKM']}}</td>
+					@if(isset($getSchoolSetting->meta['show_top_kkm']))
+						@if(!$getSchoolSetting->meta['show_top_kkm'])
+						<td>{{$value['KKM']}}</td>
+						@endif
+					@endif
 					<td>{{Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv)}}</td>
 					<td style="text-align: left; padding: 5px; word-wrap: break-word;">
 						@php 
@@ -590,7 +611,11 @@
 				<tr>
 					<th style="vertical-align: middle;width: 5%">No</th>
 					<th style="vertical-align: middle;width: 30%">Subjects</th>
-					<th style="vertical-align: middle;width: 10%">KKM</th>
+					@if(isset($getSchoolSetting->meta['show_top_kkm']))
+						@if(!$getSchoolSetting->meta['show_top_kkm'])
+							<th style="vertical-align: middle;width: 10%">KKM</th>
+						@endif
+					@endif
 					<th style="vertical-align: middle;width: 15%">Final Score</th>
 					<th style="vertical-align: middle;width: 40%">Descriptions</th>
 				</tr>
@@ -601,7 +626,11 @@
 				<tr>
 					<td>{{$loop->iteration}}</td>
 					<td style="text-align: left; padding: 5px">{{$key}}</td>
-					<td>{{$value['KKM']}}</td>
+					@if(isset($getSchoolSetting->meta['show_top_kkm']))
+						@if(!$getSchoolSetting->meta['show_top_kkm'])
+							<td>{{$value['KKM']}}</td>
+						@endif
+					@endif
 					<td>{{Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv)}}</td>
 					<td style="text-align: left; padding: 5px; word-wrap: break-word;">
 						@php 
@@ -739,7 +768,6 @@
 
 	
 	<footer class=""><h2>Vision : To Know God and God is Known</h2></footer>
-
 	<!-- <div class="page-break"></div> -->
 	
 </body>
