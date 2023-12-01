@@ -443,7 +443,7 @@ class Helper {
             $result +=$pas*$pasDiv;
         }
 
-        return $result;
+        return round($result);
     }
 
     public static function reportSheetCalculateAverage($datas){

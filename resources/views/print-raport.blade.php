@@ -591,7 +591,7 @@
 					<th style="vertical-align: middle;width: 5%">No</th>
 					<th style="vertical-align: middle;width: 30%">Subjects</th>
 					<th style="vertical-align: middle;width: 10%">KKM</th>
-					<th style="vertical-align: middle;width: 15%">Filan Score</th>
+					<th style="vertical-align: middle;width: 15%">Final Score</th>
 					<th style="vertical-align: middle;width: 40%">Descriptions</th>
 				</tr>
 			</thead>
