@@ -61,7 +61,7 @@ IMPORTANT
 - [ ] character report bisa pilih anak yg mana dan karakter yang mana saat membuat caharctr raport
 - [ ] show or hide fase in print raport
 - [ ] show or hide kkm in print raport
-- [ ] nilai akhir bulat di raport
+- [x] nilai akhir bulat di raport
 - [ ] every teacher can see the report sheet.
 - [x] random character description, pelajari di print-report-character
 
