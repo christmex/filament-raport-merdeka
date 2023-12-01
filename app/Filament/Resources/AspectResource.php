@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ExtracurricularResource\Pages;
-use App\Filament\Resources\ExtracurricularResource\RelationManagers;
-use App\Models\Extracurricular;
+use App\Filament\Resources\AspectResource\Pages;
+use App\Filament\Resources\AspectResource\RelationManagers;
+use App\Models\Aspect;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ExtracurricularResource extends Resource
+class AspectResource extends Resource
 {
-    protected static ?string $model = Extracurricular::class;
+    protected static ?string $model = Aspect::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,7 +23,12 @@ class ExtracurricularResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form->schema(self::getForm());
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -31,11 +36,7 @@ class ExtracurricularResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->sortable()
                     ->searchable(),
-                Tables\Columns\TextInputColumn::make('order')
-                    ->sortable()
-                    ->rules(['min:1']),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -49,12 +50,12 @@ class ExtracurricularResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\EditAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -62,20 +63,7 @@ class ExtracurricularResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageExtracurriculars::route('/'),
-        ];
-    }
-
-    public static function getForm(): array 
-    {
-        return [
-            Forms\Components\TextInput::make('name')
-                ->required()
-                ->unique(ignoreRecord: true)
-                ->maxLength(255),
-            Forms\Components\TextInput::make('order')
-                ->default(1)
-                ->minValue(1),
+            'index' => Pages\ManageAspects::route('/'),
         ];
     }
 

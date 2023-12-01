@@ -113,8 +113,6 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('guardian_job')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -182,6 +180,10 @@ class StudentResource extends Resource
                     //     ->url(fn (Student $record): string => route('students.print-raport-cover', $record))
                     //     ->openUrlInNewTab()
                     //     ->icon('heroicon-o-printer'),
+                    Tables\Actions\Action::make('print_character_report')
+                        ->url(fn (Student $record): string => route('students.print-report-character', $record))
+                        ->openUrlInNewTab()
+                        ->icon('heroicon-o-printer'),
                 ])
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
@@ -300,6 +302,7 @@ class StudentResource extends Resource
         return [
             RelationManagers\ExtracurricularsRelationManager::class,
             RelationManagers\AbsenceRelationManager::class,
+            RelationManagers\CharacterReportRelationManager::class,
         ];
     }
     

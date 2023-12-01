@@ -16,16 +16,20 @@ class Helper {
         $C = $B-(100-$kkm)/3-0.5;
 
         if ($avg > $A) {
-            $result = "Sangat Baik";
+            $result = "Menunjukkan kemampuan memahami konsep";
         } elseif ($avg > $B) {
-            $result = "Baik";
+            $result = "Menunjukkan kemampuan memahami konsep";
         } elseif ($avg > $C) {
-            $result = "Cukup";
+            $result = "Perlu bimbingan";
         } else {
-            $result = "Kurang";
+            $result = "Perlu bimbingan";
         }
 
         return $result;
+    }
+
+    public static function predicateInEnglish($avg, $kkm){
+
     }
 
     public static function getSex($id){

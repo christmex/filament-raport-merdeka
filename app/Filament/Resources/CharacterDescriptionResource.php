@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ReligionResource\Pages;
-use App\Filament\Resources\ReligionResource\RelationManagers;
-use App\Models\Religion;
+use App\Filament\Resources\CharacterDescriptionResource\Pages;
+use App\Filament\Resources\CharacterDescriptionResource\RelationManagers;
+use App\Models\CharacterDescription;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,21 +13,21 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ReligionResource extends Resource
+class CharacterDescriptionResource extends Resource
 {
-    protected static ?string $model = Religion::class;
+    protected static ?string $model = CharacterDescription::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    protected static ?string $navigationGroup = 'Master';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('range_character_description_id')
+                    ->relationship('rangeCharacterDescription', 'name')
+                    ->required(),
+                Forms\Components\Textarea::make('description')
+                    ->required(),
             ]);
     }
 
@@ -35,7 +35,10 @@ class ReligionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('rangeCharacterDescription.name')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -50,12 +53,12 @@ class ReligionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\EditAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -63,12 +66,7 @@ class ReligionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageReligions::route('/'),
+            'index' => Pages\ManageCharacterDescriptions::route('/'),
         ];
     }    
-
-    public static function getNavigationBadge(): ?string
-    {
-        return 'new';
-    }
 }

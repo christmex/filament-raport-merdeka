@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ExtracurricularResource\Pages;
-use App\Filament\Resources\ExtracurricularResource\RelationManagers;
-use App\Models\Extracurricular;
+use App\Filament\Resources\RangeCharacterDescriptionResource\Pages;
+use App\Filament\Resources\RangeCharacterDescriptionResource\RelationManagers;
+use App\Models\RangeCharacterDescription;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,17 +13,26 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ExtracurricularResource extends Resource
+class RangeCharacterDescriptionResource extends Resource
 {
-    protected static ?string $model = Extracurricular::class;
+    protected static ?string $model = RangeCharacterDescription::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Master';
-
     public static function form(Form $form): Form
     {
-        return $form->schema(self::getForm());
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('start')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('end')
+                    ->required()
+                    ->numeric(),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -31,11 +40,13 @@ class ExtracurricularResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->sortable()
                     ->searchable(),
-                Tables\Columns\TextInputColumn::make('order')
-                    ->sortable()
-                    ->rules(['min:1']),
+                Tables\Columns\TextColumn::make('start')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('end')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -49,12 +60,12 @@ class ExtracurricularResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\EditAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -62,25 +73,7 @@ class ExtracurricularResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageExtracurriculars::route('/'),
+            'index' => Pages\ManageRangeCharacterDescriptions::route('/'),
         ];
-    }
-
-    public static function getForm(): array 
-    {
-        return [
-            Forms\Components\TextInput::make('name')
-                ->required()
-                ->unique(ignoreRecord: true)
-                ->maxLength(255),
-            Forms\Components\TextInput::make('order')
-                ->default(1)
-                ->minValue(1),
-        ];
-    }
-
-    public static function getNavigationBadge(): ?string
-    {
-        return 'new';
-    }
+    }    
 }

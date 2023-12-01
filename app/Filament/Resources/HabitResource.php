@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ExtracurricularResource\Pages;
-use App\Filament\Resources\ExtracurricularResource\RelationManagers;
-use App\Models\Extracurricular;
+use App\Filament\Resources\HabitResource\Pages;
+use App\Filament\Resources\HabitResource\RelationManagers;
+use App\Models\Habit;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ExtracurricularResource extends Resource
+class HabitResource extends Resource
 {
-    protected static ?string $model = Extracurricular::class;
+    protected static ?string $model = Habit::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,19 +23,26 @@ class ExtracurricularResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form->schema(self::getForm());
+        return $form
+            ->schema([
+                Forms\Components\Select::make('aspect_id')
+                    ->relationship('aspect', 'name')
+                    ->required(),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('aspect.name')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->sortable()
                     ->searchable(),
-                Tables\Columns\TextInputColumn::make('order')
-                    ->sortable()
-                    ->rules(['min:1']),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -47,14 +54,15 @@ class ExtracurricularResource extends Resource
             ])
             ->filters([
                 //
+                
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\EditAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -62,22 +70,9 @@ class ExtracurricularResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageExtracurriculars::route('/'),
+            'index' => Pages\ManageHabits::route('/'),
         ];
-    }
-
-    public static function getForm(): array 
-    {
-        return [
-            Forms\Components\TextInput::make('name')
-                ->required()
-                ->unique(ignoreRecord: true)
-                ->maxLength(255),
-            Forms\Components\TextInput::make('order')
-                ->default(1)
-                ->minValue(1),
-        ];
-    }
+    }    
 
     public static function getNavigationBadge(): ?string
     {

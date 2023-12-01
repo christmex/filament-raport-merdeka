@@ -512,7 +512,7 @@
 					<td><input type="text" id="fase" style="display:block;width:10px" value="{{Str::upper($student->active_classroom_fase)}}"></td>
 				</tr>
 				<tr>
-					<td>Annual Study</td>
+					<td>School Year</td>
 					<td>:</td>
 					<td>{{Helper::getSchoolYearName()}}</td>
 				</tr>
