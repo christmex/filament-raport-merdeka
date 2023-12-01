@@ -555,13 +555,13 @@
 								if($check != null){
 									if($desc != ''){
 										if($previousPredicate == 'Kurang'){
-											$desc .= "Namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'])."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+											$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 										}else {
-											$desc .= "Dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'])."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+											$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 										}
 									}else {
-										$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM']);
-										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'])."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
+										$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description);
+										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
 									}
 								}
 							@endphp
@@ -618,13 +618,13 @@
 								if($check != null){
 									if($desc != ''){
 										if($previousPredicate == 'Kurang'){
-											$desc .= "Namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'])."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+											$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 										}else {
-											$desc .= "Dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'])."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+											$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 										}
 									}else {
-										$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM']);
-										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'])."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
+										$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description);
+										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
 									}
 								}
 							@endphp

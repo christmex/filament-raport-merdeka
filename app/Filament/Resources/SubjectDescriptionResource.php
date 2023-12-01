@@ -10,9 +10,11 @@ use Filament\Tables\Table;
 use App\Models\SubjectUser;
 use Filament\Resources\Resource;
 use App\Models\SubjectDescription;
+use Illuminate\Support\HtmlString;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubjectDescriptionResource\Pages;
 use App\Filament\Resources\SubjectDescriptionResource\RelationManagers;
@@ -67,7 +69,11 @@ class SubjectDescriptionResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull()
                     ->required()
-                    ->helperText('Please use [STUDENT_NAME] when you want to mention the student name and [STUDENT_PREDICATE] if you want mention the predicate'),
+                    ->helperText(new HtmlString('Please use [STUDENT_NAME] when you want to mention the student name and [STUDENT_PREDICATE] if you want mention the predicate')),
+                Forms\Components\Toggle::make('is_english_description')
+                    ->helperText('please turn this on, if you make description in english')
+                    
+                
             ]);
     }
 

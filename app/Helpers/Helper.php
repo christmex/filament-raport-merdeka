@@ -10,19 +10,19 @@ class Helper {
 
     public static $superUserEmail = 'super@sekolahbasic.sch.id';
 
-    public static function predicate($avg, $kkm){
+    public static function predicate($avg, $kkm, $inEnglish = false){
         $A = 100-(100 - $kkm)/3 ;
         $B = $A-(100-$kkm)/3 ;
         $C = $B-(100-$kkm)/3-0.5;
 
         if ($avg > $A) {
-            $result = "Menunjukkan kemampuan memahami konsep";
+            $result = $inEnglish ? 'Showing' :"Menunjukkan kemampuan memahami konsep";
         } elseif ($avg > $B) {
-            $result = "Menunjukkan kemampuan memahami konsep";
+            $result = $inEnglish ? 'Showing' :"Menunjukkan kemampuan memahami konsep";
         } elseif ($avg > $C) {
-            $result = "Perlu bimbingan";
+            $result = $inEnglish ? 'Need ' :"Perlu bimbingan";
         } else {
-            $result = "Perlu bimbingan";
+            $result = $inEnglish ? 'Need ' :"Perlu bimbingan";
         }
 
         return $result;
