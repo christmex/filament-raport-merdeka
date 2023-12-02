@@ -10,6 +10,100 @@ class Helper {
 
     public static $superUserEmail = 'super@sekolahbasic.sch.id';
 
+    public static function getFirstLetterFromWord($words){
+        $words = preg_split("/\s+/", $words);
+        $acronym = "";
+        foreach ($words as $w) {
+            $acronym .= mb_substr($w, 0, 1);
+        }
+        return $acronym;
+
+    }
+
+    public static function generateCharacterAvg($data){
+        $avgTotal = [];
+        $habitsTotal = 0;
+
+        foreach($data as $AspectValue){
+            foreach($AspectValue as $habitValue){
+                $avgHome = [];
+                $avgSchool = [];
+                $countAvgHome = 0;
+                $countAvgSchool = 0;
+                $countAllAvg = 0;
+                $habitsTotal++;
+
+                $countI = 0;
+                $countHabitValue = count($habitValue);
+                
+                foreach($habitValue as $weekVal){
+                    foreach($weekVal as $homeOrSchoolKey => $homeOrSchool){
+                        if($homeOrSchoolKey == 'home'){
+                            array_push($avgHome, $homeOrSchool); 
+                        }
+                        if($homeOrSchoolKey == 'school'){
+                            array_push($avgSchool, $homeOrSchool); 
+                        }
+                    }
+                    if(++$countI === $countHabitValue){
+                        $countHomeArray = array_filter($avgHome, function ($value) {
+                            return $value !== null;
+                        });
+                        $countSchoolArray = array_filter($avgSchool, function ($value) {
+                            return $value !== null;
+                        });
+                        if(count($countHomeArray) && count($countSchoolArray)){
+                            $countAvgHome = round((array_sum($countHomeArray)/count($countHomeArray))/4, 1);
+                            $countAvgSchool = round((array_sum($countSchoolArray)/count($countSchoolArray)), 1);
+                            $countAllAvg = round(($countAvgHome*20/100)+($countAvgSchool*80/100),1);
+                            array_push($avgTotal, $countAllAvg);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return round(round(array_sum($avgTotal),1) / $habitsTotal,1);
+
+
+    }
+
+    public static function getOnlyFinalAvgAcademic($data,$avgDiv, $PASDiv){
+        $result = [];
+        foreach($data as $student_name => $subjects ){
+            $avg = [];
+            foreach($subjects as $subjectKey => $subjectValue ){
+                array_push($avg, self::countFinalGrade($subjectValue['AVG'],$subjectValue['PAS'],$avgDiv, $PASDiv));
+            }
+            $result[$student_name] = round(array_sum($avg) / count($avg),1)/10;
+        }
+
+        return $result;
+    }
+
+    public static function generateRank($data,$getOnlyFinalAvgAcademic){
+        $rank = [];
+        $character = [];
+        foreach ($data as $key => $value) {
+            $character[$key] = self::generateCharacterAvg($value);
+        }
+
+        if(count($character) == count($getOnlyFinalAvgAcademic)){
+            foreach ($character as $key => $value) {
+                $rank[$key] = round(($getOnlyFinalAvgAcademic[$key]*75/100+$character[$key]*25/100*2.5),1);
+            }
+        }
+        
+        arsort($rank);
+        $start = 1;
+        foreach ($rank as $key => $value) {
+            $rank[$key] = $start;
+            $start++;
+        }
+        return $rank;
+    }
+
     public static function getDefaultMetaForSchoolSetting(){
         return [
             "show_fase" => "1",

@@ -13,9 +13,10 @@
 		.heading_progress_title_cover {
 			text-align: center;
 			margin-top: 0;
+			margin-bottom: 0;
 		}
 		.heading_progress_title {
-			background-color: #FCD5B4;
+			/* background-color: #FCD5B4; */
 		}
 
 
@@ -163,20 +164,24 @@
 <body>
 	@php 
 		$getSchoolSetting = App\Models\SchoolSetting::first();
+		$getOnlyFinalAvgAcademic = Helper::getOnlyFinalAvgAcademic($finalNewData,$avgDiv, $PASDiv);
+		$getRank = Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic);
 	@endphp
 	<!--  -->
-	<h1 class="heading_progress_title">Laporan Hasil Belajar Siswa</h1>
-	<section id="extracurricular" style="margin-top:20px;">
+	<h6 class="heading_progress_title">Rekap Nilai {{auth()->user()->activeHomeroom()->first()->classroom->classroom_name}} {{Helper::getSchoolYearName()}} - {{Helper::getSchoolTermName()}}</h6>
+	<section id="extracurricular" style="">
 		<table>
 			<thead>
-				<tr>
+				<tr style="font-size: 10px;">
 					@foreach($tableHeader as $header)
 						@if($header == 'No')
 						<th style="vertical-align: middle;width: 2%">{{$header}}</th>
+						@elseif(Str::startsWith($header,'Nama Siswa'))
+						<th style="vertical-align: middle;width: 10%">{{$header}}</th>
 						@elseif(Str::startsWith($header,'Seni Budaya'))
 						<th style="vertical-align: middle;width: 5%">Seni Budaya</th>
 						@else
-						<th style="vertical-align: middle;width: 5%">{{$header}}</th>
+						<th style="vertical-align: middle;width: 5%"> {{$header}}</th>
 						@endif
 					@endforeach
 				</tr>
@@ -188,22 +193,56 @@
 					@endphp 
 					<tr>
 						<td>{{$loop->iteration}}</td>
-						<td>{{$student_name}}</td>
+						<td style="text-align: left;padding-left: 2px">{{$student_name}}</td>
 						@foreach($subjects as $subjectKey => $subjectValue )
 							@php array_push($avg, Helper::countFinalGrade($subjectValue['AVG'],$subjectValue['PAS'],$avgDiv, $PASDiv)); @endphp
 							<td>{{Helper::countFinalGrade($subjectValue['AVG'],$subjectValue['PAS'],$avgDiv, $PASDiv)}}</td>
 						@endforeach
-						<td>{{ round(array_sum($avg) / count($avg),1)}}</td>
-						<td>Rata-rata Karakter</td>
-						<td>Final</td>
-						<td>Rank</td>
+						@php
+							$countFinalAvgAcademic = round(array_sum($avg) / count($avg),1)/10;
+							$countFinalAvgCharacter = Helper::generateCharacterAvg($getStudentCharacter[$student_name]);
+						@endphp
+						<td>{{ $countFinalAvgAcademic }}</td>
+						<td>{{ $countFinalAvgCharacter }}</td>
+						<td>{{round(($countFinalAvgAcademic*75/100+$countFinalAvgCharacter*25/100*2.5),1)}}</td>
+						
+						<td>{{$getRank[$student_name]}}</td>
 					</tr>
 				@endforeach
 			</tbody>
 		</table>
 	</section>
-	{{dd()}}
-	
+	<section id="sign" style="margin-top: 50px" >
+		<div id="sign_parent" style="float:left;width:30%;">
+			<div class="sign_top" style="margin-bottom:80px">
+				<p>Mengetahui</p>
+				<p>Kepala Sekolah {{$getSchoolSetting->school_name_prefix}}
+				<span class="logoB">B</span>
+				<span class="logoA">A</span>
+				<span class="logoS">S</span>
+				<span class="logoI">I</span>
+				<span class="logoC">C</span>
+				<span class="font511880">{{$getSchoolSetting->school_name_suffix}}</span></p>
+			</div>
+
+			<div class="border_sign">
+				<p>{{$getSchoolSetting->school_principal_name}}</p>
+				<hr style="margin-top:-10px;display: block">
+			</div>
+		</div>
+		<div id="sign_main_teacher" style="float:right;width:auto;">
+			<div class="sign_top" style="margin-bottom:80px">
+				<p>Batam, {!!$getSchoolSetting->school_progress_report_date!!}</p>
+				<p>Wali Kelas</p>
+			</div>
+
+			<div class="border_sign">
+				<p>{{auth()->user()->name}}</p>
+				<hr style="margin-top:-10px;display: block">
+			</div>
+		</div>
+	</section>
+	<div style="clear: both;"></div>
 	<!-- <div class="page-break"></div> -->
 	
 </body>

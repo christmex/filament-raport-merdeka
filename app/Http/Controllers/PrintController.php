@@ -329,8 +329,9 @@ class PrintController extends Controller
         // }
         array_push($tableHeader,'Rata-rata Akademik','Rata-rata Karakter','Nilai Akhir','Ranking');
         // dd($tableHeader,$finalNewData);
-
-        $pdf = Pdf::loadView('print-report-sheet', compact('tableHeader','finalNewData','PASDiv','avgDiv'))->setPaper('A4', 'landscape');//convert mm to point
+        
+        $getStudentCharacter = $this->generateCharacterAvg($studentIds);
+        $pdf = Pdf::loadView('print-report-sheet', compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter'))->setPaper('A4', 'landscape');//convert mm to point
         return $pdf->download('print-report-sheet.pdf');
     }
 
@@ -486,6 +487,41 @@ class PrintController extends Controller
         return array_sum($avg) / count($avg);
 
         // return compact('avg','finalNewData','PASDiv','avgDiv');
+    }
+
+    public function generateCharacterAvg(array $studentIds){
+        if(auth()->guest()){
+            abort(404,'Login First');
+        }
+
+        $data = [];
+        $characterReports = CharacterReport::query()
+            ->with('habit', 'student')
+            ->join('habits', 'character_reports.habit_id', '=', 'habits.id')
+            ->select(
+                'habits.aspect_id',
+                'habit_id',
+                'week',
+                'home',
+                'school',
+                'student_id',
+            )
+            ->whereIn('student_id', $studentIds)
+            ->where('school_year_id', auth()->user()->activeHomeroom->first()->school_year_id)
+            ->where('school_term_id', auth()->user()->activeHomeroom->first()->school_term_id)
+            ->groupBy( 'habits.aspect_id','habit_id','week','home','school','student_id')
+            ->orderBy('habits.id', 'asc') // Order by the sort_order column from subject_users table
+            ->orderBy('week','asc') // Order by the maximum grading
+            ->get();
+
+        // return $characterReports->first();
+        // Group By Subject
+        $activeData = [];
+        foreach ($characterReports as $value) {
+            $data[$value->student->student_name][$value->habit->aspect->name][$value->habit->name][$value->week] = ['home' => $value->home,'school' => $value->school];
+        }
+        return $data;
+
     }
     
 }
