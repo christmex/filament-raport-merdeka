@@ -22,7 +22,14 @@ class ManageCharacterReports extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            // Actions\CreateAction::make(),
+            // Actions\Action::make('Create Character Report By Student')
+            // ->form([
+
+            // ])
+            // ->action(function(){
+
+            // }),
             Actions\Action::make('Create Character Report '.auth()->user()->activeHomeroom->first()->classroom->classroom_name)
             ->form([
                 CheckboxList::make('student_id')
@@ -43,6 +50,14 @@ class ManageCharacterReports extends ManageRecords
                         }
                     })
                     // ->default(fn (CheckboxList $component): array => dd($component))
+                    ->searchable()
+                    ->bulkToggleable()
+                    ->columns(3),
+                CheckboxList::make('habit_id')
+                    ->label('Habits')
+                    ->options(function(Get $get){
+                        return Habit::all()->pluck('name','id');
+                    })
                     ->searchable()
                     ->bulkToggleable()
                     ->columns(3),
@@ -67,7 +82,7 @@ class ManageCharacterReports extends ManageRecords
                         ->get();
                     
                     if(!$check->count()){
-                        $getHabits = Habit::all();
+                        $getHabits = Habit::whereIn('id',$data['habit_id'])->get();
                         // dd($getHabits);
                         for($i=0; $i < count($getCLassroomStudentIds); $i++) {
                             foreach ($getHabits as $value) {
@@ -91,7 +106,7 @@ class ManageCharacterReports extends ManageRecords
                                 ->send();
                         }
                     }else{
-                        dd('as');
+                        dd('Data Exist');
                         // $arrayNames = array_unique($check->pluck('student.student_name')->toArray());
                         // $names ='';
                         // for ($i=0; $i < count($arrayNames); $i++) { 
