@@ -215,8 +215,8 @@
 		<table>
 			<thead>
 				<tr>
-					<th style="vertical-align: middle;width: 5%" rowspan="3">Aspect</th>
-					<th style="vertical-align: middle;width: 5%" rowspan="3">Habits</th>
+					<th style="vertical-align: middle;width: 7%" rowspan="3">Aspect</th>
+					<th style="vertical-align: middle;width: 13%" rowspan="3">Habits</th>
 					<th style="vertical-align: middle;width: 70%" colspan="34">Scoring</th>
 					<th style="vertical-align: middle;width: 5%" rowspan="2" colspan="2">Total Score</th>
 					<th style="vertical-align: middle;width: 5%" rowspan="3">Average</th>
@@ -245,8 +245,8 @@
 					<td>H</td>
 					<td>S</td>
 					@endfor
-					<td>Home</td>
-					<td>School</td>
+					<td>H</td>
+					<td>S</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -261,7 +261,7 @@
 					
 					@foreach($AspectValue as $habitKey => $habitValue)
 						<tr>
-							<td>{{$habitKey}}</td>
+							<td style="text-align:left;padding-left: 5px">{{$habitKey}}</td>
 							@php 
 								$avgHome = [];
 								$avgSchool = [];
@@ -377,7 +377,6 @@
 		</table>
 		<div style="clear: both;"></div>
 	</section>
-	{{dd($habitsTotal)}}
 	<!-- <div class="page-break"></div> -->
 	
 </body>
