@@ -57,7 +57,7 @@ IMPORTANT
 - [x] di bagian student semester evaluation hanya bisa  sekali saja membuat penilain PAS, tidak bolehlebih dari 1, lakukanbpengecekan saat pembuatan, silahkan ditanya apakah bisa buat 2 PAS?  -> hanya bisa 1 nilai assessment
 - [x] ada bug saat  print raport, description  tidak muncul, contoh matematika dimatthew 1 (sudah solve di query  di tambah withoutGlobalScope)
 - [x] buat versi inggris di subject description
-- [ ] buat contoh result saat guru membuat subject description, supaya bisa membayangkan contoh output di raport
+- [x] buat contoh result saat guru membuat subject description, supaya bisa membayangkan contoh output di raport
 - [ ] character report bisa pilih anak yg mana dan karakter yang mana saat membuat caharctr raport
 - [x] show or hide fase in print raport ->meta name = show_fase, set 0 if u dont want to show the fase
 - [x] show or hide kkm in print raport -> meta name = show_top_kkm, set 0 if you want to show kkm in table, set the global kkm if you want to show top kkm

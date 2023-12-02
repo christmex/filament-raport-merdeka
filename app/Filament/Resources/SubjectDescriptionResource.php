@@ -4,10 +4,12 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Helpers\Helper;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\SubjectUser;
+use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use App\Models\SubjectDescription;
 use Illuminate\Support\HtmlString;
@@ -31,48 +33,80 @@ class SubjectDescriptionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('subject_user_id')
-                    ->label('subject')
-                    ->options(SubjectUser::with('subject')->whereIn('id',auth()->user()->activeSubjects->pluck('id')->toArray())->get()->pluck('subject_user_name', 'id'))
-                    ->required()
-                    ->searchable()
-                    ->selectablePlaceholder(false)
-                    ->preload()
-                    ->live()
-                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
-                        return $rule->where('topic_setting_id', $get('topic_setting_id'));
-                    },ignoreRecord:true),
-                Forms\Components\Select::make('topic_setting_id')
-                    ->relationship('topicSetting','topic_setting_name')
-                    ->required()
-                    ->live()
-                    ->searchable()
-                    ->helperText('Topic 1 also called Chapter 1 or bab 1, etc, they are all the same 🤩')
-                    ->preload()
-                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
-                        return $rule->where('subject_user_id', $get('subject_user_id'));
-                    },ignoreRecord:true),
-                // Forms\Components\TextInput::make('range_start')
-                //     ->numeric()
-                //     ->minValue(0)
-                //     ->maxValue(100)
-                //     ->required(),
-                // Forms\Components\TextInput::make('range_end')
-                //     ->numeric()
-                //     ->minValue(0)
-                //     ->maxValue(100)
-                //     ->required(),
-                // Forms\Components\TextInput::make('topic_name')
-                //     ->maxLength(255),
-                // Forms\Components\TextInput::make('predicate')
-                //     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull()
-                    ->required()
-                    ->helperText(new HtmlString('Please use [STUDENT_NAME] when you want to mention the student name and [STUDENT_PREDICATE] if you want mention the predicate')),
-                Forms\Components\Toggle::make('is_english_description')
-                    ->helperText('please turn this on, if you make description in english')
-                    
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\Select::make('subject_user_id')
+                                    ->label('subject')
+                                    ->options(SubjectUser::with('subject')->whereIn('id',auth()->user()->activeSubjects->pluck('id')->toArray())->get()->pluck('subject_user_name', 'id'))
+                                    ->required()
+                                    ->searchable()
+                                    ->selectablePlaceholder(false)
+                                    ->preload()
+                                    ->live()
+                                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                                        return $rule->where('topic_setting_id', $get('topic_setting_id'));
+                                    },ignoreRecord:true),
+                                Forms\Components\Select::make('topic_setting_id')
+                                    ->relationship('topicSetting','topic_setting_name')
+                                    ->required()
+                                    ->live()
+                                    ->searchable()
+                                    ->helperText('Topic 1 also called Chapter 1 or bab 1, etc, they are all the same 🤩')
+                                    ->preload()
+                                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
+                                        return $rule->where('subject_user_id', $get('subject_user_id'));
+                                    },ignoreRecord:true),
+                                // Forms\Components\TextInput::make('range_start')
+                                //     ->numeric()
+                                //     ->minValue(0)
+                                //     ->maxValue(100)
+                                //     ->required(),
+                                // Forms\Components\TextInput::make('range_end')
+                                //     ->numeric()
+                                //     ->minValue(0)
+                                //     ->maxValue(100)
+                                //     ->required(),
+                                // Forms\Components\TextInput::make('topic_name')
+                                //     ->maxLength(255),
+                                // Forms\Components\TextInput::make('predicate')
+                                //     ->maxLength(255),
+                                Forms\Components\Textarea::make('description')
+                                    ->columnSpanFull()
+                                    ->required()
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function ($state, Forms\Set $set, Get $get) {
+                                        $state = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$get('is_english_description')), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $state));
+                                        // $state = Str::replace('[STUDENT_PREDICATE]','ass',$state) ;
+                                        $set('result', $state);
+                                    })
+                                    ->helperText(new HtmlString('Please use [STUDENT_NAME] when you want to mention the student name automatic and [STUDENT_PREDICATE] if you want mention the predicate automatic')),
+                                Forms\Components\Toggle::make('is_english_description')
+                                    ->live()
+                                    ->afterStateUpdated(function ($state,Forms\Set $set, Get $get) {
+                                        $desc = $get('description');
+
+                                        $desc = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$state), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $desc));
+
+                                        $set('result', $desc);
+                                    })
+                                    ->helperText('please turn this on, if you make description in english')
+                                ])
+                    ]),
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\Textarea::make('result')
+                                ->rows(10)
+                                ->cols(20)
+                                ->helperText('click anywhere after write description to see the result')
+                                    // ->allowHtml()
+                                    // ->toHtml()
+                                    // ->disabled()
+                            ])
+                ])
                 
             ]);
     }
@@ -137,5 +171,6 @@ class SubjectDescriptionResource extends Resource
         return [
             'index' => Pages\ManageSubjectDescriptions::route('/'),
         ];
-    }    
+    }
+
 }
