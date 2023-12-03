@@ -95,8 +95,10 @@ class ManageSubjectDescriptions extends ManageRecords
                         \Filament\Forms\Components\Section::make()
                             ->schema([
                                 \Filament\Forms\Components\Textarea::make('result')
+                                    ->label('Result example')
                                     ->rows(10)
                                     ->cols(20)
+                                    ->disabled()
                                     ->default('Ananda [STUDENT_NAME] [STUDENT_PREDICATE] dalam ...')
                             ])
                     ])
