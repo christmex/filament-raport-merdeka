@@ -81,7 +81,9 @@ class StudentSemesterEvaluationResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->paginated([1,50])
+            ->defaultPaginationPageOption(1);
     }
     
     public static function getPages(): array

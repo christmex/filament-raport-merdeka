@@ -5,6 +5,7 @@ namespace App\Filament\Resources\AssessmentResource\Pages;
 use Filament\Actions;
 use App\Models\Student;
 use Filament\Forms\Get;
+use App\Models\Classroom;
 use App\Models\Assessment;
 use App\Models\SubjectUser;
 use App\Models\HomeroomTeacher;
@@ -28,6 +29,21 @@ class ManageAssessments extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('reportSheet')
+                ->form([
+                    Select::make('classroom_id')
+                    ->label('classroom')
+                    ->options(function(){
+                        return Classroom::whereIn('id',array_unique(auth()->user()->activeSubjects->pluck('classroom_id')->toArray()))->pluck('classroom_name','id');
+                    })
+                    ->required()
+                    ->searchable()
+                    ->selectablePlaceholder(false)
+                    ->preload(),
+                ])
+                ->action(function(array $data){
+                    return redirect()->route('students.print-report-sheet-for-teacher',$data['classroom_id']);
+                }),
             Actions\ActionGroup::make([
                 Actions\Action::make('importAssessment')->color('success')
                 ->form([

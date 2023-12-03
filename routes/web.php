@@ -42,6 +42,7 @@ Route::get('/debug',function(){
 });
 
 Route::get('/print-report-character/{student}',[PrintController::class,'print_report_character'])->name('students.print-report-character');
+Route::get('/print-report-sheet-for-teacher/{classroom}',[PrintController::class,'print_report_sheet_for_teacher'])->name('students.print-report-sheet-for-teacher');
 Route::get('/print-report-sheet',[PrintController::class,'print_report_sheet'])->name('students.print-report-sheet');
 Route::get('/print-raport-cover/{student}',[PrintController::class,'print_raport_cover'])->name('students.print-raport-cover');
 Route::get('/print-raport/{student}',[PrintController::class,'print_raport'])->name('students.print-raport');
