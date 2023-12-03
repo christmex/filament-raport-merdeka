@@ -216,8 +216,8 @@ class PrintController extends Controller
             DB::raw('AVG(grading) as max_grading')
         )
         ->whereIn('student_id', $studentIds)
-        ->where('subject_users.school_year_id', auth()->user()->activeHomeroom->first()->school_year_id)
-        ->where('subject_users.school_term_id', auth()->user()->activeHomeroom->first()->school_term_id)
+        ->where('subject_users.school_year_id', SchoolYear::activeId())
+        ->where('subject_users.school_term_id', SchoolTerm::activeId())
         ->whereNotNull('grading')
         ->groupBy( 'subjects.is_curiculum_basic','assessment_method_setting_id', 'subject_user_id', 'topic_setting_id','student_id')
         ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
