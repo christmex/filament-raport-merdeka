@@ -680,8 +680,8 @@ class PrintController extends Controller
                 'student_id',
             )
             ->whereIn('student_id', $studentIds)
-            ->where('school_year_id', auth()->user()->activeHomeroom->first()->school_year_id)
-            ->where('school_term_id', auth()->user()->activeHomeroom->first()->school_term_id)
+            ->where('school_year_id', SchoolYear::activeId())
+            ->where('school_term_id', SchoolTerm::activeId())
             ->groupBy( 'habits.aspect_id','habit_id','week','home','school','student_id')
             ->orderBy('habits.id', 'asc') // Order by the sort_order column from subject_users table
             ->orderBy('week','asc') // Order by the maximum grading
