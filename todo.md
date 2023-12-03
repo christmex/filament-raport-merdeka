@@ -62,9 +62,9 @@ IMPORTANT
 - [x] show or hide fase in print raport ->meta name = show_fase, set 0 if u dont want to show the fase
 - [x] show or hide kkm in print raport -> meta name = show_top_kkm, set 0 if you want to show kkm in table, set the global kkm if you want to show top kkm
 - [x] nilai akhir bulat di raport
-- [ ] every teacher can see the report sheet.
+- [x] every teacher can see the report sheet.
 - [x] random character description, pelajari di print-report-character
-- [ ] make assessment and student evaluation pagination, load 1 first then maximal 10.
+- [x] make assessment and student evaluation pagination, load 1 first then maximal 10.
 - [x] import student details
 - [x] report sheet, harus link ke raport karakter.
 
