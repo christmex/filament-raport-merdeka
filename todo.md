@@ -69,18 +69,17 @@ IMPORTANT
 - [x] report sheet, harus link ke raport karakter.
 
 
-HOWTO
+## HOWTO
 1. git fetch origin && git merge origin/main
 2. composer2 install
 3. php artisan migrate
 4. php artisan shield:generate --resource=SubjectDescriptionResource,StudentDescriptionResource,StudentSemesterEvaluationResource,ReligionResource,ExtracurricularResource,StudentClassroomResource,AspectResource,HabitResource,CharacterReportResource,RangeCharacterDescriptionResource,CharacterDescriptionResource,RaportConfigResource -> for creating permission and policy file for SubjectDescriptionResource
 5. git restore .
-6. after we finish open the aplication then login with super admin, then go to the student classroom menu, and click student sync
-7. agar description tampil, guru harus membuat semua description  untuk tiap topic
 
-##
-untuk moving class, moving class itu adalah kelas yang bukan kelas normal, contoh ada kelas matthew A untuk maths, nah siswanya bisa dari matthew 1,2,3 makanya itu namanya moving class, jika ada guru yg ngajar di moving class, jangan lupa admin masukin siswa siapa aja yg masuk di moving class di menu student classroom
-
+## IMPORTANT TO INFORM
+- after we finish open the aplication then login with super admin, then go to the student classroom menu, and click student sync
+- agar description tampil, guru harus membuat semua description  untuk tiap topic
+- untuk moving class, moving class itu adalah kelas yang bukan kelas normal, contoh ada kelas matthew A untuk maths, nah siswanya bisa dari matthew 1,2,3 makanya itu namanya moving class, jika ada guru yg ngajar di moving class, jangan lupa admin masukin siswa siapa aja yg masuk di moving class di menu student classroom
 
 
 There is 3 ways to use laravel global scope

@@ -19,6 +19,8 @@ class CharacterDescriptionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Master';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -58,7 +60,7 @@ class CharacterDescriptionResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -69,4 +71,9 @@ class CharacterDescriptionResource extends Resource
             'index' => Pages\ManageCharacterDescriptions::route('/'),
         ];
     }    
+
+    public static function getNavigationBadge(): ?string
+    {
+        return 'new';
+    }
 }

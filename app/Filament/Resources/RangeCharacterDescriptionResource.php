@@ -19,6 +19,8 @@ class RangeCharacterDescriptionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Master';
+    
     public static function form(Form $form): Form
     {
         return $form
@@ -76,4 +78,9 @@ class RangeCharacterDescriptionResource extends Resource
             'index' => Pages\ManageRangeCharacterDescriptions::route('/'),
         ];
     }    
+
+    public static function getNavigationBadge(): ?string
+    {
+        return 'new';
+    }
 }

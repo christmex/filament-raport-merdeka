@@ -19,6 +19,13 @@ class RaportConfigResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static bool $shouldRegisterNavigation = false;
+
+    public function mount(): void
+    {
+        // this is doenst work
+    }
+
     public static function form(Form $form): Form
     {
         return $form
