@@ -483,7 +483,7 @@
 					<td>{{$getSchoolSetting->school_address}}</td>
 				</tr>
 				<tr>
-					<td>Nama Siswa</td>
+					<td>Nama Peserta Didik</td>
 					<td style="width: 5px">:</td>
 					<td><strong>{{Str::title($student->student_name)}}</strong></td>
 				</tr>
