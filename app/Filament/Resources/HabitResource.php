@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\HabitResource\Pages;
-use App\Filament\Resources\HabitResource\RelationManagers;
-use App\Models\Habit;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Habit;
+use Filament\Forms\Get;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Illuminate\Validation\Rules\Unique;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\HabitResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\HabitResource\RelationManagers;
 
 class HabitResource extends Resource
 {
@@ -27,9 +29,14 @@ class HabitResource extends Resource
             ->schema([
                 Forms\Components\Select::make('aspect_id')
                     ->relationship('aspect', 'name')
+                    ->live()
                     ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->unique(modifyRuleUsing: function ($state,Unique $rule, Get $get) {
+                        return $rule->where('aspect_id', $get('aspect_id'))
+                                    ->where('name', $state);
+                    },ignoreRecord:true)
                     ->maxLength(255),
             ]);
     }
@@ -57,7 +64,7 @@ class HabitResource extends Resource
                 
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
