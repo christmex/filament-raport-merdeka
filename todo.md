@@ -70,8 +70,8 @@ IMPORTANT
 - [x] di subject descirpiton kasih juga contoh klo siswa dibawah kkm
 - [ ] inform filament ada bug, untuk penggunaan gourp di modal, liihat di menu subject descirption
 - [x] error di menu school setting saat create meta
-- [ ] export student bermasalah
-- [ ] import student bermasalah
+- [x] export student bermasalah
+- [x] import student bermasalah
 - [ ] add custom text in requiredconfriamtion action
 - [ ] di live app, ada error klo siswa beda jumlah mapel, mapel yang beda ngg tampil
 

@@ -234,53 +234,54 @@ class StudentResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\BulkAction::make('add_extracurricular')
-                    ->form([
-                        Forms\Components\Select::make('school_year_id')
-                            ->options(SchoolYear::all()->pluck('school_year_name','id'))
-                            ->searchable(['school_year_name'])
-                            ->preload()
-                            ->default(fn($state) => $state ?? SchoolYear::activeId())
-                            ->required(),
-                        Forms\Components\Select::make('school_term_id')
-                            ->options(SchoolTerm::all()->pluck('school_term_name','id'))
-                            ->searchable(['school_term_name'])
-                            ->preload()
-                            ->default(fn($state) => $state ?? SchoolTerm::activeId())
-                            ->required(),
-                        Forms\Components\Select::make('extracurricular_id')
-                            ->options(Extracurricular::all()->pluck('name','id'))
-                            ->searchable(['name'])
-                            ->preload()
-                            ->required(),
-                    ])
-                    ->action(function(array $data, $livewire){
-                        // dd($data, $livewire->selectedTableRecords);
-                            DB::beginTransaction();
-                            try {
-                                foreach ($livewire->selectedTableRecords as $key => $value) {
-                                    StudentExtracurricular::firstOrCreate([
-                                        'student_id' => $value,
-                                        'extracurricular_id' => $data['extracurricular_id'],
-                                        'school_year_id' => $data['school_year_id'],
-                                        'school_term_id' => $data['school_term_id'],
-                                    ]);
-                                }
-                                DB::commit();
-                                Notification::make()
-                                    ->success()
-                                    ->title('Success')
-                                    ->send();
-                            } catch (\Throwable $th) {
-                                DB::rollback();
-                                Notification::make()
-                                    ->danger()
-                                    ->title($th->getMessage())
-                                    ->send();
-                            }
+                    // Tables\Actions\BulkAction::make('add_extracurricular')
+                    //     ->form([
+                    //         Forms\Components\Select::make('school_year_id')
+                    //             ->options(SchoolYear::all()->pluck('school_year_name','id'))
+                    //             ->searchable(['school_year_name'])
+                    //             ->preload()
+                    //             ->default(fn($state) => $state ?? SchoolYear::activeId())
+                    //             ->required(),
+                    //         Forms\Components\Select::make('school_term_id')
+                    //             ->options(SchoolTerm::all()->pluck('school_term_name','id'))
+                    //             ->searchable(['school_term_name'])
+                    //             ->preload()
+                    //             ->default(fn($state) => $state ?? SchoolTerm::activeId())
+                    //             ->required(),
+                    //         Forms\Components\Select::make('extracurricular_id')
+                    //             ->options(Extracurricular::all()->pluck('name','id'))
+                    //             ->searchable(['name'])
+                    //             ->preload()
+                    //             ->required(),
+                    //     ])
+                    //     ->action(function(array $data, $livewire){
+                    //         // dd($data, $livewire->selectedTableRecords);
+                    //             DB::beginTransaction();
+                    //             try {
+                    //                 foreach ($livewire->selectedTableRecords as $key => $value) {
+                    //                     StudentExtracurricular::firstOrCreate([
+                    //                         'student_id' => $value,
+                    //                         'extracurricular_id' => $data['extracurricular_id'],
+                    //                         'school_year_id' => $data['school_year_id'],
+                    //                         'school_term_id' => $data['school_term_id'],
+                    //                     ]);
+                    //                 }
+                    //                 DB::commit();
+                    //                 Notification::make()
+                    //                     ->success()
+                    //                     ->title('Success')
+                    //                     ->send();
+                    //             } catch (\Throwable $th) {
+                    //                 DB::rollback();
+                    //                 Notification::make()
+                    //                     ->danger()
+                    //                     ->title($th->getMessage())
+                    //                     ->send();
+                    //             }
 
-                    })
-                    ->deselectRecordsAfterCompletion(),
+                    //     })
+                    // ->deselectRecordsAfterCompletion(),
+                    
                     // Tables\Actions\BulkAction::make('promoted_students')
                     //     ->form([
                     //         Forms\Components\Select::make('school_year_id')
