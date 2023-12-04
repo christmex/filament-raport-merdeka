@@ -18,10 +18,11 @@ class ManageSchoolSettings extends ManageRecords
         return [
             // Actions\CreateAction::make(),
             Actions\Action::make('createDefaultMeta')
+            ->requiresConfirmation()
             ->action(function(){
                 // {"show_fase":"1","show_top_kkm":"0"}
                 $SchoolSetting = SchoolSetting::first();
-                $SchoolSetting->meta = $SchoolSetting->meta ?? Helper::getDefaultMetaForSchoolSetting();
+                $SchoolSetting->meta =  Helper::getDefaultMetaForSchoolSetting();
                 if($SchoolSetting->save()){
                     Notification::make()
                         ->success()

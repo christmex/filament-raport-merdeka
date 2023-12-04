@@ -71,6 +71,7 @@ IMPORTANT
 - [ ] inform filament ada bug, untuk penggunaan gourp di modal, liihat di menu subject descirption
 - [ ] error di menu school setting saat create meta
 - [ ] export student bermasalah
+- [ ] add custom text in requiredconfriamtion action
 
 
 ## HOWTO
