@@ -182,14 +182,14 @@
     <h1 class="heading_progress_title_cover">{{Str::title($student->student_name)}}</h1>
 
     <section style="margin-bottom: 20px; margin-top: 40px">
-        <p id="student_name">NIS / NISN</p>
+        <p id="student_name">NIS/NISN</p>
         <h1 class="heading_progress_title_cover">{{$student->student_nis}}/{{$student->student_nisn}}</h1>
     </section>
     <div style="text-align: center;">
         <img src="{{asset('logo_basic.jpg')}}" alt="" id="tutwuri_logo">
     </div>
 
-	<footer class="heading_progress_title_cover" style="bottom: 50px;"><h2>Kementerian Pendidikan dan Kebudayaan<br>Republik Indonesia</h2></footer>
+	<footer class="heading_progress_title_cover" style="bottom: 50px;"><h2>Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi<br>Republik Indonesia</h2></footer>
 
 	<div class="page-break"></div>
 
@@ -220,7 +220,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width:300px">{{Str::title('NPSN')}}</td>
+					<td style="width:300px">NPSN</td>
 					<td style="width: 5px">:</td>
 					<td>{{$getSchoolSetting->npsn}}</td>
 				</tr>
