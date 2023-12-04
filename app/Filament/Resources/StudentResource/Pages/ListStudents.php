@@ -40,7 +40,7 @@ class ListStudents extends ListRecords
                     ->form([
                         \Filament\Forms\Components\FileUpload::make('importStudentAfterExport')
                             ->storeFiles(false)
-                            ->helperText(new HtmlString('Please before you import, export the excel first'))
+                            ->helperText(new HtmlString('Before you import, please export the excel first'))
                             ->columnSpanFull(),
                     ])
                     ->action(function(array $data){
@@ -69,21 +69,25 @@ class ListStudents extends ListRecords
                             ->columnSpanFull(),
                     ])
                     ->action(function(array $data){
-                        DB::beginTransaction();
-                        try {
-                            Excel::import(new StudentImport, $data['import_student']);
-                            DB::commit();
                             Notification::make()
-                                ->success()
-                                ->title('Student imported')
+                                ->warning()
+                                ->title('Not available at the moment')
                                 ->send();
-                        } catch (\Throwable $th) {
-                            DB::rollback();
-                            Notification::make()
-                                ->danger()
-                                ->title($th->getMessage())
-                                ->send();
-                        }
+                        // DB::beginTransaction();
+                        // try {
+                        //     Excel::import(new StudentImport, $data['import_student']);
+                        //     DB::commit();
+                        //     Notification::make()
+                        //         ->success()
+                        //         ->title('Student imported')
+                        //         ->send();
+                        // } catch (\Throwable $th) {
+                        //     DB::rollback();
+                        //     Notification::make()
+                        //         ->danger()
+                        //         ->title($th->getMessage())
+                        //         ->send();
+                        // }
                     })
             ])
             ->label('Import')

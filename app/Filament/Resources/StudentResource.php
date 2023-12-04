@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Religion;
 use Filament\Forms;
 use Filament\Tables;
+use App\Helpers\Helper;
 use App\Models\Student;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
@@ -56,6 +58,7 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('activeExtracurriculars.extracurricular.name')
                     ->listWithLineBreaks(),
                 Tables\Columns\TextColumn::make('activeExtracurriculars.description')
+                    ->label('Extracurricular Description')
                     ->listWithLineBreaks(),
                 Tables\Columns\TextColumn::make('student_nis')
                     ->searchable(),
@@ -70,6 +73,9 @@ class StudentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('religion.name')
                     ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('sex')
+                    ->formatStateUsing(fn (string $state): string => Helper::getSex($state))
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('status_in_family')
                     ->searchable()
@@ -187,16 +193,17 @@ class StudentResource extends Resource
                         ->url(fn (Student $record): string => route('students.print-report-character', $record))
                         ->openUrlInNewTab()
                         ->icon('heroicon-o-printer'),
-                        ExportAction::make()->exports([
-                            ExcelExport::make()->withColumns([
+                    ExportAction::make()->exports([
+                        ExcelExport::make()
+                            ->withColumns([
                                 Column::make('id'),
                                 Column::make('student_name'),
                                 Column::make('student_nis'),
                                 Column::make('student_nisn'),
                                 Column::make('born_place'),
                                 Column::make('born_date'),
-                                Column::make('sex'),
-                                Column::make('religion_id'),
+                                Column::make('sex')->formatStateUsing(fn ($state) => Helper::getSex($state)),
+                                Column::make('religion_id')->formatStateUsing(fn ($state) => Religion::find($state)->name),
                                 Column::make('status_in_family'),
                                 Column::make('sibling_order_in_family'),
                                 Column::make('address'),
@@ -213,8 +220,12 @@ class StudentResource extends Resource
                                 Column::make('guardian_address'),
                                 Column::make('guardian_job'),
                             ])
-                            ->withNamesAsHeadings(),
-                        ]),
+                        ->modifyQueryUsing(fn ($query) => $query->ownStudent()->withoutGlobalScopes([SoftDeletingScope::class]))
+                        
+                        // ->fromTable()
+                        ->withNamesAsHeadings()
+                        ,
+                    ]),
                 ])
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
