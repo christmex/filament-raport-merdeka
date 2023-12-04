@@ -67,16 +67,18 @@ IMPORTANT
 - [x] make assessment and student evaluation pagination, load 1 first then maximal 10.
 - [x] import student details
 - [x] report sheet, harus link ke raport karakter.
+- [x] di subject descirpiton kasih juga contoh klo siswa dibawah kkm
+- [ ] inform filament ada bug, untuk penggunaan gourp di modal, liihat di menu subject descirption
 
 
 ## HOWTO
-1. git fetch origin && git merge origin/main
-2. composer2 install
-3. php artisan migrate
-4. php artisan shield:generate --resource=SubjectDescriptionResource,StudentDescriptionResource,StudentSemesterEvaluationResource,ReligionResource,ExtracurricularResource,StudentClassroomResource,AspectResource,HabitResource,CharacterReportResource,RangeCharacterDescriptionResource,CharacterDescriptionResource,RaportConfigResource -> for creating permission and policy file for SubjectDescriptionResource
-5. git restore .
+1. git fetch origin && git merge origin/main && composer2 install
+2. php artisan migrate
+3. php artisan shield:generate --resource=SubjectDescriptionResource,StudentDescriptionResource,StudentSemesterEvaluationResource,ReligionResource,ExtracurricularResource,StudentClassroomResource,AspectResource,HabitResource,CharacterReportResource,RangeCharacterDescriptionResource,CharacterDescriptionResource,RaportConfigResource -> for creating permission and policy file for SubjectDescriptionResource
+4. git restore .
 
 ## IMPORTANT TO INFORM
+- TIngkat SMP dan SMA harus set  KKM yang sama semua guru
 - after we finish open the aplication then login with super admin, then go to the student classroom menu, and click student sync
 - agar description tampil, guru harus membuat semua description  untuk tiap topic
 - untuk moving class, moving class itu adalah kelas yang bukan kelas normal, contoh ada kelas matthew A untuk maths, nah siswanya bisa dari matthew 1,2,3 makanya itu namanya moving class, jika ada guru yg ngajar di moving class, jangan lupa admin masukin siswa siapa aja yg masuk di moving class di menu student classroom

@@ -77,19 +77,23 @@ class SubjectDescriptionResource extends Resource
                                     ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(function ($state, Forms\Set $set, Get $get) {
-                                        $state = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$get('is_english_description')), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $state));
+                                        $PassKKM = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$get('is_english_description')), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $state));
                                         // $state = Str::replace('[STUDENT_PREDICATE]','ass',$state) ;
-                                        $set('result', $state);
+                                        $set('result', $PassKKM);
+
+                                        $UnderKKM = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(60,70,$get('is_english_description')), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $state));
+                                        $set('result_under_kkm', $UnderKKM);
                                     })
                                     ->helperText(new HtmlString('Please use [STUDENT_NAME] when you want to mention the student name automatic and [STUDENT_PREDICATE] if you want mention the predicate automatic')),
                                 Forms\Components\Toggle::make('is_english_description')
                                     ->live()
                                     ->afterStateUpdated(function ($state,Forms\Set $set, Get $get) {
                                         $desc = $get('description');
+                                        $PassKKM = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$state), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $desc));
+                                        $set('result', $PassKKM);
 
-                                        $desc = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$state), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $desc));
-
-                                        $set('result', $desc);
+                                        $UnderKKM = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(60,70,$state), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $desc));
+                                        $set('result_under_kkm', $UnderKKM);
                                     })
                                     ->helperText('please turn this on, if you make description in english')
                                 ])
@@ -99,12 +103,25 @@ class SubjectDescriptionResource extends Resource
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\Textarea::make('result')
-                                ->rows(10)
-                                ->cols(20)
-                                ->helperText('click anywhere after write description to see the result')
-                                    // ->allowHtml()
-                                    // ->toHtml()
-                                    // ->disabled()
+                                    ->rows(5)
+                                    ->cols(20)
+                                    ->helperText('click anywhere after write description to see the result')
+                                    ->default(function(Get $get){
+                                        $desc = $get('description');
+                                        return Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$get('is_english_description')), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $desc));
+                                    })
+                                    ->disabled(),
+                                Forms\Components\Textarea::make('result_under_kkm')
+                                    ->label('Result example (Under KKM)')
+                                    ->rows(5)
+                                    ->cols(20)
+                                    ->helperText('click anywhere after write description to see the result')
+                                    ->default(function(Get $get){
+                                        $desc = $get('description');
+                                        return Str::replace('[STUDENT_PREDICATE]', Helper::predicate(60,70,$get('is_english_description')), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $desc));
+                                    })
+                                    ->disabled(),
+
                             ])
                 ])
                 

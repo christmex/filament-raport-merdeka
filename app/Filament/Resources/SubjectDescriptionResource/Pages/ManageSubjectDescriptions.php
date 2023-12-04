@@ -75,8 +75,13 @@ class ManageSubjectDescriptions extends ManageRecords
                                     ->live(onBlur: true)
                                     ->default('Ananda [STUDENT_NAME] [STUDENT_PREDICATE] dalam ...')
                                     ->afterStateUpdated(function ($state, Set $set, Get $get) {
-                                        $state = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$get('is_english_description')), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $state));
-                                        $set('result', $state);
+                                        $PassKKM = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$get('is_english_description')), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $state));
+                                        $set('result', $PassKKM);
+
+                                        $UnderKKM = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(60,70,$get('is_english_description')), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $state));
+                                        $set('result_under_kkm', $UnderKKM);
+
+                                        
                                     })
                                     ->helperText(new HtmlString('Please use [STUDENT_NAME] when you want to mention the student name and [STUDENT_PREDICATE] if you want mention the predicate')),
 
@@ -84,8 +89,12 @@ class ManageSubjectDescriptions extends ManageRecords
                                     ->live()
                                     ->afterStateUpdated(function ($state,Set $set, Get $get) {
                                         $desc = $get('description');
-                                        $desc = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$state), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $desc));
-                                        $set('result', $desc);
+
+                                        $PassKKM = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$state), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $desc));
+                                        $set('result', $PassKKM);
+
+                                        $UnderKKM = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(60,70,$state), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $desc));
+                                        $set('result_under_kkm', $UnderKKM);
                                     })
                                     ->helperText('please turn this on, if you make description in english')
                             ])
@@ -96,10 +105,18 @@ class ManageSubjectDescriptions extends ManageRecords
                             ->schema([
                                 \Filament\Forms\Components\Textarea::make('result')
                                     ->label('Result example')
-                                    ->rows(10)
+                                    ->rows(5)
                                     ->cols(20)
                                     ->disabled()
-                                    ->default('Ananda [STUDENT_NAME] [STUDENT_PREDICATE] dalam ...')
+                                    ->helperText('click anywhere after write description to see the result')
+                                    ->default('Click here to see the result ...'),
+                                \Filament\Forms\Components\Textarea::make('result_under_kkm')
+                                    ->label('Result example (Under KKM)')
+                                    ->rows(5)
+                                    ->cols(20)
+                                    ->disabled()
+                                    ->helperText('click anywhere after write description to see the result')
+                                    ->default('Click here to see the result ...'),
                             ])
                     ])
 
