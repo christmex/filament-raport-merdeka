@@ -276,10 +276,11 @@ class PrintController extends Controller
             }
             if(count($value) != $firstCount){
                 $differences = array_diff_assoc(array_keys($firstArrayData), array_keys($value));
+                $separ = count($value) > count($firstArrayData) ? 'memiliki nilai di mapel' : 'tidak memiliki nilai di mapel';
                 Notification::make()
                     ->danger()
                     ->persistent()
-                    ->title('<strong>'.$key.'</strong> memiliki nilai di mapel <strong>'. implode(',', $differences).'</strong>, berikut daftar mapel <strong>'.$key.'</strong>:<br>'.implode('<br>',array_keys($value)).'<br><br> silahkan menghapus salah satu nilai pada mapel')
+                    ->title('<strong>'.$key.'</strong> '.$separ.' <strong>'. implode(',', $differences).'</strong>. <br><br>Daftar mapel <strong>'.$key.'</strong>:<br><ol style="list-style:auto!important"><li>'.implode('</li><li>',array_keys($value)).'</li></ol><br> Silahkan menghapus salah satu nilai pada mapel di atas/menambahkan mapel yang hanya dimiliki siswa ini kepada siswa lain')
                     ->send();
                 // If this ishappen stopthe prosses
                 return back();
@@ -336,15 +337,15 @@ class PrintController extends Controller
         // dd($tableHeader,$finalNewData);
         
         $getStudentCharacter = $this->generateCharacterAvg($studentIds);
-        if(count($studentIds) != count($getStudentCharacter)){
-            Notification::make()
-                    ->danger()
-                    ->persistent()
-                    ->title('Please ask the main teacher to create character raport first then we can generate the report sheet')
-                    ->send();
-                // If this ishappen stopthe prosses
-                return back();
-        }
+        // if(count($studentIds) != count($getStudentCharacter)){
+        //     Notification::make()
+        //             ->danger()
+        //             ->persistent()
+        //             ->title('Please ask the main teacher to create character raport first then we can generate the report sheet')
+        //             ->send();
+        //         // If this ishappen stopthe prosses
+        //         return back();
+        // }
         $pdf = Pdf::loadView('print-report-sheet-for-teacher', compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter'))->setPaper('A4', 'landscape');//convert mm to point
         return $pdf->stream('print-report-sheet-for-teacher.pdf');
     }
@@ -439,7 +440,7 @@ class PrintController extends Controller
                 Notification::make()
                     ->danger()
                     ->persistent()
-                    ->title('<strong>'.$key.'</strong> memiliki nilai di mapel <strong>'. implode(',', $differences).'</strong>, berikut daftar mapel <strong>'.$key.'</strong>:<br>'.implode('<br>',array_keys($value)).'<br><br> silahkan menghapus salah satu nilai pada mapel')
+                    ->title('<strong>'.$key.'</strong> memiliki nilai di mapel <strong>'. implode(',', $differences).'</strong>, berikut daftar mapel <strong>'.$key.'</strong>:<br>'.implode('<br>',array_keys($value)).'<br><br> silahkan menghapus salah satu nilai pada mapel di atas/menambahkan mapel yang hanya dimiliki siswa ini kepada siswa lain')
                     ->send();
                 // If this ishappen stopthe prosses
                 return back();
@@ -495,15 +496,15 @@ class PrintController extends Controller
         // dd($tableHeader,$finalNewData);
         
         $getStudentCharacter = $this->generateCharacterAvg($studentIds);
-        if(count($studentIds) != count($getStudentCharacter)){
-            Notification::make()
-                    ->danger()
-                    ->persistent()
-                    ->title('Please ask the main teacher to create character raport first then we can generate the report sheet')
-                    ->send();
-                // If this ishappen stopthe prosses
-                return back();
-        }
+        // if(count($studentIds) != count($getStudentCharacter)){
+        //     Notification::make()
+        //             ->danger()
+        //             ->persistent()
+        //             ->title('Please ask the main teacher to create character raport first then we can generate the report sheet')
+        //             ->send();
+        //         // If this ishappen stopthe prosses
+        //         return back();
+        // }
         $pdf = Pdf::loadView('print-report-sheet', compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter'))->setPaper('A4', 'landscape');//convert mm to point
         return $pdf->download('print-report-sheet.pdf');
     }
