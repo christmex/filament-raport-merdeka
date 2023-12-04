@@ -441,11 +441,11 @@ class PrintController extends Controller
             }
             if(count($value) != $firstCount){
                 $differences = array_diff_assoc(array_keys($firstArrayData), array_keys($value));
-                $separ = count($value) > count($firstArrayData) ? 'memiliki nilai di mapel' : 'tidak memiliki nilai di mapel';
+                $separ = count($value) > count($firstArrayData) ? 'memiliki nilai di mapel'. implode(',', $differences) : 'tidak memiliki nilai di beberapa mapel';
                 Notification::make()
                     ->danger()
                     ->persistent()
-                    ->title('<strong>'.$key.'</strong> '.$separ.' <strong>'. implode(',', $differences).'</strong>. <br><br>Daftar mapel <strong>'.$key.'</strong>:<br><ol style="list-style:auto!important"><li>'.implode('</li><li>',array_keys($value)).'</li></ol><br> Silahkan menghapus salah satu nilai pada mapel di atas/menambahkan mapel yang hanya dimiliki siswa ini kepada siswa lain')
+                    ->title('<strong>'.$key.'</strong> '.$separ.'</strong>. <br><br>Daftar mapel <strong>'.$key.'</strong>:<br><ol style="list-style:auto!important"><li>'.implode('</li><li>',array_keys($value)).'</li></ol><br> Silahkan menghapus salah satu nilai pada mapel di atas/menambahkan mapel yang hanya dimiliki siswa ini kepada siswa lain')
                     ->send();
                 // If this ishappen stopthe prosses
                 return back();
