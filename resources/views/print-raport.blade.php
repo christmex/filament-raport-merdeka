@@ -466,7 +466,7 @@
 		<div style="float: left; width: 70%;">
 			<table>
 				<tr>
-					<td style="width: 100px">School Name</td>
+					<td style="width: 100px">Nama Sekolah</td>
 					<td style="width: 5px">:</td>
 					<td>{{$getSchoolSetting->school_name_prefix}}
 						<span class="logoB">B</span>
@@ -478,12 +478,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Address</td>
+					<td>Alamat</td>
 					<td style="width: 5px">:</td>
 					<td>{{$getSchoolSetting->school_address}}</td>
 				</tr>
 				<tr>
-					<td>Student Name</td>
+					<td>Nama Siswa</td>
 					<td style="width: 5px">:</td>
 					<td><strong>{{Str::title($student->student_name)}}</strong></td>
 				</tr>
@@ -497,7 +497,7 @@
 		<div style="float: right; width: 30%;">
 			<table>
 				<tr>
-					<td>Class</td>
+					<td>Kelas</td>
 					<td>:</td>
 					<td>{{Helper::numberToRomawi($student->active_classroom_level)}} {{$student->active_classroom_name}}</td>
 				</tr>
@@ -525,7 +525,7 @@
 					@endif
 				@endif
 				<tr>
-					<td>School Year</td>
+					<td>Tahun Ajaran</td>
 					<td>:</td>
 					<td>{{Helper::getSchoolYearName()}}</td>
 				</tr>
