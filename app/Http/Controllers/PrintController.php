@@ -542,8 +542,16 @@ class PrintController extends Controller
         foreach ($characterReports as $value) {
             $data[$value->habit->aspect->name][$value->habit->name][$value->week] = ['home' => $value->home,'school' => $value->school];
         }
+        if(!count($characterReports)){
+            Notification::make()
+                    ->danger()
+                    ->persistent()
+                    ->title('go to "Character report" menu to create character raport first then we can generate the report sheet')
+                    ->send();
+                // If this ishappen stopthe prosses
+                return back();
+        }
 
-        
         // ->setPaper(array(0,0,935.433,609.449), 'potrait')
         $avgAcademic = $this->generateAcademyAvg($student);
         $pdf = Pdf::loadView('print-report-character', compact('data','avgAcademic','student'))->setPaper(array(0,0,935.433,609.449), 'potrait');//convert mm to point
