@@ -172,7 +172,7 @@
 		}
 	@endphp
 	<!--  -->
-	<h6 class="heading_progress_title">Rekap Nilai {{auth()->user()->activeHomeroom()->first()->classroom->classroom_name}} {{Helper::getSchoolYearName()}} - {{Helper::getSchoolTermName()}}</h6>
+	<h6 class="heading_progress_title">Rekap Nilai {{$classroom_name}} {{Helper::getSchoolYearName()}} - {{Helper::getSchoolTermName()}}</h6>
 	<section id="extracurricular" style="">
 		<table>
 			<thead>

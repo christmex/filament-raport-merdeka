@@ -181,10 +181,13 @@ class PrintController extends Controller
     }
 
 
-    public  function print_report_sheet_for_teacher($classroom_id){
+    public  function print_report_sheet_for_teacher(Classroom $classroom){
         if(auth()->guest()){
             abort(404,'Login First');
         }
+
+        $classroom_id = $classroom->id;
+        $classroom_name = $classroom->classroom_name;
 
         $data = [];
 
@@ -346,7 +349,7 @@ class PrintController extends Controller
         //         // If this ishappen stopthe prosses
         //         return back();
         // }
-        $pdf = Pdf::loadView('print-report-sheet-for-teacher', compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter'))->setPaper('A4', 'landscape');//convert mm to point
+        $pdf = Pdf::loadView('print-report-sheet-for-teacher', compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter','classroom_name'))->setPaper('A4', 'landscape');//convert mm to point
         return $pdf->stream('print-report-sheet-for-teacher.pdf');
     }
 
