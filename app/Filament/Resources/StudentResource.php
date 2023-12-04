@@ -333,7 +333,7 @@ class StudentResource extends Resource
         return [
             RelationManagers\ExtracurricularsRelationManager::class,
             RelationManagers\AbsenceRelationManager::class,
-            RelationManagers\CharacterReportRelationManager::class,
+            // RelationManagers\CharacterReportRelationManager::class,
         ];
     }
     
