@@ -283,7 +283,7 @@ class PrintController extends Controller
                 Notification::make()
                     ->danger()
                     ->persistent()
-                    ->title('<strong>'.$key.'</strong> '.$separ.'</strong>. <br><br>Daftar mapel <strong>'.$key.'</strong>:<br><ol style="list-style:auto!important"><li>'.implode('</li><li>',array_keys($value)).'</li></ol><br> Silahkan menghapus salah satu nilai pada mapel di atas/menambahkan mapel yang hanya dimiliki siswa ini kepada siswa lain')
+                    ->title('<strong>'.$key.'</strong> '.$separ.'</strong>. <br><br>Daftar mapel <strong>'.$key.'</strong>:<br><ol style="list-style:auto!important"><li>'.implode('</li><li>',array_keys($value)).'</li></ol>')
                     // ->title('<strong>'.$key.'</strong> '.$separ.' <strong>'. implode(',', $differences).'</strong>. <br><br>Daftar mapel <strong>'.$key.'</strong>:<br><ol style="list-style:auto!important"><li>'.implode('</li><li>',array_keys($value)).'</li></ol><br> Silahkan menghapus salah satu nilai pada mapel di atas/menambahkan mapel yang hanya dimiliki siswa ini kepada siswa lain')
                     ->send();
                 // If this ishappen stopthe prosses
@@ -445,7 +445,7 @@ class PrintController extends Controller
                 Notification::make()
                     ->danger()
                     ->persistent()
-                    ->title('<strong>'.$key.'</strong> '.$separ.'</strong>. <br><br>Daftar mapel <strong>'.$key.'</strong>:<br><ol style="list-style:auto!important"><li>'.implode('</li><li>',array_keys($value)).'</li></ol><br> Silahkan menghapus salah satu nilai pada mapel di atas/menambahkan mapel yang hanya dimiliki siswa ini kepada siswa lain')
+                    ->title('<strong>'.$key.'</strong> '.$separ.'</strong>. <br><br>Daftar mapel <strong>'.$key.'</strong>:<br><ol style="list-style:auto!important"><li>'.implode('</li><li>',array_keys($value)).'</li></ol>')
                     ->send();
                 // If this ishappen stopthe prosses
                 return back();
