@@ -165,11 +165,6 @@
 	@php 
 		$getSchoolSetting = App\Models\SchoolSetting::first();
 		$getOnlyFinalAvgAcademic = Helper::getOnlyFinalAvgAcademic($finalNewData,$avgDiv, $PASDiv);
-		if(count($getStudentCharacter)){
-			$getRank = Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic)[$student_name];
-		}else {
-			$getRank = 'unavailable.';
-		}
 	@endphp
 	<!--  -->
 	<h6 class="heading_progress_title">Rekap Nilai {{$classroom_name}} {{Helper::getSchoolYearName()}} - {{Helper::getSchoolTermName()}}</h6>
@@ -217,7 +212,17 @@
 						@else
 							<td>Unavailable</td>
 						@endif
-						<td>{{$getRank}}</td>
+						<td>
+							@php
+								if(count($getStudentCharacter)){
+									$getRank = Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic)[$student_name];
+								}else {
+									$getRank = 'unavailable.';
+								}
+							@endphp
+							
+							{{$getRank}}
+						</td>
 					</tr>
 				@endforeach
 			</tbody>

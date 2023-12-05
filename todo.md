@@ -75,6 +75,8 @@ IMPORTANT
 - [ ] add custom text in requiredconfriamtion action
 - [ ] di live app, ada error klo siswa beda jumlah mapel, mapel yang beda ngg tampil
 - [ ] export report sheet as excel
+- [ ] buat grade sheet as excel
+- [x] deskripsi kalau semua nilai rendah, semisal 64 dan 60, apakah tetap menunjukkan kemampuan dan 60 perlu bimbingan?
 
 ## HOWTO
 1. git fetch origin && git merge origin/main && composer2 install

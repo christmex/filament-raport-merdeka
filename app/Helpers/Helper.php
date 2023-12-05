@@ -111,19 +111,31 @@ class Helper {
         ];
     }
 
-    public static function predicate($avg, $kkm, $inEnglish = false){
-        $A = 100-(100 - $kkm)/3 ;
-        $B = $A-(100-$kkm)/3 ;
-        $C = $B-(100-$kkm)/3-0.5;
+    public static function predicate($avg, $kkm, $inEnglish = false, $type = 'past'){
 
-        if ($avg > $A) {
+        $result = self::staticPredicate($inEnglish, $type);
+        // $A = 100-(100 - $kkm)/3 ;
+        // $B = $A-(100-$kkm)/3 ;
+        // $C = $B-(100-$kkm)/3-0.5;
+
+        // if ($avg > $A) {
+        //     $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
+        // } elseif ($avg > $B) {
+        //     $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
+        // } elseif ($avg > $C) {
+        //     $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
+        // } else {
+        //     $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
+        // }
+
+        return $result;
+    }
+
+    public static function staticPredicate($inEnglish, $type){
+        if($type == 'past'){
             $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
-        } elseif ($avg > $B) {
-            $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
-        } elseif ($avg > $C) {
-            $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
-        } else {
-            $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
+        }else {
+            $result = $inEnglish ? 'need to improve about ' :"perlu bimbingan dalam";
         }
 
         return $result;
