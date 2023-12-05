@@ -68,11 +68,11 @@ class ManageCharacterReports extends ManageRecords
                 $dataArray = [];
                 $getCLassroomStudentIds = $data['student_id'];
 
-                if(!count($getCLassroomStudentIds)){
+                if(!count($getCLassroomStudentIds) || !count($data['habit_id'])){
                     Notification::make()
                         ->warning()
                         ->title('Whopps, cant do that :(')
-                        ->body("No student selected")
+                        ->body("No student selected or no habit selected")
                         ->send();
                 }else{
                     $activeHomeroom = auth()->user()->activeHomeroom->first();

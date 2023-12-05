@@ -343,7 +343,7 @@
 				</tr>
 				<tr>
 					<td style="width: 20px">10.</td>
-					<td style="width:300px">{{Str::title('pendidikan sebelumnya')}}</td>
+					<td style="width:300px">{{Str::title('asal sekolah')}}</td>
 					<td style="width: 5px">:</td>
 					<td>{{Str::title($student->previous_education)}}</td>
 				</tr>
@@ -525,7 +525,7 @@
 					@endif
 				@endif
 				<tr>
-					<td>Tahun Ajaran</td>
+					<td>Tahun Pelajaran</td>
 					<td>:</td>
 					<td>{{Helper::getSchoolYearName()}}</td>
 				</tr>

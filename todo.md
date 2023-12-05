@@ -74,6 +74,7 @@ IMPORTANT
 - [x] import student bermasalah
 - [ ] add custom text in requiredconfriamtion action
 - [ ] di live app, ada error klo siswa beda jumlah mapel, mapel yang beda ngg tampil
+- [ ] export report sheet as excel
 
 ## HOWTO
 1. git fetch origin && git merge origin/main && composer2 install
