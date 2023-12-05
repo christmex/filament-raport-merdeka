@@ -371,7 +371,7 @@
 					<td style="width: 20px"></td>
 					<td style="width:300px">a. Pada Tanggal</td>
 					<td style="width: 5px">:</td>
-					<td>{{!empty($student->joined_at) ? Str::title($student->joined_at) : "-"  }}</td>
+					<td>{{!empty($student->joined_at) ? \Carbon\Carbon::parse($student->joined_at)->locale('id')->isoFormat('D MMMM YYYY') : "-"  }}</td>
 				</tr>
 				<tr>
 					<td style="width: 20px">12.</td>
@@ -463,7 +463,7 @@
 		</div>
 		<section id="sign_principle" style="margin: 5% auto 0; display:inline-block">
 			<div class="sign_top">
-				<p>Batam, {!!$getSchoolSetting->school_progress_report_date!!} </p>
+				<p>Batam, {{!empty($student->joined_at) ? \Carbon\Carbon::parse($student->joined_at)->locale('id')->isoFormat('D MMMM YYYY') : "-"  }} </p>
 				<p>Kepala Sekolah
 					{{$getSchoolSetting->school_name_prefix}}
 					<span class="logoB">B</span>

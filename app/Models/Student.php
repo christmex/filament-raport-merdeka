@@ -18,6 +18,17 @@ class Student extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+
+
+    protected $casts = [
+        'joined_at' => 'datetime'
+    ];
+
+    /**
      * The "booted" method of the model.
      */
     // protected static function booted(): void
