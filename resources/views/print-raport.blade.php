@@ -56,7 +56,7 @@
 
 		/* STUDENT DETAILS */
 		table tr td {
-			padding: 5px
+			padding: 2px 5px
 		}
 		/* STUDENT DETAILS */
 
@@ -349,6 +349,32 @@
 				</tr>
 				<tr>
 					<td style="width: 20px">11.</td>
+					<td style="width:300px">Diterima di 
+						{{$getSchoolSetting->school_name_prefix}}
+						<span class="logoB">B</span>
+						<span class="logoA">A</span>
+						<span class="logoS">S</span>
+						<span class="logoI">I</span>
+						<span class="logoC">C</span>
+						<span class="font511880">{{$getSchoolSetting->school_name_suffix}}</span> :
+					</td>
+					<td style="width: 5px"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">a. {{Str::title('di kelas')}}</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty($student->joined_at_class) ? Str::title($student->joined_at_class) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px"></td>
+					<td style="width:300px">a. Pada Tanggal</td>
+					<td style="width: 5px">:</td>
+					<td>{{!empty($student->joined_at) ? Str::title($student->joined_at) : "-"  }}</td>
+				</tr>
+				<tr>
+					<td style="width: 20px">12.</td>
 					<td style="width:300px">{{Str::title('orang tua')}}</td>
 					<td style="width: 5px"></td>
 					<td></td>
@@ -378,7 +404,7 @@
 					<td>{{!empty(Str::title($student->parent_phone)) ? Str::title($student->parent_phone) : "-"  }}</td>
 				</tr>
 				<tr>
-					<td style="width: 20px">12.</td>
+					<td style="width: 20px">13.</td>
 					<td style="width:300px">{{Str::title('pekerjaan orang tua')}}</td>
 					<td style="width: 5px"></td>
 					<td></td>
@@ -396,7 +422,7 @@
 					<td>{{!empty(Str::title($student->mother_job)) ? Str::title($student->mother_job) : "-"  }}</td>
 				</tr>
 				<tr>
-					<td style="width: 20px">13.</td>
+					<td style="width: 20px">14.</td>
 					<td style="width:300px">{{Str::title('wali peserta didik')}}</td>
 					<td style="width: 5px"></td>
 					<td></td>

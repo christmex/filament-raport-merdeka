@@ -209,6 +209,8 @@ class StudentResource extends Resource
                                 Column::make('address'),
                                 Column::make('phone'),
                                 Column::make('previous_education'),
+                                Column::make('joined_at_class'),
+                                Column::make('joined_at'),
                                 Column::make('father_name'),
                                 Column::make('mother_name'),
                                 Column::make('parent_address'),
@@ -399,6 +401,8 @@ class StudentResource extends Resource
                         Forms\Components\Textarea::make('address'),
                         Forms\Components\TextInput::make('phone')->tel(),
                         Forms\Components\TextInput::make('previous_education')->maxLength(255),
+                        Forms\Components\TextInput::make('joined_at_class')->maxLength(255),
+                        Forms\Components\DatePicker::make('joined_at'),
                     ]),
                 Tabs\Tab::make('Parent Details')
                     ->schema([
