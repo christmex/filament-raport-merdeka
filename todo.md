@@ -77,6 +77,9 @@ IMPORTANT
 - [ ] export report sheet as excel
 - [ ] buat grade sheet as excel
 - [x] deskripsi kalau semua nilai rendah, semisal 64 dan 60, apakah tetap menunjukkan kemampuan dan 60 perlu bimbingan?
+- [ ] raport basic curiculum juga sama descrpsiny?
+- [ ] raport basiccurikulum pakai kkm jga ngg?
+- [ ] raport basi curiculum formatnya sama dengan yg di atasnya?
 
 ## HOWTO
 1. git fetch origin && git merge origin/main && composer2 install

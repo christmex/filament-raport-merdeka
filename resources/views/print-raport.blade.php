@@ -614,7 +614,7 @@
 										$desc .= $separ.Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description,'under')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 									}else {
 										$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description);
-										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
+										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description,'past')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
 									}
 								}
 							@endphp
@@ -719,7 +719,7 @@
 				@foreach($student->activeExtracurriculars as $value)
 				<tr draggable="true">
 					<td>{{$loop->iteration}}</td>
-					<td style="text-align: left; padding: 5px">{{$value->extracurricular->name}}</td>
+					<td style="text-align: left; padding: 5px">{{$value->name}}</td>
 					<td style="text-align: left; padding: 5px">{{$value->description}}</td>
 				</tr>
 				@endforeach

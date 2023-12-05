@@ -171,8 +171,16 @@ class Student extends Model
 
     public function activeExtracurriculars()
     {
-        return $this->extracurriculars()->where('school_year_id', SchoolYear::active())
-        ->where('school_term_id', SchoolTerm::active())->latest();
+        // return $this->extracurriculars()->where('school_year_id', SchoolYear::active())
+        // ->where('school_term_id', SchoolTerm::active())->latest();
+
+        return $this->extracurriculars()
+        ->join('extracurriculars', 'student_extracurricular.extracurricular_id', '=', 'extracurriculars.id')
+        ->where('student_extracurricular.school_year_id', SchoolYear::active())
+        ->where('student_extracurricular.school_term_id', SchoolTerm::active())
+        ->orderBy('extracurriculars.order','asc')
+        ->select('student_extracurricular.*', 'extracurriculars.name');
+
     }
     public function activeCharacterReport()
     {

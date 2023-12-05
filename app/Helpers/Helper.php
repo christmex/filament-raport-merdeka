@@ -111,22 +111,26 @@ class Helper {
         ];
     }
 
-    public static function predicate($avg, $kkm, $inEnglish = false, $type = 'past'){
+    public static function predicate($avg, $kkm, $inEnglish = false, $type = null){
 
-        $result = self::staticPredicate($inEnglish, $type);
-        // $A = 100-(100 - $kkm)/3 ;
-        // $B = $A-(100-$kkm)/3 ;
-        // $C = $B-(100-$kkm)/3-0.5;
+        if($type == null){
+            $A = 100-(100 - $kkm)/3 ;
+            $B = $A-(100-$kkm)/3 ;
+            $C = $B-(100-$kkm)/3-0.5;
 
-        // if ($avg > $A) {
-        //     $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
-        // } elseif ($avg > $B) {
-        //     $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
-        // } elseif ($avg > $C) {
-        //     $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
-        // } else {
-        //     $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
-        // }
+            if ($avg > $A) {
+                $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
+            } elseif ($avg > $B) {
+                $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
+            } elseif ($avg > $C) {
+                $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
+            } else {
+                $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
+            }
+        }else {
+            $result = self::staticPredicate($inEnglish, $type);
+        }
+        
 
         return $result;
     }
@@ -134,7 +138,7 @@ class Helper {
     public static function staticPredicate($inEnglish, $type){
         if($type == 'past'){
             $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
-        }else {
+        }elseif($type == 'under') {
             $result = $inEnglish ? 'need to improve about ' :"perlu bimbingan dalam";
         }
 
