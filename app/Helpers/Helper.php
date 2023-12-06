@@ -650,7 +650,8 @@ class Helper {
                 if ($totalCount === 0) {
                     $average = 0;
                 } else {
-                    $average = round($totalSum / $totalCount); // Memasukkan fungsi round di sini
+                    // $average = round($totalSum / $totalCount); // Memasukkan fungsi round di sini
+                    $average = $totalSum / $totalCount; // Memasukkan fungsi round di sini
                 }
         
                 // Simpan rata-rata dalam array dengan nama mata pelajaran sebagai kunci
