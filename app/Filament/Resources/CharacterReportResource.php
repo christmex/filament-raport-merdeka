@@ -103,7 +103,17 @@ class CharacterReportResource extends Resource
                     ->searchable(),
                 SelectFilter::make('habit_id')
                     ->label('habit')
-                    ->options(Habit::all()->pluck('name','id'))
+                    ->options(Habit::all()->pluck('name','id')),
+                SelectFilter::make('week')
+                    ->label('Week')
+                    ->options(function(){
+                        $week = [];
+                        for ($i=1; $i <= 17; $i++) { 
+                            $week[$i] = $i;
+                        }
+
+                        return $week;
+                    }),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

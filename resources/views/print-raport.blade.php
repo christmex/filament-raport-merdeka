@@ -605,16 +605,18 @@
 								->first();
 								if($check != null){
 									if($desc != ''){
+										$separ = $check->is_english_description ? 'And ' : 'Dan ';
+
 										//if($previousPredicate == 'Need to improve about' || $previousPredicate == 'Perlu bimbingan dalam'){
 										//	$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 										//}else {
 										//	$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 										//}
-										$separ = $check->is_english_description ? 'But ' : 'Namun ';
-										$desc .= $separ.Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description,'under')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+										
+										$desc .= "<hr>".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description, 'under')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 									}else {
 										$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description);
-										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description,'past')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
+										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
 									}
 								}
 							@endphp
@@ -678,11 +680,13 @@
 								->first();
 								if($check != null){
 									if($desc != ''){
-										if($previousPredicate == 'Need to improve about' || $previousPredicate == 'Perlu bimbingan dalam'){
-											$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
-										}else {
-											$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
-										}
+										//if($previousPredicate == 'Need to improve about' || $previousPredicate == 'Perlu bimbingan dalam'){
+										//	$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+										//}else {
+										//	$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+										//}
+										
+										$desc .= "<hr>".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description, 'under')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 									}else {
 										$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description);
 										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";

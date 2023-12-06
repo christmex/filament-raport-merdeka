@@ -38,6 +38,8 @@ class StudentImportAfterExport implements ToModel, WithHeadingRow
             $student->address = $row['address'];
             $student->phone = $row['phone'];
             $student->previous_education = $row['previous_education'];
+            $student->joined_at_class = $row['joined_at_class'];
+            $student->joined_at = $row['joined_at'];
             $student->father_name = $row['father_name'];
             $student->mother_name = $row['mother_name'];
             $student->parent_address = $row['parent_address'];

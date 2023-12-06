@@ -72,16 +72,16 @@ IMPORTANT
 - [x] error di menu school setting saat create meta
 - [x] export student bermasalah
 - [x] import student bermasalah
-- [ ] add custom text in requiredconfriamtion action
+- [ ] add custom text in required confriamtion action
 - [ ] di live app, ada error klo siswa beda jumlah mapel, mapel yang beda ngg tampil
-- [ ] export report sheet as excel
+- [x] export report sheet as excel
 - [ ] buat grade sheet as excel
-- [ ] deskripsi kalau semua nilai rendah, semisal 64 dan 60, perlu bimbingan semua
-- [ ] raport basic curiculum descrpsiny apakah sama dengan yang lain?
-- [ ] raport basic curiculum ngga pakai kkm jga?
-- [ ] nilai grade sheet di system beda dengan grade sheet di excel
-- [ ] import joinet class dan joinet at
-- [ ] raport character dibuat pengisian seperti dibuku character
+- [x] deskripsi kalau semua nilai rendah, semisal 64 dan 60, perlu bimbingan semua
+- [x] raport basic curiculum descrpsiny apakah sama dengan yang lain?
+- [x] raport basic curiculum ngga pakai kkm jga?
+- [ ] nilai report sheet di system beda dengan grade sheet di excel
+- [x] import joinet class dan joinet at
+- [x] raport character dibuat pengisian seperti dibuku character
 
 ## HOWTO
 1. git fetch origin && git merge origin/main && composer2 install
