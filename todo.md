@@ -78,8 +78,8 @@ IMPORTANT
 - [ ] buat grade sheet as excel
 - [x] deskripsi kalau semua nilai rendah, semisal 64 dan 60, perlu bimbingan semua
 - [x] raport basic curiculum descrpsiny apakah sama dengan yang lain?
-- [ ] raport basic curiculum ngga pakai kkm jga? pakai tetap dimunculkan
-- [ ] nilai report sheet di system beda dengan grade sheet di excel
+- [x] raport basic curiculum ngga pakai kkm jga? pakai tetap dimunculkan
+- [x] nilai report sheet di system beda dengan grade sheet di excel
 - [x] import joinet class dan joinet at
 - [x] raport character dibuat pengisian seperti dibuku character
 

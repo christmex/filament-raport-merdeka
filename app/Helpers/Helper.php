@@ -599,7 +599,19 @@ class Helper {
         }
 
         // Tanya lagi mau gimana untuk pembulatannya
-        return round($result,mode: PHP_ROUND_HALF_DOWN );
+        // return round($result,mode: PHP_ROUND_HALF_DOWN );
+        return self::customRound($result);
+    }
+
+    public static function customRound($number)
+    {
+        $decimalPart = $number - floor($number); // Mendapatkan bagian desimal
+
+        if ($decimalPart >= 0.55) {
+            return ceil($number); // Pembulatan ke atas jika desimal >= 0.55
+        } else {
+            return floor($number); // Pembulatan ke bawah jika desimal < 0.55
+        }
     }
 
     public static function reportSheetCalculateAverage($datas){
