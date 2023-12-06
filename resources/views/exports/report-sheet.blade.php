@@ -59,6 +59,7 @@
 					{{$getRank}}
 				</td>
 			</tr>
+			{{dd($finalNewData)}}
 		@endforeach
 	</tbody>
 </table>

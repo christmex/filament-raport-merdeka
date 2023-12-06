@@ -776,7 +776,7 @@
 		<div id="sign_main_teacher" style="float:right;width:auto;">
 			<div class="sign_top" style="margin-bottom:80px">
 				<p>Batam, {!!$getSchoolSetting->school_progress_report_date!!}</p>
-				<p>Wali Kelas</p>
+				<p>Wali Kelas {{Helper::numberToRomawi($student->active_classroom_level)}} {{$student->active_classroom_name}}</p>
 			</div>
 
 			<div class="border_sign">

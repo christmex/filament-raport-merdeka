@@ -591,13 +591,14 @@ class Helper {
         if(empty($avgDiv) || empty($pasDiv)){
             return "Kontak adm untuk setting alokasi bobot di menu school setting";
         }
+
         
         $result = $avg*$avgDiv;
         if($pas){
             $result +=$pas*$pasDiv;
         }
 
-        return round($result);
+        return round($result,mode: PHP_ROUND_HALF_DOWN );
     }
 
     public static function reportSheetCalculateAverage($datas){
