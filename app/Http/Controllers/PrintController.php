@@ -262,10 +262,11 @@ class PrintController extends Controller
                 $newData[$newDataKey][$key]['is_curiculum_basic'] = $data[$newDataKey][$key]['is_curiculum_basic'];
 
                 if($StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()){
-                    $newData[$newDataKey][$key]['PAS'] =$StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()->grading;
+                    $newData[$newDataKey][$key]['PAS'] = $StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()->grading;
                 }
             }
         }
+        dd($newData);
 
         $getSchoolSettings = SchoolSetting::first();
         $avgDiv = ($getSchoolSettings->sumatif_avg/100);

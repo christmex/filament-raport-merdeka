@@ -598,6 +598,7 @@ class Helper {
             $result +=$pas*$pasDiv;
         }
 
+        // Tanya lagi mau gimana untuk pembulatannya
         return round($result,mode: PHP_ROUND_HALF_DOWN );
     }
 
