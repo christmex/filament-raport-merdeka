@@ -226,9 +226,9 @@ class PrintController extends Controller
         ->where('subject_users.school_term_id', SchoolTerm::activeId())
         ->whereNotNull('grading')
         ->groupBy( 'subjects.is_curiculum_basic','assessment_method_setting_id', 'subject_user_id', 'topic_setting_id','student_id')
-        ->orderBy('students.student_name', 'asc')
         ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
         ->orderBy('subjects.subject_name', 'asc') // Order by the sort_order column from subject_users table
+        ->orderBy('students.student_name', 'asc')
         ->orderByDesc('max_grading') // Order by the maximum grading
         ->withoutGlobalScope('subjectUser')
         ->get();
@@ -244,8 +244,9 @@ class PrintController extends Controller
 
         // Count avg based on the $data
         $newData = Helper::reportSheetCalculateAverage($data);
+
         // Sort by student name
-        ksort($newData);
+        // ksort($newData);
 
         // GET THE PAS 
         $StudentSemesterEvaluation = StudentSemesterEvaluation::with('subjectUserThrough','student')
