@@ -46,7 +46,12 @@
 				<td>{{ $countFinalAvgAcademic }}</td>
 				<td>{{ $countFinalAvgCharacter }}</td>
 				@if(count($getStudentCharacter))
-					<td>{{round(($countFinalAvgAcademic*75/100+$countFinalAvgCharacter*25/100*2.5),1)}}</td>
+					@if(array_key_exists($student_name,$getStudentCharacter))
+						<td>{{round(($countFinalAvgAcademic*75/100+$countFinalAvgCharacter*25/100*2.5),1)}}</td>
+					@else
+						<td>Unavailable</td>
+					@endif
+					
 				@else
 					<td>Unavailable</td>
 				@endif
