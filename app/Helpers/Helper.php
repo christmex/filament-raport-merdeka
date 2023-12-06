@@ -600,8 +600,8 @@ class Helper {
 
         // Tanya lagi mau gimana untuk pembulatannya
         // return round($result,mode: PHP_ROUND_HALF_DOWN );
-        // return self::customRound($result);
-        return $result;
+        return self::customRound($result);
+        // return $result;
     }
 
     public static function customRound($number)
