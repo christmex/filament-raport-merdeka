@@ -266,7 +266,7 @@ class PrintController extends Controller
                 }
             }
         }
-        dd($newData);
+        dd($StudentSemesterEvaluation,$newData);
 
         $getSchoolSettings = SchoolSetting::first();
         $avgDiv = ($getSchoolSettings->sumatif_avg/100);
