@@ -34,7 +34,11 @@
 				@php
 					$countFinalAvgAcademic = round(array_sum($avg) / count($avg),1)/10;
 					if(count($getStudentCharacter)){
-						$countFinalAvgCharacter = Helper::generateCharacterAvg($getStudentCharacter[$student_name]);
+						if(array_key_exists([$student_name],$getStudentCharacter)){
+							$countFinalAvgCharacter = Helper::generateCharacterAvg($getStudentCharacter[$student_name]);
+						}else {
+							$countFinalAvgCharacter = 'unavailable';
+						}
 					}else {
 						$countFinalAvgCharacter = 'unavailable';
 					}
@@ -50,7 +54,11 @@
 				<td>
 					@php
 						if(count($getStudentCharacter)){
-							$getRank = Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic)[$student_name];
+							if(array_key_exists([$student_name],$getStudentCharacter)){
+								$getRank = Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic)[$student_name];
+							}else {
+								$getRank = 'unavailable.';
+							}
 						}else {
 							$getRank = 'unavailable.';
 						}

@@ -654,9 +654,9 @@
 					<th style="vertical-align: middle;width: 30%">Subjects</th>
 					@if(isset($getSchoolSetting->meta['show_top_kkm']))
 						@if(!$getSchoolSetting->meta['show_top_kkm'])
-							<th style="vertical-align: middle;width: 10%">KKM</th>
 						@endif
-					@endif
+						@endif
+						<th style="vertical-align: middle;width: 10%">KKM</th>
 					<th style="vertical-align: middle;width: 15%">Final Score</th>
 					<th style="vertical-align: middle;width: 40%">Descriptions</th>
 				</tr>
@@ -669,9 +669,9 @@
 					<td style="text-align: left; padding: 5px">{{$key}}</td>
 					@if(isset($getSchoolSetting->meta['show_top_kkm']))
 						@if(!$getSchoolSetting->meta['show_top_kkm'])
-							<td>{{$value['KKM']}}</td>
 						@endif
-					@endif
+						@endif
+						<td>{{$value['KKM']}}</td>
 					<td>{{Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv)}}</td>
 					<td style="text-align: left; padding: 5px; word-wrap: break-word;">
 						@php 

@@ -136,16 +136,16 @@ class Helper {
             if($avg < $kkm){
                 $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
             }else{
-                $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
+                $result = $inEnglish ? 'Showing the ability to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
             }
             // $A = 100-(100 - $kkm)/3 ;
             // $B = $A-(100-$kkm)/3 ;
             // $C = $B-(100-$kkm)/3-0.5;
 
             // if ($avg > $A) {
-            //     $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
+            //     $result = $inEnglish ? 'Showing the ability to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
             // } elseif ($avg > $B) {
-            //     $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
+            //     $result = $inEnglish ? 'Showing the ability to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
             // } elseif ($avg > $C) {
             //     $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
             // } else {
@@ -162,7 +162,7 @@ class Helper {
 
     public static function staticPredicate($inEnglish, $type){
         if($type == 'past'){
-            $result = $inEnglish ? 'Showing the abilty to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
+            $result = $inEnglish ? 'Showing the ability to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
         }elseif($type == 'under') {
             $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
         }
