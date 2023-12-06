@@ -33,44 +33,24 @@
 				@endforeach
 				@php
 					$countFinalAvgAcademic = round(array_sum($avg) / count($avg),1)/10;
-					if(count($getStudentCharacter)){
-						if(array_key_exists($student_name,$getStudentCharacter)){
-							$countFinalAvgCharacter = Helper::generateCharacterAvg($getStudentCharacter);
-							if(count($countFinalAvgCharacter)){
-									$countFinalAvgCharacter = $countFinalAvgCharacter[$student_name];
-							}else{
-								$countFinalAvgCharacter = 'unavailable';	
-							}
-						}else {
-							$countFinalAvgCharacter = 'unavailable';
-						}
+					if(count($getStudentCharacter) == count($finalNewData)){
+						$countFinalAvgCharacter = Helper::generateCharacterAvg($getStudentCharacter[$student_name]);
 					}else {
 						$countFinalAvgCharacter = 'unavailable';
 					}
 				@endphp
 				<td>{{ $countFinalAvgAcademic }}</td>
 				<td>{{ $countFinalAvgCharacter }}</td>
-				@if(count($getStudentCharacter))
-					@if($countFinalAvgCharacter == 'unavailable')
-						<td>Unavailable</td>
-					@else
-						<td>{{round(($countFinalAvgAcademic*75/100+$countFinalAvgCharacter*25/100*2.5),1)}}</td>
-					@endif
-					
+				@if(count($getStudentCharacter) == count($finalNewData))
+					<td>{{round(($countFinalAvgAcademic*75/100+$countFinalAvgCharacter*25/100*2.5),1)}}</td>
 				@else
 					<td>Unavailable</td>
 				@endif
 
 				<td>
 					@php
-						if(count($getStudentCharacter)){
-							if($countFinalAvgCharacter == 'unavailable'){
-								$getRank = 'unavailable.';
-							}else {
-								$getRank = Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic);
-								$getRank = $getRank[$student_name];
-								
-							}
+						if(count($getStudentCharacter) == count($finalNewData)){
+							$getRank = Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic)[$student_name];
 						}else {
 							$getRank = 'unavailable.';
 						}
