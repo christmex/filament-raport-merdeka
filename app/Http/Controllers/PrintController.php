@@ -247,7 +247,7 @@ class PrintController extends Controller
         ksort($newData);
 
         // GET THE PAS 
-        $StudentSemesterEvaluation = StudentSemesterEvaluation::with('subjectUserThrough')
+        $StudentSemesterEvaluation = StudentSemesterEvaluation::with('subjectUserThrough','student')
         ->whereIn('student_id',$studentIds)
         ->whereIn('subject_user_id',array_unique($assessments->pluck('subject_user_id')->toArray()))
         ->withoutGlobalScope('subjectUser')
@@ -255,18 +255,18 @@ class PrintController extends Controller
 
         // Set the KKM
         foreach ($newData as $newDataKey => $newDataValue) {
+            
             foreach ($newDataValue as $key => $value) {
                 $newData[$newDataKey][$key]['KKM'] = $data[$newDataKey][$key]['KKM'];
                 $newData[$newDataKey][$key]['PAS'] = null;
                 // $newData[$newDataKey][$key]['subject_user_id'] = $data[$newDataKey][$key]['subject_user_id'] ; //this is exist for description in this case we dont need the description
                 $newData[$newDataKey][$key]['is_curiculum_basic'] = $data[$newDataKey][$key]['is_curiculum_basic'];
 
-                if($StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()){
-                    $newData[$newDataKey][$key]['PAS'] = $StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()->grading;
+                if($StudentSemesterEvaluation->where('student.student_name',$newDataKey)->where('subjectUserThrough.subject_name',$key)->first()){
+                    $newData[$newDataKey][$key]['PAS'] = $StudentSemesterEvaluation->where('student.student_name',$newDataKey)->where('subjectUserThrough.subject_name',$key)->first()->grading;
                 }
             }
         }
-        dd($StudentSemesterEvaluation,$newData);
 
         $getSchoolSettings = SchoolSetting::first();
         $avgDiv = ($getSchoolSettings->sumatif_avg/100);
