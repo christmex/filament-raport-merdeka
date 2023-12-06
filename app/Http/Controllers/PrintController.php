@@ -212,7 +212,7 @@ class PrintController extends Controller
         ->join('subject_users', 'assessments.subject_user_id', '=', 'subject_users.id')
     
         ->join('subjects', 'subject_users.subject_id', '=', 'subjects.id') // Inner join another_table inside subject_users
-    
+        ->join('students', 'assessments.student_id', '=', 'students.id') // Join the students table
         ->select(
             'subjects.is_curiculum_basic',
             'subject_user_id',
@@ -226,6 +226,7 @@ class PrintController extends Controller
         ->where('subject_users.school_term_id', SchoolTerm::activeId())
         ->whereNotNull('grading')
         ->groupBy( 'subjects.is_curiculum_basic','assessment_method_setting_id', 'subject_user_id', 'topic_setting_id','student_id')
+        ->orderBy('students.student_name', 'asc')
         ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
         ->orderBy('subjects.subject_name', 'asc') // Order by the sort_order column from subject_users table
         ->orderByDesc('max_grading') // Order by the maximum grading
