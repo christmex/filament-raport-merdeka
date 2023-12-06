@@ -313,7 +313,14 @@
 					<td style="width: 20px">4.</td>
 					<td style="width:300px">{{Str::title('jenis kelamin')}}</td>
 					<td style="width: 5px">:</td>
-					<td>{{!empty($student->sex) ? Str::title(Helper::getSex($student->sex)) : "-"}}</td>
+					<td>
+						@if($student->sex == 0 || $student->sex == 1)
+							{{Str::title(Helper::getSex($student->sex))}}
+						@else
+							-
+						@endif
+
+					</td>
 				</tr>
 				<tr>
 					<td style="width: 20px">5.</td>
@@ -685,7 +692,7 @@
 										//}else {
 										//	$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 										//}
-										
+
 										$desc .= "<hr>".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description, 'under')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 									}else {
 										$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description);
