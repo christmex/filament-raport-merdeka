@@ -60,6 +60,6 @@
 				</td>
 			</tr>
 		@endforeach
-		{{dd($finalNewData)}}
+		{{dd($finalNewData,$avgDiv, $PASDiv, Helper::countFinalGrade(85,79,$avgDiv, $PASDiv))}}
 	</tbody>
 </table>
