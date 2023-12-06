@@ -2,25 +2,29 @@
 
 namespace App\Filament\Resources\StudentResource\Pages;
 
-use App\Imports\StudentImportAfterExport;
 use Filament\Actions;
 use App\Helpers\Helper;
 use App\Models\Student;
+use App\Models\Classroom;
 use App\Models\Assessment;
 use Filament\Tables\Table;
 use App\Models\SchoolSetting;
 use App\Imports\StudentImport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\StudentClassroom;
+use App\Exports\ReportSheetExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Facades\Excel;
+use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
+use App\Imports\StudentImportAfterExport;
 use App\Models\StudentSemesterEvaluation;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StudentResource;
+use App\Helpers\Report;
 
 class ListStudents extends ListRecords
 {
@@ -96,13 +100,26 @@ class ListStudents extends ListRecords
             ->button(), 
             
             Actions\Action::make('reportSheet')
-            ->url(route('students.print-report-sheet'))
-            ->openUrlInNewTab()
-            // ->action(function(){
-            //     return redirect()->route('students.print-report-sheet');
-            // })
-            ->color('info')
-            ->button(), 
+                // ->url(route('students.print-report-sheet'))
+                // ->openUrlInNewTab()
+                // ->form([
+                //     Select::make('classroom_id')
+                //     ->label('classroom')
+                //     ->options(function(){
+                //         return Classroom::whereIn('id',auth()->user()->activeHomeroom->first()->classroom_id)->pluck('classroom_name','id');
+                //     })
+                //     ->required()
+                //     ->searchable()
+                //     ->selectablePlaceholder(false)
+                //     ->preload(),
+                // ])
+                ->action(function(array $data){
+                    return redirect()->route('students.print-report-sheet-for-teacher',auth()->user()->activeHomeroom->first()->classroom_id);
+                    // return redirect()->route('students.print-report-sheet');
+                    // return Excel::download(new ReportSheetExport(Report::generateReportSheet(auth()->user()->activeHomeroom->first()->classroom_id)), 'report_sheet.xlsx');
+                })
+                ->color('info')
+                ->button(), 
         ];
     }
 

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\AssessmentResource\Pages;
 
 use Filament\Actions;
+use App\Helpers\Report;
 use App\Models\Student;
 use Filament\Forms\Get;
 use App\Models\Classroom;
@@ -11,6 +12,7 @@ use App\Models\SubjectUser;
 use App\Models\HomeroomTeacher;
 use App\Models\StudentClassroom;
 use App\Imports\AssessmentImport;
+use App\Exports\ReportSheetExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
 use Maatwebsite\Excel\Facades\Excel;
@@ -43,6 +45,9 @@ class ManageAssessments extends ManageRecords
                 ])
                 ->action(function(array $data){
                     return redirect()->route('students.print-report-sheet-for-teacher',$data['classroom_id']);
+
+                    // return Excel::download(new ReportSheetExport(Report::generateReportSheet($data['classroom_id'])), 'report_sheet.xlsx');
+                    // return redirect()->route('students.print-report-sheet-for-teacher',$data['classroom_id']);
                 }),
             Actions\ActionGroup::make([
                 Actions\Action::make('importAssessment')->color('success')

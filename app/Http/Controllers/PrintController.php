@@ -14,8 +14,10 @@ use App\Models\SchoolSetting;
 use App\Models\CharacterReport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\StudentClassroom;
+use App\Exports\ReportSheetExport;
 use App\Models\SubjectDescription;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Filament\Notifications\Notification;
 use App\Models\StudentSemesterEvaluation;
 use Masterminds\HTML5\Parser\CharacterReference;
@@ -181,6 +183,7 @@ class PrintController extends Controller
     }
 
 
+    // Deprecated
     public  function print_report_sheet_for_teacher(Classroom $classroom){
         if(auth()->guest()){
             abort(404,'Login First');
@@ -278,8 +281,11 @@ class PrintController extends Controller
                 $firstArrayData = $value;
             }
             if(count($value) != $firstCount){
-                $differences = array_diff_assoc(array_keys($firstArrayData), array_keys($value));
-                $separ = count($value) > count($firstArrayData) ? 'memiliki nilai di mapel'. implode(',', $differences) : 'tidak memiliki nilai di beberapa mapel';
+                // $differences = array_diff_assoc(array_keys($firstArrayData), array_keys($value));
+
+                $getArrayDifKey = Helper::getArrayDifKey($value, $firstArrayData);
+
+                $separ = count($value) > count($firstArrayData) ? 'memiliki nilai di mapel '. implode(',', $getArrayDifKey) : 'tidak memiliki nilai di beberapa mapel '.implode(',', $getArrayDifKey);
                 Notification::make()
                     ->danger()
                     ->persistent()
@@ -350,10 +356,13 @@ class PrintController extends Controller
         //         // If this ishappen stopthe prosses
         //         return back();
         // }
-        $pdf = Pdf::loadView('print-report-sheet-for-teacher', compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter','classroom_name'))->setPaper('A4', 'landscape');//convert mm to point
-        return $pdf->stream('print-report-sheet-for-teacher.pdf');
+
+        return Excel::download(new ReportSheetExport(compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter')), 'report_sheet.xlsx');
+        // $pdf = Pdf::loadView('print-report-sheet-for-teacher', compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter','classroom_name'))->setPaper('A4', 'landscape');//convert mm to point
+        // return $pdf->stream('print-report-sheet-for-teacher.pdf');
     }
 
+    // Deprecated
     public  function print_report_sheet(){
         if(auth()->guest()){
             abort(404,'Login First');
@@ -510,8 +519,11 @@ class PrintController extends Controller
         //         // If this ishappen stopthe prosses
         //         return back();
         // }
-        $pdf = Pdf::loadView('print-report-sheet', compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter'))->setPaper('A4', 'landscape');//convert mm to point
-        return $pdf->download('print-report-sheet.pdf');
+
+        return Excel::download(new ReportSheetExport(compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter')), 'report_sheet.xlsx');
+
+        // $pdf = Pdf::loadView('print-report-sheet', compact('tableHeader','finalNewData','PASDiv','avgDiv','getStudentCharacter'))->setPaper('A4', 'landscape');//convert mm to point
+        // return $pdf->download('print-report-sheet.pdf');
     }
 
     public function print_report_character(Student $student){

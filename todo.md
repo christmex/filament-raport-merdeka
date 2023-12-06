@@ -76,10 +76,12 @@ IMPORTANT
 - [ ] di live app, ada error klo siswa beda jumlah mapel, mapel yang beda ngg tampil
 - [ ] export report sheet as excel
 - [ ] buat grade sheet as excel
-- [x] deskripsi kalau semua nilai rendah, semisal 64 dan 60, apakah tetap menunjukkan kemampuan dan 60 perlu bimbingan?
-- [ ] raport basic curiculum juga sama descrpsiny?
-- [ ] raport basic curiculum pakai kkm jga ngg?
-- [ ] raport basic curiculum formatnya sama dengan yg di atasnya?
+- [ ] deskripsi kalau semua nilai rendah, semisal 64 dan 60, perlu bimbingan semua
+- [ ] raport basic curiculum descrpsiny apakah sama dengan yang lain?
+- [ ] raport basic curiculum ngga pakai kkm jga?
+- [ ] nilai grade sheet di system beda dengan grade sheet di excel
+- [ ] import joinet class dan joinet at
+- [ ] raport character dibuat pengisian seperti dibuku character
 
 ## HOWTO
 1. git fetch origin && git merge origin/main && composer2 install

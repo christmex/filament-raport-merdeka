@@ -10,6 +10,24 @@ class Helper {
 
     public static $superUserEmail = 'super@sekolahbasic.sch.id';
 
+    public static function getArrayDifKey($array1, $array2) :array{
+        $keys1 = array_keys($array1);
+        $keys2 = array_keys($array2);
+
+        $diff1 = array_diff($keys1, $keys2);
+        $diff2 = array_diff($keys2, $keys1);
+
+        return array_merge($diff1, $diff2);
+    }
+
+    public static function getIndexPosition($array, $keyToFind)
+    {
+        $keys = array_keys($array);
+        $position = array_search($keyToFind, $keys);
+
+        return $position !== false ? $position : null;
+    }
+
     public static function getFirstLetterFromWord($words){
         $words = preg_split("/\s+/", $words);
         $acronym = "";
