@@ -60,5 +60,6 @@
 				</td>
 			</tr>
 		@endforeach
+		{{dd($finalNewData)}}
 	</tbody>
 </table>
