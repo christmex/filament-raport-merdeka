@@ -380,7 +380,7 @@
 				</tr>
 				<tr>
 					<td style="width: 20px"></td>
-					<td style="width:300px">a. Pada Tanggal</td>
+					<td style="width:300px">b. Pada Tanggal</td>
 					<td style="width: 5px">:</td>
 					<td>{{!empty($student->joined_at) ? \Carbon\Carbon::parse($student->joined_at)->locale('id')->isoFormat('D MMMM YYYY') : "-"  }}</td>
 				</tr>
@@ -410,7 +410,7 @@
 				</tr>
 				<tr>
 					<td style="width: 20px"></td>
-					<td style="width:300px">c. {{Str::title('nomor telepon/HP')}}</td>
+					<td style="width:300px">d. {{Str::title('nomor telepon/HP')}}</td>
 					<td style="width: 5px">:</td>
 					<td>{{!empty(Str::title($student->parent_phone)) ? Str::title($student->parent_phone) : "-"  }}</td>
 				</tr>

@@ -83,6 +83,7 @@ IMPORTANT
 - [x] import joinet class dan joinet at
 - [x] raport character dibuat pengisian seperti dibuku character
 - [x] report sheet error di tc rinte matthew 1, atas nama zebeedee, | fix, penilaian harus ada isi jangan null
+- [x] hapus tombol delete di extracurricular
 
 ## HOWTO
 1. git fetch origin && git merge origin/main && composer2 install
