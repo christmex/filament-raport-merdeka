@@ -183,7 +183,7 @@ class PrintController extends Controller
     }
 
 
-    // Deprecated
+    
     public  function print_report_sheet_for_teacher(Classroom $classroom){
         if(auth()->guest()){
             abort(404,'Login First');
@@ -288,7 +288,7 @@ class PrintController extends Controller
 
                 $getArrayDifKey = Helper::getArrayDifKey($value, $firstArrayData);
 
-                $separ = count($value) > count($firstArrayData) ? 'memiliki nilai di mapel '. implode(',', $getArrayDifKey) : 'tidak memiliki nilai di beberapa mapel '.implode(',', $getArrayDifKey);
+                $separ = count($value) > count($firstArrayData) ? 'memiliki nilai di mapel '. implode(',', $getArrayDifKey) : 'tidak memiliki nilai di beberapa mapel ';
                 Notification::make()
                     ->danger()
                     ->persistent()
