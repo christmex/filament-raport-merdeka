@@ -73,7 +73,7 @@ IMPORTANT
 - [x] export student bermasalah
 - [x] import student bermasalah
 - [ ] add custom text in required confriamtion action
-- [ ] di live app, ada error klo siswa beda jumlah mapel, mapel yang beda ngg tampil
+- [x] di live app, ada error klo siswa beda jumlah mapel, mapel yang beda ngg tampil
 - [x] export report sheet as excel
 - [ ] buat grade sheet as excel
 - [x] deskripsi kalau semua nilai rendah, semisal 64 dan 60, perlu bimbingan semua

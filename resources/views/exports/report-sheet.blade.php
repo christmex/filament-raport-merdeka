@@ -40,9 +40,9 @@
 					}
 				@endphp
 				<td>{{ $countFinalAvgAcademic }}</td>
-				<td>{{ $countFinalAvgCharacter }}</td>
+				<td> {{ $countFinalAvgCharacter == 'unavailable' ? $countFinalAvgCharacter : Helper::customRound($countFinalAvgCharacter) }}</td>
 				@if(count($getStudentCharacter) == count($finalNewData))
-					<td>{{round(($countFinalAvgAcademic*75/100+$countFinalAvgCharacter*25/100*2.5),1)}}</td>
+					<td>{{Helper::customRound(($countFinalAvgAcademic*75/100+$countFinalAvgCharacter*25/100*2.5))}}</td>
 				@else
 					<td>Unavailable</td>
 				@endif
