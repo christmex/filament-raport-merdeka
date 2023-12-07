@@ -168,7 +168,7 @@ class ManageAssessments extends ManageRecords
             // ,
             // ExportAction::make(),
 
-            Actions\Action::make('Create Assessment By Classroom')
+            Actions\Action::make('Assessment Single Class')
             ->form([
                 Select::make('assessment_method_setting_id')
                     ->relationship('assessmentMethodSetting','assessment_method_setting_name')
@@ -247,7 +247,7 @@ class ManageAssessments extends ManageRecords
 
             })
             ,
-            Actions\Action::make('Create Bulk Assessment By Classroom')
+            Actions\Action::make('Assessment Multi Class')
             ->button()
             ->form([
                 Select::make('assessment_method_setting_id')
