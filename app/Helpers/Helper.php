@@ -608,7 +608,7 @@ class Helper {
     {
         $decimalPart = $number - floor($number); // Mendapatkan bagian desimal
 
-        if ($decimalPart >= 0.55) {
+        if ($decimalPart >= 0.5) {
             return ceil($number); // Pembulatan ke atas jika desimal >= 0.55
         } else {
             return floor($number); // Pembulatan ke bawah jika desimal < 0.55
