@@ -73,7 +73,7 @@ class ManageSubjectDescriptions extends ManageRecords
                                     ->columnSpanFull()
                                     ->required()
                                     ->live(onBlur: true)
-                                    ->default('Ananda [STUDENT_NAME] [STUDENT_PREDICATE] dalam ...')
+                                    ->default('[STUDENT_PREDICATE]')
                                     ->afterStateUpdated(function ($state, Set $set, Get $get) {
                                         $PassKKM = Str::replace('[STUDENT_PREDICATE]', Helper::predicate(90,70,$get('is_english_description')), Str::replace('[STUDENT_NAME]', Str::title('John Doe'), $state));
                                         $set('result', $PassKKM);

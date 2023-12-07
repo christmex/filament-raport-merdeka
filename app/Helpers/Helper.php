@@ -164,7 +164,7 @@ class Helper {
         if($type == 'past'){
             $result = $inEnglish ? 'Showing the ability to understand the concept of' :"Menunjukkan kemampuan memahami konsep dalam";
         }elseif($type == 'under') {
-            $result = $inEnglish ? 'Need to improve about ' :"Perlu bimbingan dalam";
+            $result = $inEnglish ? 'Need to improve about' :"Perlu bimbingan dalam";
         }
 
         return $result;
