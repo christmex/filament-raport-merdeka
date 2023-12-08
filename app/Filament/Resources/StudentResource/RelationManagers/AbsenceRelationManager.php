@@ -38,7 +38,7 @@ class AbsenceRelationManager extends RelationManager
                     ->unique(modifyRuleUsing: function (Unique $rule, Get $get){
                         return $rule->where('school_year_id', $get('school_year_id'))
                                     ->where('school_term_id', $get('school_term_id'))
-                                    ->where('student_id', $this->ownerRecord);
+                                    ->where('student_id', $this->ownerRecord->id);
                     },ignoreRecord:true)
                     ->required(),
                 Forms\Components\TextInput::make('sick')->integer()->minValue(0)->default(0),
