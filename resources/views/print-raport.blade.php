@@ -424,13 +424,13 @@
 					<td style="width: 20px"></td>
 					<td style="width:300px">a. {{Str::title('ayah')}}</td>
 					<td style="width: 5px">:</td>
-					<td>{{!empty(Str::title($student->father_job)) ? Str::title($student->father_job) : "-"  }}</td>
+					<td>{{!empty(Str::title($student->father_job)) ? $student->father_job : "-"  }}</td>
 				</tr>
 				<tr>
 					<td style="width: 20px"></td>
 					<td style="width:300px">b. {{Str::title('ibu')}}</td>
 					<td style="width: 5px">:</td>
-					<td>{{!empty(Str::title($student->mother_job)) ? Str::title($student->mother_job) : "-"  }}</td>
+					<td>{{!empty($student->mother_job) ? $student->mother_job : "-"  }}</td>
 				</tr>
 				<tr>
 					<td style="width: 20px">14.</td>
@@ -460,7 +460,7 @@
 					<td style="width: 20px"></td>
 					<td style="width:300px">d. {{Str::title('Pekerjaan')}}</td>
 					<td style="width: 5px">:</td>
-					<td>{{!empty(Str::title($student->guardian_job)) ? Str::title($student->guardian_job) : "-"  }}</td>
+					<td>{{!empty($student->guardian_job) ? $student->guardian_job : "-"  }}</td>
 				</tr>
 				
 			</table>
