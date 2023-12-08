@@ -316,7 +316,7 @@
 			</tbody>
 		</table>
 		<div style="margin-top: 10px"></div>
-		<div style="width:32%;float: left;border: 1px solid black;margin-top: 10px;margin-right: 10px;padding: 10px">
+		<div style="width:30%;float: left;border: 1px solid black;margin-top: 10px;margin-right: 10px;padding: 10px">
 			
 			@php 
 				//$value = 3.6; //test purposes
@@ -342,7 +342,7 @@
 				Out of range no description
 			@endif
 		</div>
-		<div style="width:43%;float: left">
+		<div style="width:45%;float: left">
 			<span style="margin-top: 5px;display: block;font-size: 12px">Batam, {!!$getSchoolSetting->school_progress_report_date!!}</span>
 			<table style="margin-top: 5px">
 				<tbody>
