@@ -35,7 +35,7 @@ class ExtracurricularResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextInputColumn::make('order')
                     ->sortable()
-                    ->rules(['min:1']),
+                    ->rules(['required','min:1']),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

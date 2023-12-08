@@ -10,7 +10,7 @@
 				@if($header == 'No')
 				<th style="">{{$header}}</th>
 				@elseif(Str::startsWith($header,'Nama Siswa'))
-				<th style="%">{{$header}}</th>
+				<th style="">{{$header}}</th>
 				@elseif(Str::startsWith($header,'Seni Budaya'))
 				<th style="">Seni Budaya</th>
 				@else

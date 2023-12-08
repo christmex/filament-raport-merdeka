@@ -75,7 +75,7 @@ IMPORTANT
 - [ ] add custom text in required confriamtion action
 - [x] di live app, ada error klo siswa beda jumlah mapel, mapel yang beda ngg tampil
 - [x] export report sheet as excel
-- [ ] buat grade sheet as excel
+- [x] buat grade sheet as excel
 - [x] deskripsi kalau semua nilai rendah, semisal 64 dan 60, perlu bimbingan semua
 - [x] raport basic curiculum descrpsiny apakah sama dengan yang lain?
 - [x] raport basic curiculum ngga pakai kkm jga? pakai tetap dimunculkan
@@ -84,6 +84,8 @@ IMPORTANT
 - [x] raport character dibuat pengisian seperti dibuku character
 - [x] report sheet error di tc rinte matthew 1, atas nama zebeedee, | fix, penilaian harus ada isi jangan null
 - [x] hapus tombol delete di extracurricular
+- [ ] bisa export report sheet via select student?
+- [ ] bisa export grade sheet via select student?
 
 ## HOWTO
 1. git fetch origin && git merge origin/main && composer2 install

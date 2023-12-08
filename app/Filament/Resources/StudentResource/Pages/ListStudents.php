@@ -114,7 +114,7 @@ class ListStudents extends ListRecords
                 //     ->preload(),
                 // ])
                 ->action(function(array $data){
-                    return redirect()->route('students.print-report-sheet-for-teacher',auth()->user()->activeHomeroom->first()->classroom_id);
+                    return redirect()->route('print-report-sheet-for-teacher',auth()->user()->activeHomeroom->first()->classroom_id);
                     // return redirect()->route('students.print-report-sheet');
                     // return Excel::download(new ReportSheetExport(Report::generateReportSheet(auth()->user()->activeHomeroom->first()->classroom_id)), 'report_sheet.xlsx');
                 })

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GradeSheetExport;
 use App\Helpers\Helper;
+use App\Models\AssessmentMethodSetting;
 use App\Models\Student;
 use App\Models\Classroom;
 use App\Models\Assessment;
@@ -182,7 +184,111 @@ class PrintController extends Controller
         
     }
 
+    public static function jhaha(...$a){
+        dd($a);
+    }
+    public function print_grade_sheet(SubjectUser $subjectUser){
+        
+        // Check if the user is autheticated
+        if(auth()->guest()){
+            abort(404,'Login First');
+        }
 
+
+        $assessments = Assessment::query()
+            ->join('students', 'assessments.student_id', '=', 'students.id')
+            ->join('topic_settings', 'assessments.topic_setting_id', '=', 'topic_settings.id')
+            ->join('assessment_method_settings', 'assessments.assessment_method_setting_id', '=', 'assessment_method_settings.id')
+            ->select(
+                'student_id',
+                'student_name',
+                'student_nis',
+                'topic_setting_name',
+                'assessment_method_setting_name',
+                'grading',
+            )
+            ->whereNotNull('grading')
+            ->where('subject_user_id', $subjectUser->id)
+            ->orderBy('students.student_name','asc')
+            ->orderBy('topic_settings.topic_setting_name','asc')
+            ->orderBy('assessment_method_settings.order','asc')
+            ->withoutGlobalScope('subjectUser')
+            ->get();
+
+
+        // Group data based on student name
+        $data = [];
+        foreach ($assessments as $key => $value) {
+            $data[$value->student_name]['NIS'] = $value->student_nis;
+            $data[$value->student_name][$value->topic_setting_name][$value->assessment_method_setting_name][] = $value->grading;
+        }
+
+        
+        $totalTopic = [];
+        $additionalAssessmentMethodSetting = ['Rata-rata Sumatif','Observasi'];
+        $assessmentMethodSetting = AssessmentMethodSetting::orderBy('order')->get();
+        
+        foreach ($data as $key => $value) {
+            foreach ($value as $topicNameKey => $topicNameValue) {
+                if($topicNameKey != 'NIS'){
+                    $totalTopic[$topicNameKey] = null;
+                }
+            }
+        }
+        $thead = '
+            <thead>
+                <tr>
+                    <th rowspan="3">NO</th>
+                    <th rowspan="3">Nama</th>
+                    <th rowspan="3">NIS</th>
+                    <th colspan="'.count($totalTopic) * ($assessmentMethodSetting->count() + count($additionalAssessmentMethodSetting)).'">Penilaian harian Sumatif dan Formatif - '.$subjectUser->subject->subject_name.' kelas '.$subjectUser->classroom->school_level.' '.$subjectUser->classroom->classroom_name.'</th>
+                    <th rowspan="3">Rata-rata Sumatif</th>
+                    <th rowspan="3">PAS</th>
+                    <th rowspan="3">Rata-rata Sumatif + PAS</th>
+                    <th rowspan="3">Deskripsi</th>
+                </tr>
+                <tr>
+                
+        ';
+
+        
+        foreach ($totalTopic as $key => $value) {
+            $thead .= '<th colspan="'.$assessmentMethodSetting->count() + count($additionalAssessmentMethodSetting).'">'.$key.'</th>';
+        }
+        $thead .= '</tr><tr>';
+
+        foreach ($totalTopic as $loop) {
+            foreach ($assessmentMethodSetting as $key => $value) {
+                $thead .= '<th>'.$value->assessment_method_setting_name.'</th>';
+            }
+            foreach ($additionalAssessmentMethodSetting as $key => $value) {
+                $thead .= '<th>'.$value.'</th>';
+            }
+        }
+
+        $thead .= '</tr>';
+        $thead .= '</thead>';
+
+        $studentIds = array_unique($assessments->pluck('student_id')->toArray());
+        
+        // GET THE PAS 
+        $StudentSemesterEvaluation = StudentSemesterEvaluation::with('student')
+            ->whereIn('student_id',$studentIds)
+            ->where('subject_user_id',$subjectUser->id)
+            ->withoutGlobalScope('subjectUser')
+            ->whereNotNull('grading')
+            ->get();
+
+        $dataPAS = [];
+        foreach ($StudentSemesterEvaluation as $key => $value) {
+            $dataPAS[$value->student->student_name] = $value->grading;
+        }
+        // dd($dataPAS);
+        return Excel::download(new GradeSheetExport(compact('data','thead','assessmentMethodSetting','totalTopic')), 'grade_sheet.xlsx');
+
+        // return view('exports.grade-sheet', compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS'));
+
+    }
     
     public  function print_report_sheet_for_teacher(Classroom $classroom){
         if(auth()->guest()){
@@ -725,5 +831,7 @@ class PrintController extends Controller
         return $data;
 
     }
+
+    
     
 }
