@@ -376,7 +376,7 @@
 					<td style="width: 20px"></td>
 					<td style="width:300px">a. {{Str::title('di kelas')}}</td>
 					<td style="width: 5px">:</td>
-					<td>{{!empty($student->joined_at_class) ? Str::title($student->joined_at_class) : "-"  }}</td>
+					<td>{{!empty($student->joined_at_class) ? $student->joined_at_class : "-"  }}</td>
 				</tr>
 				<tr>
 					<td style="width: 20px"></td>
@@ -583,7 +583,7 @@
 						@endif
 					@endif
 					<th style="vertical-align: middle;width: 15%">Nilai Akhir</th>
-					<th style="vertical-align: middle;width: 40%">Deskripsi</th>
+					<th style="vertical-align: middle;width: 40%">Capaian kompetensi</th>
 				</tr>
 			</thead>
 			<tbody>
