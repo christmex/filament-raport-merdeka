@@ -185,7 +185,6 @@ class PrintController extends Controller
     }
 
     public function print_grade_sheet(SubjectUser $subjectUser){
-        
         // Check if the user is autheticated
         if(auth()->guest()){
             abort(404,'Login First');
@@ -201,6 +200,7 @@ class PrintController extends Controller
                 'student_name',
                 'student_nis',
                 'topic_setting_name',
+                'topic_setting_id',
                 'assessment_method_setting_name',
                 'grading',
             )
@@ -228,7 +228,7 @@ class PrintController extends Controller
         foreach ($data as $key => $value) {
             foreach ($value as $topicNameKey => $topicNameValue) {
                 if($topicNameKey != 'NIS'){
-                    $totalTopic[$topicNameKey] = null;
+                    $totalTopic[$topicNameKey] = $assessments->where('topic_setting_name',$topicNameKey)->first()->topic_setting_id;
                 }
             }
         }
@@ -280,10 +280,13 @@ class PrintController extends Controller
         foreach ($StudentSemesterEvaluation as $key => $value) {
             $dataPAS[$value->student->student_name] = $value->grading;
         }
-        // dd($dataPAS);
-        return Excel::download(new GradeSheetExport(compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS')), 'grade_sheet - '.$subjectUser->subject->subject_name.' kelas '.$subjectUser->classroom->school_level.' '.$subjectUser->classroom->classroom_name.'.xlsx');
 
-        // return view('exports.grade-sheet', compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS'));
+        $subjectDescription = SubjectDescription::where('subject_user_id',$subjectUser->id)->get();
+        $grade_minimum = $subjectUser->grade_minimum;
+
+        return Excel::download(new GradeSheetExport(compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS','subjectDescription','grade_minimum')), 'grade_sheet - '.$subjectUser->subject->subject_name.' kelas '.$subjectUser->classroom->school_level.' '.$subjectUser->classroom->classroom_name.'.xlsx');
+
+        // return view('exports.grade-sheet', compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS','subjectDescription','grade_minimum'));
 
     }
     

@@ -305,7 +305,8 @@ class Helper {
                 }
 
                 if ($totalCount > 0) {
-                    $topicAverage = round($totalSum / $totalCount);
+                    // $topicAverage = round($totalSum / $totalCount);
+                    $topicAverage = self::customRound($totalSum / $totalCount);
                     $subjectAverages[$topic] = $topicAverage;
                 }
             }

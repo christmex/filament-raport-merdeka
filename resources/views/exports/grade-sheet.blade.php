@@ -10,6 +10,7 @@
                 @php 
                     $topicAvg = [];
                     $finalAvg = [];
+                    $minMax = [];
                 @endphp
                 @foreach($totalTopic as $topicKey => $topicValue)
                     @php 
@@ -28,6 +29,7 @@
                             @php
                                 $countSumatifAvg = Helper::customRound(array_sum($sumatifAvg)/count($sumatifAvg));
                                 array_push($topicAvg, $countSumatifAvg);
+                                $minMax[$countSumatifAvg] = $topicValue;
                             @endphp
                             {{ $countSumatifAvg }}
                         </td>
@@ -58,7 +60,34 @@
                         {{ Helper::customRound(array_sum($finalAvg)/count($finalAvg)) }}
                     @endif    
                 </td>
-                <td>SOON</td>
+                <td>
+                    @if(!empty($minMax)) 
+                        @php 
+                            arsort($minMax);
+                            $desc = '';
+							$previousPredicate = '';
+                        @endphp
+
+                        @foreach($minMax as $minMaxKey => $minMaxValue)
+                            @php
+								$check = $subjectDescription
+								->where('topic_setting_id',$minMaxValue)
+								->first();
+								if($check != null){
+									if($desc != ''){
+										$separ = $check->is_english_description ? 'And ' : 'Dan ';
+										$desc .= "<br>".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($minMaxKey,$grade_minimum,$check->is_english_description, 'under')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($key), $check->description));
+									}else {
+										$previousPredicate = Helper::predicate($minMaxKey,$grade_minimum,$check->is_english_description);
+										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($minMaxKey,$grade_minimum,$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($key), $check->description))."<br>";
+									}
+								}
+							@endphp
+                        @endforeach
+
+                        {!! $desc !!}
+                    @endif  
+                </td>
             </tr>
         @endforeach
     </tbody>
