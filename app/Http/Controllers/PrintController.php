@@ -284,7 +284,7 @@ class PrintController extends Controller
             $dataPAS[$value->student->student_name] = $value->grading;
         }
         // dd($dataPAS);
-        return Excel::download(new GradeSheetExport(compact('data','thead','assessmentMethodSetting','totalTopic')), 'grade_sheet.xlsx');
+        return Excel::download(new GradeSheetExport(compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS')), 'grade_sheet - '.$subjectUser->subject->subject_name.' kelas '.$subjectUser->classroom->school_level.' '.$subjectUser->classroom->classroom_name.'.xlsx');
 
         // return view('exports.grade-sheet', compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS'));
 
