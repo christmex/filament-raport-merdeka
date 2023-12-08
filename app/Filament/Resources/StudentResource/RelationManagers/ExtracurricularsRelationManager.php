@@ -45,7 +45,7 @@ class ExtracurricularsRelationManager extends RelationManager
                     ->unique(modifyRuleUsing: function (Unique $rule, Get $get){
                         return $rule->where('school_year_id', $get('school_year_id'))
                                     ->where('school_term_id', $get('school_term_id'))
-                                    ->where('student_id', $this->ownerRecord)
+                                    ->where('student_id', $this->ownerRecord->id)
                                     ->where('extracurricular_id', $get('extracurricular_id'));
                     },ignoreRecord:true),
                 Forms\Components\Textarea::make('description'),
