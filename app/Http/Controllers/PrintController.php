@@ -184,9 +184,6 @@ class PrintController extends Controller
         
     }
 
-    public static function jhaha(...$a){
-        dd($a);
-    }
     public function print_grade_sheet(SubjectUser $subjectUser){
         
         // Check if the user is autheticated

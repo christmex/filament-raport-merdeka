@@ -343,7 +343,7 @@
 			@endif
 		</div>
 		<div style="width:43%;float: left">
-			<span style="margin-top: 5px;display: block;font-size: 12px">Batam, June 8th, 2023</span>
+			<span style="margin-top: 5px;display: block;font-size: 12px">Batam, {!!$getSchoolSetting->school_progress_report_date!!}</span>
 			<table style="margin-top: 5px">
 				<tbody>
 					<tr>
