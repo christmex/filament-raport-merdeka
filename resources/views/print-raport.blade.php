@@ -475,7 +475,7 @@
 		<section id="sign_principle" style="margin: 5% auto 0; display:inline-block">
 			<div class="sign_top">
 				<p>Batam, {{!empty($student->joined_at) ? \Carbon\Carbon::parse($student->joined_at)->locale('id')->isoFormat('D MMMM YYYY') : "-"  }} </p>
-				<p>Kepala Sekolah
+				<p>Kepala 
 					{{$getSchoolSetting->school_name_prefix}}
 					<span class="logoB">B</span>
 					<span class="logoA">A</span>
@@ -791,7 +791,7 @@
 	
 		<div class="sign_top">
 			<p>Mengetahui</p>
-			<p>Kepala Sekolah
+			<p>Kepala 
 				{{$getSchoolSetting->school_name_prefix}}
 				<span class="logoB">B</span>
 				<span class="logoA">A</span>
