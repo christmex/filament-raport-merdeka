@@ -46,24 +46,24 @@ class ManageAssessments extends ManageRecords
                     ->action(function(array $data){
                         return redirect()->route('print-grade-sheet',$data['subject_user_id']);
                     }),
-                Actions\Action::make('reportSheet')
-                    ->form([
-                        Select::make('classroom_id')
-                        ->label('classroom')
-                        ->options(function(){
-                            return Classroom::whereIn('id',array_unique(auth()->user()->activeSubjects->pluck('classroom_id')->toArray()))->pluck('classroom_name','id');
-                        })
-                        ->required()
-                        ->searchable()
-                        ->selectablePlaceholder(false)
-                        ->preload(),
-                    ])
-                    ->action(function(array $data){
-                        return redirect()->route('print-report-sheet-for-teacher',$data['classroom_id']);
+                // Actions\Action::make('reportSheet')
+                //     ->form([
+                //         Select::make('classroom_id')
+                //         ->label('classroom')
+                //         ->options(function(){
+                //             return Classroom::whereIn('id',array_unique(auth()->user()->activeSubjects->pluck('classroom_id')->toArray()))->pluck('classroom_name','id');
+                //         })
+                //         ->required()
+                //         ->searchable()
+                //         ->selectablePlaceholder(false)
+                //         ->preload(),
+                //     ])
+                //     ->action(function(array $data){
+                //         return redirect()->route('print-report-sheet-for-teacher',$data['classroom_id']);
     
-                        // return Excel::download(new ReportSheetExport(Report::generateReportSheet($data['classroom_id'])), 'report_sheet.xlsx');
-                        // return redirect()->route('print-report-sheet-for-teacher',$data['classroom_id']);
-                    }),
+                //         // return Excel::download(new ReportSheetExport(Report::generateReportSheet($data['classroom_id'])), 'report_sheet.xlsx');
+                //         // return redirect()->route('print-report-sheet-for-teacher',$data['classroom_id']);
+                //     }),
             ])
             ->icon('heroicon-s-arrow-up-tray')
             ->color('info')

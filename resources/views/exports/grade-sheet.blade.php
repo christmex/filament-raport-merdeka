@@ -18,8 +18,11 @@
                     @endphp
                     @foreach($assessmentMethodSetting as $assessmentMethodValue)
                             @if(!empty($data[$key][$topicKey][$assessmentMethodValue->assessment_method_setting_name]))
-                                <td>{{array_sum($data[$key][$topicKey][$assessmentMethodValue->assessment_method_setting_name])}}</td>
-                                @php array_push($sumatifAvg, array_sum($data[$key][$topicKey][$assessmentMethodValue->assessment_method_setting_name])) @endphp
+                                @php 
+                                    $countSumatifAvg = array_sum($data[$key][$topicKey][$assessmentMethodValue->assessment_method_setting_name]) / count($data[$key][$topicKey][$assessmentMethodValue->assessment_method_setting_name]);
+                                    array_push($sumatifAvg, $countSumatifAvg) 
+                                @endphp
+                                <td>{{$countSumatifAvg}}</td>
                             @else
                                 <td></td>
                             @endif
@@ -62,6 +65,7 @@
                 </td>
                 <td>
                     @if(!empty($minMax)) 
+                        
                         @php 
                             arsort($minMax);
                             $desc = '';

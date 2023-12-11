@@ -356,7 +356,7 @@
 					<td style="width: 20px">10.</td>
 					<td style="width:300px">{{Str::title('asal sekolah')}}</td>
 					<td style="width: 5px">:</td>
-					<td>{{Str::title($student->previous_education)}}</td>
+					<td>{{$student->previous_education}}</td>
 				</tr>
 				<tr>
 					<td style="width: 20px">11.</td>
