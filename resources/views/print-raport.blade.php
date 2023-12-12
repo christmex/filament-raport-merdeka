@@ -468,7 +468,7 @@
 	</section>
 	<div style="clear: both;"></div>
 	<section id="student_photo" style="float:right; margin-right: 100px;margin-top: 30px">
-		<div style="display: inline-block;border:1px solid black;width: 115px;height: 145px;text-align:center; line-height: 100px;margin-right: 10px">
+		<div style="display: inline-block;border:1px solid black;width: 100px;height: 130px;text-align:center; line-height: 100px;margin-right: 10px">
 			Pas foto
 			3 x4
 		</div>
