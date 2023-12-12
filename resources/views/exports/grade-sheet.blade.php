@@ -65,7 +65,7 @@
 
                             }
                             //Helper::customRound(array_sum($finalAvg)/count($finalAvg))
-                            $finalAvg =($countAvgAvg*$avgDiv)+(array_sum($dataPAS[$key])*$PASDiv)
+                            $finalAvg =($countAvgAvg*$avgDiv)+($dataPAS[$key]*$PASDiv)
                         @endphp 
                         {{ $finalAvg }}
                     @endif    
