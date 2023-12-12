@@ -284,9 +284,13 @@ class PrintController extends Controller
         $subjectDescription = SubjectDescription::where('subject_user_id',$subjectUser->id)->get();
         $grade_minimum = $subjectUser->grade_minimum;
 
-        return Excel::download(new GradeSheetExport(compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS','subjectDescription','grade_minimum')), 'grade_sheet - '.$subjectUser->subject->subject_name.' kelas '.$subjectUser->classroom->school_level.' '.$subjectUser->classroom->classroom_name.'.xlsx');
+        $getSchoolSettings = SchoolSetting::first();
+        $avgDiv = ($getSchoolSettings->sumatif_avg/100);
+        $PASDiv = ($getSchoolSettings->pas_avg/100);
 
-        // return view('exports.grade-sheet', compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS','subjectDescription','grade_minimum'));
+        return Excel::download(new GradeSheetExport(compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS','subjectDescription','grade_minimum','avgDiv','PASDiv')), 'grade_sheet - '.$subjectUser->subject->subject_name.' kelas '.$subjectUser->classroom->school_level.' '.$subjectUser->classroom->classroom_name.'.xlsx');
+
+        // return view('exports.grade-sheet', compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS','subjectDescription','grade_minimum','avgDiv','PASDiv'));
 
     }
     

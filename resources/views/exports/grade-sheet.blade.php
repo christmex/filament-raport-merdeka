@@ -60,7 +60,14 @@
                 </td>
                 <td>
                     @if(!empty($finalAvg)) 
-                        {{ Helper::customRound(array_sum($finalAvg)/count($finalAvg)) }}
+                        @php 
+                            if(count($topicAvg) && !empty($dataPAS[$key])){
+
+                            }
+                            //Helper::customRound(array_sum($finalAvg)/count($finalAvg))
+                            $finalAvg =($countAvgAvg*$avgDiv)+(array_sum($dataPAS[$key])*$PASDiv)
+                        @endphp 
+                        {{ $finalAvg }}
                     @endif    
                 </td>
                 <td>

@@ -572,6 +572,7 @@
 	<div style="clear: both;"></div>
 	
 	<section id="grade" style="margin-top:20px;">
+		<h3 style="margin: 10px 0 10px">A. Pengetahuan dan Keterampilan</h3>
 		<table>
 			<thead>
 				<tr>
@@ -718,11 +719,12 @@
 
 	@if($student->activeExtracurriculars->count())
 	<section id="extracurricular" style="margin-top:20px;">
+		<h3 style="margin: 10px 0 10px">B. Ekstrakurikuler</h3>
 		<table>
 			<thead>
 				<tr>
 					<th style="vertical-align: middle;width: 5%">No</th>
-					<th style="vertical-align: middle;width: auto">Ekstrakurikuler</th>
+					<th style="vertical-align: middle;width: auto">Kegiatan Ekstrakurikuler</th>
 					<th style="vertical-align: middle;width: auto">Keterangan</th>
 				</tr>
 			</thead>
@@ -741,7 +743,7 @@
 
 	@if($student->activeAbsence->count())
 	<section id="absence" style="margin-top:20px;">
-		<h3 style="margin: 10px 0 10px">Ketidakhadiran</h3>
+		<h3 style="margin: 10px 0 10px">C. Ketidakhadiran</h3>
 		<table>
 			<thead>
 				<tr>
