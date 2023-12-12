@@ -350,7 +350,7 @@
 					<td style="width: 20px">9.</td>
 					<td style="width:300px">{{Str::title('nomor telepon rumah/HP')}}</td>
 					<td style="width: 5px">:</td>
-					<td>{{Str::title($student->phone)}}</td>
+					<td>@if($student->phone != null) {{$student->phone}} @else - @endif</td>
 				</tr>
 				<tr>
 					<td style="width: 20px">10.</td>
