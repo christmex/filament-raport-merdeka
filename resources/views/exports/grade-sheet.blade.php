@@ -30,11 +30,11 @@
                     @if(count($sumatifAvg))
                         <td>
                             @php
-                                $countSumatifAvg = Helper::customRound(array_sum($sumatifAvg)/count($sumatifAvg));
+                                $countSumatifAvg = array_sum($sumatifAvg)/count($sumatifAvg);
                                 array_push($topicAvg, $countSumatifAvg);
                                 $minMax[$countSumatifAvg] = $topicValue;
                             @endphp
-                            {{ $countSumatifAvg }}
+                            {{ Helper::customRound($countSumatifAvg) }}
                         </td>
                     @else 
                         <td></td>
