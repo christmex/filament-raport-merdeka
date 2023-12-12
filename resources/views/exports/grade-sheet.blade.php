@@ -44,30 +44,31 @@
                 <td>
                     @if(count($topicAvg)) 
                     @php
-                        $countAvgAvg = Helper::customRound(array_sum($topicAvg)/count($topicAvg));
-                        array_push($finalAvg,$countAvgAvg);
+                        //$countAvgAvg = Helper::customRound(array_sum($topicAvg)/count($topicAvg));
+                        $countAvgAvg = array_sum($topicAvg)/count($topicAvg);
+                        //array_push($finalAvg,$countAvgAvg);
                     @endphp    
-                        {{ $countAvgAvg }} 
+                        {{ Helper::customRound($countAvgAvg) }} 
                     @endif
                 </td>
                 <td>
                     @if(!empty($dataPAS[$key])) 
                         @php 
-                            array_push($finalAvg,$dataPAS[$key]);
+                            //array_push($finalAvg,$dataPAS[$key]);
                         @endphp 
                         {{$dataPAS[$key]}} 
                     @endif
                 </td>
                 <td>
-                    @if(!empty($finalAvg)) 
-                        @php 
-                            if(count($topicAvg) && !empty($dataPAS[$key])){
+                    @php 
+                        if(count($topicAvg) && !empty($dataPAS[$key])){
 
-                            }
-                            //Helper::customRound(array_sum($finalAvg)/count($finalAvg))
-                            $finalAvg =Helper::customRound(($countAvgAvg*$avgDiv)+($dataPAS[$key]*$PASDiv));
-                        @endphp 
-                        {{ $finalAvg }}
+                        }
+                        //Helper::customRound(array_sum($finalAvg)/count($finalAvg))
+                        $finalAvg = Helper::customRound(($countAvgAvg*$avgDiv)+($dataPAS[$key]*$PASDiv));
+                    @endphp 
+                    {{ $finalAvg }}
+                    @if(!empty($finalAvg)) 
                     @endif    
                 </td>
                 <td>
