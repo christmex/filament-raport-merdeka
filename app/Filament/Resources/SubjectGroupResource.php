@@ -29,6 +29,9 @@ class SubjectGroupResource extends Resource
                     ->required()
                     ->unique(ignoreRecord : true)
                     ->maxLength(255),
+                Forms\Components\TextInput::make('order')
+                    ->default(1)
+                    ->minValue(1),
             ]);
     }
 
@@ -38,6 +41,9 @@ class SubjectGroupResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextInputColumn::make('order')
+                    ->sortable()
+                    ->rules(['required','min:1']),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -98,6 +98,7 @@ IMPORTANT
 - after we finish open the aplication then login with super admin, then go to the student classroom menu, and click student sync
 - agar description tampil, guru harus membuat semua description  untuk tiap topic
 - untuk moving class, moving class itu adalah kelas yang bukan kelas normal, contoh ada kelas matthew A untuk maths, nah siswanya bisa dari matthew 1,2,3 makanya itu namanya moving class, jika ada guru yg ngajar di moving class, jangan lupa admin masukin siswa siapa aja yg masuk di moving class di menu student classroom
+- semua mapel harus masuk sebuah subject group
 
 
 There is 3 ways to use laravel global scope

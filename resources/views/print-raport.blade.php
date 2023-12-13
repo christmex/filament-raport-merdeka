@@ -570,7 +570,9 @@
 		</div>
 	</section>
 	<div style="clear: both;"></div>
-	
+	@php 
+		$avgIP = [];
+	@endphp 
 	<section id="grade" style="margin-top:20px;">
 		<h3 style="margin: 10px 0 10px">A. Pengetahuan dan Keterampilan</h3>
 		<table>
@@ -588,57 +590,85 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($schoolCurriculum as $key => $value)
-				<!-- <tr draggable="true"> -->
-				<tr>
-					<td>{{$loop->iteration}}</td>
-					<td style="text-align: left; padding: 5px">{{$key}}</td>
-					@if(isset($getSchoolSetting->meta['show_top_kkm']))
-						@if(!$getSchoolSetting->meta['show_top_kkm'])
-						<td>{{$value['KKM']}}</td>
+				@foreach($getSubjectGroup as $SG)
+					@php 
+						$countHead = 0;
+						$iteration = 1;
+					@endphp 
+					@foreach($schoolCurriculum as $key => $value)
+						@if($SG->name == $value['subject_group_name'] && $countHead == 0)
+						<tr>
+							<td colspan="4" style="text-align:left;padding-left: 12px">{{$SG->name}}</td>
+						</tr>
+						@php $countHead++; @endphp 
 						@endif
-					@endif
-					<td>{{Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv)}}</td>
-					<td style="text-align: left; padding: 5px; word-wrap: break-word;">
-						@php 
-							$desc = '';
-							$previousPredicate = '';
-						@endphp
-						
-						@foreach($value['minMax_topic_id'] as $topic_setting_id => $MixMaxValue)
-							@php
-								$check = $subjectDescription
-								->where('topic_setting_id',$topic_setting_id)
-								->where('subject_user_id', $value['subject_user_id'])
-								->first();
-								if($check != null){
-									if($desc != ''){
-										$separ = $check->is_english_description ? 'And ' : 'Dan ';
-
-										//if($previousPredicate == 'Need to improve about' || $previousPredicate == 'Perlu bimbingan dalam'){
-										//	$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
-										//}else {
-										//	$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
-										//}
-										
-										$desc .= "<hr>".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description, 'under')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
-									}else {
-										$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description);
-										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
-									}
-								}
-							@endphp
-						@endforeach
-						
-
-						{!! $desc !!}
-					</td>
-				</tr>
-				@endforeach
+					@endforeach
+					@foreach($schoolCurriculum as $key => $value)
+						@if($SG->name == $value['subject_group_name'])
+							<!-- <tr draggable="true"> -->
+								
+							<tr>
+								<td>
+									@php 
+										echo $iteration;
+										$iteration++;
+									@endphp 
+								</td>
+								<td style="text-align: left; padding: 5px">{{$key}}</td>
+								@if(isset($getSchoolSetting->meta['show_top_kkm']))
+									@if(!$getSchoolSetting->meta['show_top_kkm'])
+									<td>{{$value['KKM']}}</td>
+									@endif
+								@endif
+								<td>
+									@php 
+										$countFinalGrade = Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv);
+										array_push($avgIP, $countFinalGrade);
+									@endphp 
+									{{ $countFinalGrade }}
+								</td>
+								<td style="text-align: left; padding: 5px; word-wrap: break-word;">
+									@php 
+										$desc = '';
+										$previousPredicate = '';
+									@endphp
+									
+									@foreach($value['minMax_topic_id'] as $topic_setting_id => $MixMaxValue)
+										@php
+											$check = $subjectDescription
+											->where('topic_setting_id',$topic_setting_id)
+											->where('subject_user_id', $value['subject_user_id'])
+											->first();
+											if($check != null){
+												if($desc != ''){
+													$separ = $check->is_english_description ? 'And ' : 'Dan ';
+			
+													//if($previousPredicate == 'Need to improve about' || $previousPredicate == 'Perlu bimbingan dalam'){
+													//	$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+													//}else {
+													//	$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+													//}
+													
+													$desc .= "<hr>".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description, 'under')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+												}else {
+													$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description);
+													$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
+												}
+											}
+										@endphp
+									@endforeach
+									
+			
+									{!! $desc !!}
+								</td>
+							</tr>
+						@endif
+					@endforeach
+				@endforeach()
 			</tbody>
 		</table>
 	</section>
-
+	
 	@if(count($basicCurriculum))
 	<section id="grade" style="margin-top:20px;">
 		<h3 style="margin: 10px 0 10px">
@@ -673,7 +703,13 @@
 						@endif
 						@endif
 						<td>{{$value['KKM']}}</td>
-					<td>{{Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv)}}</td>
+					<td>
+						@php 
+							$countFinalGrade = Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv);
+							array_push($avgIP, $countFinalGrade);
+						@endphp 
+						{{ $countFinalGrade }}
+					</td>
 					<td style="text-align: left; padding: 5px; word-wrap: break-word;">
 						@php 
 							$desc = '';
@@ -733,10 +769,23 @@
 				<tr draggable="true">
 					<td>{{$loop->iteration}}</td>
 					<td style="text-align: left; padding: 5px">{{$value->name}}</td>
-					<td style="text-align: left; padding: 5px">{{$value->description}}</td>
+					<td style="text-align: center; padding: 5px">{{$value->description}}</td>
 				</tr>
 				@endforeach
 			</tbody>
+		</table>
+	</section>
+	@endif
+
+	@if(count($avgIP))
+	<section id="extracurricular" style="margin-top:20px;">
+		<table style="width: 30%">
+			<thead>
+				<tr>
+					<th style="vertical-align: middle;width: 20%">IP Semester</th>
+					<th style="vertical-align: middle;width: 5%">{{Helper::customRound(array_sum($avgIP) / count($avgIP))}}</th>
+				</tr>
+			</thead>
 		</table>
 	</section>
 	@endif

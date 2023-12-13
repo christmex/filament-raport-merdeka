@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\GradeSheetExport;
 use App\Helpers\Helper;
-use App\Models\AssessmentMethodSetting;
 use App\Models\Student;
 use App\Models\Classroom;
 use App\Models\Assessment;
 use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
 use App\Models\SubjectUser;
+use App\Models\SubjectGroup;
 use Illuminate\Http\Request;
 use App\Models\SchoolSetting;
 use App\Models\CharacterReport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\StudentClassroom;
+use App\Exports\GradeSheetExport;
 use App\Exports\ReportSheetExport;
 use App\Models\SubjectDescription;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\AssessmentMethodSetting;
 use Filament\Notifications\Notification;
 use App\Models\StudentSemesterEvaluation;
 use Masterminds\HTML5\Parser\CharacterReference;
@@ -44,16 +45,18 @@ class PrintController extends Controller
 
         $data = [];
         $assessments = Assessment::query()
-        ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough','subjectUser')
+        ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough','subjectUser','subjectUser.subject.subjectGroup')
         ->join('subject_users', 'assessments.subject_user_id', '=', 'subject_users.id')
     
         ->join('subjects', 'subject_users.subject_id', '=', 'subjects.id') // Inner join another_table inside subject_users
+        ->join('subject_groups', 'subjects.subject_group_id', '=', 'subject_groups.id') // Inner join another_table inside subject_users
     
         ->select(
             'subjects.is_curiculum_basic',
             'subject_user_id',
             'assessment_method_setting_id',
             'topic_setting_id',
+            'subject_groups.name',
             DB::raw('AVG(grading) as max_grading')
         )
         ->where('student_id', $student->id)
@@ -62,9 +65,10 @@ class PrintController extends Controller
         ->where('subject_users.school_year_id', auth()->user()->activeHomeroom->first()->school_year_id)
         ->where('subject_users.school_term_id', auth()->user()->activeHomeroom->first()->school_term_id)
         ->whereNotNull('grading')
-        ->groupBy( 'subjects.is_curiculum_basic','assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
+        ->groupBy( 'subject_groups.name','subjects.is_curiculum_basic','assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
         ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
         ->orderBy('subjects.subject_name', 'asc') // Order by the sort_order column from subject_users table
+        ->orderBy('subject_groups.order', 'asc') // Order by the sort_order column from subject_users table
         ->orderByDesc('max_grading') // Order by the maximum grading
         ->withoutGlobalScope('subjectUser')
         ->get();
@@ -76,6 +80,7 @@ class PrintController extends Controller
             $data[$value->subjectUserThrough->subject_name]['KKM'] = $value->subjectUser->grade_minimum;
             $data[$value->subjectUserThrough->subject_name]['subject_user_id'] = $value->subject_user_id;
             $data[$value->subjectUserThrough->subject_name]['is_curiculum_basic'] = $value->is_curiculum_basic;
+            $data[$value->subjectUserThrough->subject_name]['subject_group_name'] = $value->name;
         }
 
         // dd($data);
@@ -92,6 +97,7 @@ class PrintController extends Controller
         ->whereIn('subject_user_id',array_unique($assessments->pluck('subject_user_id')->toArray()))
         ->withoutGlobalScope('subjectUser')
         ->get();
+
   
         // Set the KKM
         foreach ($newData as $key => $value) {
@@ -99,6 +105,7 @@ class PrintController extends Controller
             $newData[$key]['PAS'] = null;
             $newData[$key]['subject_user_id'] = $data[$key]['subject_user_id'] ;
             $newData[$key]['is_curiculum_basic'] = $data[$key]['is_curiculum_basic'] ;
+            $newData[$key]['subject_group_name'] = $data[$key]['subject_group_name'] ;
 
             if($StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()){
                 $newData[$key]['PAS'] =$StudentSemesterEvaluation->where('subjectUserThrough.subject_name',$key)->first()->grading;
@@ -157,6 +164,9 @@ class PrintController extends Controller
                 $schoolCurriculum[$key] = $newData[$key];
             }
         }
+        // dd(array_unique($assessments->pluck('subjectUser.subject.subjectGroup.id')->toArray()));
+
+        $getSubjectGroup = SubjectGroup::all();
 
         // dd($basicCurriculum,$schoolCurriculum, $newData);
         // return view('print-raport',compact('student','basicCurriculum','schoolCurriculum','avgDiv','PASDiv','subjectDescription'));
@@ -174,7 +184,7 @@ class PrintController extends Controller
         
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,609.4488,935.433), 'portrait');
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,612.283,935.433), 'portrait');//convert mm to point 216 mm
-        $pdf = Pdf::loadView('print-raport', compact('student','basicCurriculum','schoolCurriculum','avgDiv','PASDiv','subjectDescription'))->setPaper(array(0,0,609.449,935.433), 'portrait');//convert mm to point
+        $pdf = Pdf::loadView('print-raport', compact('getSubjectGroup','student','basicCurriculum','schoolCurriculum','avgDiv','PASDiv','subjectDescription'))->setPaper(array(0,0,609.449,935.433), 'portrait');//convert mm to point
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,595.28,935.433), 'portrait');//convert mm to point
         return $pdf->stream('print-raport.pdf');
 

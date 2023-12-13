@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('subject_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('order')->default(1);
             $table->timestamps();
         });
     }
