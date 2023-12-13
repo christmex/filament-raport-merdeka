@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use IbrahimBougaoua\FilamentSortOrder\Traits\SortOrder;
 
@@ -17,4 +18,9 @@ class Subject extends Model
     // {
     //     $this->attributes['subject_name'] = ucwords($value);
     // }
+
+    public function subjectGroup() :BelongsTo
+    {
+        return $this->belongsTo(SubjectGroup::class);
+    }
 }

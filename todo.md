@@ -90,7 +90,7 @@ IMPORTANT
 ## HOWTO
 1. git fetch origin && git merge origin/main && composer2 install
 2. php artisan migrate
-3. php artisan shield:generate --resource=SubjectDescriptionResource,StudentDescriptionResource,StudentSemesterEvaluationResource,ReligionResource,ExtracurricularResource,StudentClassroomResource,AspectResource,HabitResource,CharacterReportResource,RangeCharacterDescriptionResource,CharacterDescriptionResource,RaportConfigResource -> for creating permission and policy file for SubjectDescriptionResource
+3. php artisan shield:generate --resource=SubjectDescriptionResource,StudentDescriptionResource,StudentSemesterEvaluationResource,ReligionResource,ExtracurricularResource,StudentClassroomResource,AspectResource,HabitResource,CharacterReportResource,RangeCharacterDescriptionResource,CharacterDescriptionResource,RaportConfigResource, SubjectGroupResource -> for creating permission and policy file for SubjectDescriptionResource
 4. git restore .
 
 ## IMPORTANT TO INFORM

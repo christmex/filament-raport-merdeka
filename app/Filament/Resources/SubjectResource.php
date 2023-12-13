@@ -7,6 +7,7 @@ use Filament\Tables;
 use App\Models\Subject;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\SubjectGroup;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\SubjectResource\Pages;
@@ -39,6 +40,8 @@ class SubjectResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\ToggleColumn::make('is_curiculum_basic')
                     ->sortable(),
+                Tables\Columns\SelectColumn::make('subject_group_id')
+                ->options(fn()=> SubjectGroup::all()->pluck('name','id')),
                 Tables\Columns\TextInputColumn::make('sort_order')
                     ->rules(['required','integer','min:0', 'max:100'])
                     ->sortable(),
@@ -101,6 +104,8 @@ class SubjectResource extends Resource
             Forms\Components\TextInput::make('subject_code')
                 ->unique(ignoreRecord: true)
                 ->maxLength(255),
+            Forms\Components\Select::make('subject_group_id')
+                ->relationship(name: 'subjectGroup', titleAttribute: 'name'),
             Forms\Components\Toggle::make('is_curiculum_basic')
                 ->onColor('success'),
         ];
