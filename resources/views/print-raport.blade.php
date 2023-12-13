@@ -777,19 +777,6 @@
 	</section>
 	@endif
 
-	@if(count($avgIP))
-	<section id="extracurricular" style="margin-top:20px;">
-		<table style="width: 30%">
-			<thead>
-				<tr>
-					<th style="vertical-align: middle;width: 20%">IP Semester</th>
-					<th style="vertical-align: middle;width: 5%">{{Helper::customRound(array_sum($avgIP) / count($avgIP))}}</th>
-				</tr>
-			</thead>
-		</table>
-	</section>
-	@endif
-
 	@if($student->activeAbsence->count())
 	<section id="absence" style="margin-top:20px;">
 		<h3 style="margin: 10px 0 10px">C. Ketidakhadiran</h3>
@@ -811,8 +798,34 @@
 		</table>
 	</section>
 	@endif
+	
+	<section id="notes_from_homeroom_teacher" style="margin-top:20px;">
+		<h3 style="margin: 10px 0 10px">D. Catatan Wali Kelas</h3>
+			@if($student->activeDescription->count())
+			<div style="border: 1px solid black;padding: 10px 10px;text-align:center">
+				{{ $student->activeDescription->first()->description }}
+			</div>
+			@endif
+	</section>
+	<section id="notes_from_parent" style="margin-top:20px;">
+		<h3 style="margin: 10px 0 10px">E. Tanggapan Orang Tua/Wali Siswa</h3>
+			<div style="border: 1px solid black;padding: 20px;text-align:center"></div>
+	</section>
 
-	<section id="sign" style="margin-top: 50px" >
+	@if(count($avgIP))
+	<section id="extracurricular" style="margin-top:20px;">
+		<table style="width: 30%">
+			<thead>
+				<tr>
+					<th style="vertical-align: middle;width: 20%; height: 40px;">IP Semester</th>
+					<th style="vertical-align: middle;width: 5%; height: 40px;">{{Helper::customRound(array_sum($avgIP) / count($avgIP))}}</th>
+				</tr>
+			</thead>
+		</table>
+	</section>
+	@endif
+
+	<section id="sign" style="margin-top: 50px">
 		<div id="sign_parent" style="float:left;width:30%;">
 			<div class="sign_top" style="margin-bottom:80px">
 				<p>Mengetahui</p>

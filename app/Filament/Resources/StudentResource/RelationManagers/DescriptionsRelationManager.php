@@ -42,7 +42,6 @@ class DescriptionsRelationManager extends RelationManager
                     },ignoreRecord:true)
                     ->required(),
                 Forms\Components\Textarea::make('description')
-                    ->required()
                     ->maxLength(255)
                     ->columnSpanFull(),
             ]);
