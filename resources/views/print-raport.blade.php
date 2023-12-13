@@ -801,11 +801,11 @@
 	
 	<section id="notes_from_homeroom_teacher" style="margin-top:20px;">
 		<h3 style="margin: 10px 0 10px">D. Catatan Wali Kelas</h3>
-			@if($student->activeDescription->count())
 			<div style="border: 1px solid black;padding: 10px 10px;text-align:center">
-				{{ $student->activeDescription->first()->description }}
+				@if($student->activeDescription->count())
+					{{ $student->activeDescription->first()->description }}
+				@endif
 			</div>
-			@endif
 	</section>
 	<section id="notes_from_parent" style="margin-top:20px;">
 		<h3 style="margin: 10px 0 10px">E. Tanggapan Orang Tua/Wali Siswa</h3>
