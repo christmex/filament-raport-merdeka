@@ -155,6 +155,10 @@ class Student extends Model
     {
         return $this->HasMany(StudentExtracurricular::class);
     }
+    public function descriptions():HasMany
+    {
+        return $this->HasMany(StudentNotesByHomeroomTeacher::class);
+    }
     public function absence():HasMany
     {
         return $this->HasMany(StudentAbsence::class);
@@ -166,6 +170,11 @@ class Student extends Model
     public function activeAbsence():HasMany
     {
         return $this->absence()->where('school_year_id', SchoolYear::active())
+        ->where('school_term_id', SchoolTerm::active())->latest();
+    }
+    public function activeDescription():HasMany
+    {
+        return $this->descriptions()->where('school_year_id', SchoolYear::active())
         ->where('school_term_id', SchoolTerm::active())->latest();
     }
 
