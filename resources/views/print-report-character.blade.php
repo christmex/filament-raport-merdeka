@@ -337,7 +337,7 @@
 			@endphp
 
 			@if($getData)
-				{{Str::replace('[SEX]',$sex,Str::replace('[STUDENT_NAME]',$student->student_name,$getDesc))}}.	
+				{{Str::replace('[SEX]',$sex,Str::replace('[STUDENT_NAME]',Str::title($student->student_name),$getDesc))}}.	
 			@else 
 				Out of range no description
 			@endif
