@@ -289,17 +289,17 @@
 											return $value !== null;
 										});
 										if(count($countHomeArray) && count($countSchoolArray)){
-											$countAvgHome = round((array_sum($countHomeArray)/count($countHomeArray))/4, 1);
-											$countAvgSchool = round((array_sum($countSchoolArray)/count($countSchoolArray)), 1);
+											$countAvgHome = (array_sum($countHomeArray)/count($countHomeArray))/4;
+											$countAvgSchool = (array_sum($countSchoolArray)/count($countSchoolArray));
 	
-											$countAllAvg = round(($countAvgHome*20/100)+($countAvgSchool*80/100),1);
+											$countAllAvg = ($countAvgHome*20/100)+($countAvgSchool*80/100);
 											array_push($avgTotal, $countAllAvg);
 										}
 
 									@endphp 
-									<td>{{$countAvgHome}}</td>
-									<td>{{$countAvgSchool}}</td>
-									<td>{{$countAllAvg}}</td>
+									<td>{{ round($countAvgHome, 1) }}</td>
+									<td>{{ round($countAvgSchool, 1) }}</td>
+									<td>{{ round($countAllAvg,1)}} </td>
 								@endif
 							@endforeach
 						</tr>
