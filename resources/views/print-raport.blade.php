@@ -837,30 +837,29 @@
 	
 	<section id="sign" style="margin-top: @if(!empty($getSchoolSetting->meta['margin_top_sign_parent'])) {{$getSchoolSetting->meta['margin_top_sign_parent']}} @else 50px @endif">
 		<div id="sign_parent" style="float:left;width:30%;">
-			<div class="sign_top" style="margin-bottom:80px">
+			<div class="sign_top" style="margin-bottom: @if(!empty($getSchoolSetting->meta['margin_bottom_sign_parent'])) {{$getSchoolSetting->meta['margin_bottom_sign_parent']}} @else 60px @endif">
 				<p>Mengetahui</p>
 				<p>Orang Tua/Wali</p>
 			</div>
 
 			<div class="border_sign">
-				<p style="visibility:hidden">parentsign</p>
-				<hr style="margin-top:-10px;display: block">
+				<p style="visibility:hidden;text-decoration:underline;text-decoration-thickness: 1px;text-decoration-color:black; text-underline-offset: 8px;">parentsignasasasasa</p>
+				<hr style='margin-top:-10px;display: block;margin-left: -5px;margin-right:-5px;height:1px;border-width:0;background-color:black'>
 			</div>
 		</div>
 		<div id="sign_main_teacher" style="float:right;width:auto;">
-			<div class="sign_top" style="margin-bottom:80px">
+			<div class="sign_top" style="margin-bottom: @if(!empty($getSchoolSetting->meta['margin_bottom_sign_homeroom_teacher'])) {{$getSchoolSetting->meta['margin_bottom_sign_homeroom_teacher']}} @else 60px @endif">
 				<p>Batam, {!!$getSchoolSetting->school_progress_report_date!!}</p>
 				<p>Wali Kelas {{Helper::numberToRomawi($student->active_classroom_level)}} {{$student->active_classroom_name}}</p>
 			</div>
 
 			<div class="border_sign">
-				<p>{{auth()->user()->name}}</p>
-				<hr style="margin-top:-10px;display: block">
+				<p style="text-decoration:underline;text-decoration-thickness: 1px;text-decoration-color:black; text-underline-offset: 8px;">{{auth()->user()->name}}</p>
+				<!-- <hr style="margin-top:-10px;display: block"> -->
 			</div>
 		</div>
 	</section>
 	<div style="clear: both;"></div>
-
 	<section id="sign_principle" style="text-align:center; margin: 5% auto 0">
 	
 		<div class="sign_top">
@@ -876,7 +875,7 @@
 			</p>
 		</div>
 
-		<div class="border_sign" style="margin-top: 100px">
+		<div class="border_sign" style="margin-top: @if(!empty($getSchoolSetting->meta['margin_top_sign_principal'])) {{$getSchoolSetting->meta['margin_top_sign_principal']}} @else 100px @endif">
 			<!-- <p style="text-decoration:underline">Rudi wanro situmorang</p> -->
 			<p style="text-decoration:underline;text-decoration-thickness: 1px; text-underline-offset: 8px;">{{$getSchoolSetting->school_principal_name}}</p>
 			<!-- <hr> -->
