@@ -598,7 +598,7 @@
 					@foreach($schoolCurriculum as $key => $value)
 						@if($SG->name == $value['subject_group_name'] && $countHead == 0)
 						<tr>
-							<td colspan="4" style="text-align:left;padding-left: 12px">{{$SG->name}}</td>
+							<td colspan="4" style="text-align:left;padding-left: 12px"><strong>{{$SG->name}}</strong></td>
 						</tr>
 						@php $countHead++; @endphp 
 						@endif
@@ -644,15 +644,15 @@
 													$separ = $check->is_english_description ? 'And ' : 'Dan ';
 			
 													//if($previousPredicate == 'Need to improve about' || $previousPredicate == 'Perlu bimbingan dalam'){
-													//	$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+													//	$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]',Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 													//}else {
-													//	$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+													//	$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]',Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 													//}
 													
-													$desc .= "<hr>".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description, 'under')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+													$desc .= "<hr style='margin-left: -5px;margin-right:-5px;height:1px;border-width:0;background-color:black'>".Str::replace('[STUDENT_PREDICATE]',Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description, 'under'), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 												}else {
 													$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description);
-													$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
+													$desc .= Str::replace('[STUDENT_PREDICATE]',Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
 												}
 											}
 										@endphp
@@ -725,15 +725,15 @@
 								if($check != null){
 									if($desc != ''){
 										//if($previousPredicate == 'Need to improve about' || $previousPredicate == 'Perlu bimbingan dalam'){
-										//	$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+										//	$desc .= "namun ".Str::replace('[STUDENT_PREDICATE]', Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 										//}else {
-										//	$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+										//	$desc .= "dan ".Str::replace('[STUDENT_PREDICATE]', Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 										//}
 
-										$desc .= "<hr>".Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description, 'under')."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
+										$desc .= "<hr style='margin-left: -5px;margin-right:-5px;height:1px;border-width:0;background-color:black'>".Str::replace('[STUDENT_PREDICATE]', Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description, 'under'), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description));
 									}else {
 										$previousPredicate = Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description);
-										$desc .= Str::replace('[STUDENT_PREDICATE]', "<strong>".Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description)."</strong>", Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
+										$desc .= Str::replace('[STUDENT_PREDICATE]', Helper::predicate($MixMaxValue,$value['KKM'],$check->is_english_description), Str::replace('[STUDENT_NAME]', Str::title($student->student_name), $check->description))."<br>";
 									}
 								}
 							@endphp
@@ -750,6 +750,7 @@
 	@endif
 
 	@if(request('newPageAfterFirstTabel') && ($student->activeExtracurriculars->count() || $student->activeAbsence->count()))
+	<footer class=""><h2>Vision : To Know God and God is Known</h2></footer>
 	<div class="page-break"></div>
 	@endif
 
@@ -769,7 +770,11 @@
 				<tr draggable="true">
 					<td>{{$loop->iteration}}</td>
 					<td style="text-align: left; padding: 5px">{{$value->name}}</td>
-					<td style="text-align: center; padding: 5px">{{$value->description}}</td>
+					@if(!empty($getSchoolSetting->meta['text_align_extracurricular_description']))
+						<td style="text-align: {{ $getSchoolSetting->meta['text_align_extracurricular_description'] }}; padding: 5px">{{$value->description}}</td>
+					@else 
+						<td style="text-align: center; padding: 5px">{{$value->description}}</td>
+					@endif 
 				</tr>
 				@endforeach
 			</tbody>
@@ -876,6 +881,5 @@
 	
 	<footer class=""><h2>Vision : To Know God and God is Known</h2></footer>
 	<!-- <div class="page-break"></div> -->
-	
 </body>
 </html>
