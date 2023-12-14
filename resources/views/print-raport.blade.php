@@ -668,6 +668,11 @@
 			</tbody>
 		</table>
 	</section>
+
+	@if(request('newPageAfterBasicCurriculum'))
+		<footer class=""><h2>Vision : To Know God and God is Known</h2></footer>
+		<div class="page-break"></div>
+	@endif
 	
 	@if(count($basicCurriculum))
 	<section id="grade" style="margin-top:20px;">

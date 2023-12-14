@@ -177,10 +177,11 @@ class StudentResource extends Resource
                             //     ->default('A')
                             //     ->required(),
                             Forms\Components\Toggle::make('newPageAfterFirstTabel'),
+                            Forms\Components\Toggle::make('newPageAfterBasicCurriculum'),
                         ])
                         ->action(function(array $data, Student $record){
                             // return redirect()->route('students.print-raport', [$record->id, 'fase' => $data['fase'],'newPageAfterFirstTabel'=>$data['newPageAfterFirstTabel']]);
-                            return redirect()->route('students.print-raport', [$record->id,'newPageAfterFirstTabel'=>$data['newPageAfterFirstTabel']]);
+                            return redirect()->route('students.print-raport', [$record->id,'newPageAfterFirstTabel'=>$data['newPageAfterFirstTabel'],'newPageAfterBasicCurriculum'=>$data['newPageAfterBasicCurriculum']]);
                         })
                         // ->url(fn (Student $record): string => route('students.print-raport', $record))
                         // ->openUrlInNewTab()
