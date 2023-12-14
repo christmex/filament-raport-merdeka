@@ -834,8 +834,8 @@
 		</table>
 	</section>
 	@endif
-
-	<section id="sign" style="margin-top: 50px">
+	
+	<section id="sign" style="margin-top: @if(!empty($getSchoolSetting->meta['margin_top_sign_parent'])) {{$getSchoolSetting->meta['margin_top_sign_parent']}} @else 50px @endif">
 		<div id="sign_parent" style="float:left;width:30%;">
 			<div class="sign_top" style="margin-bottom:80px">
 				<p>Mengetahui</p>
