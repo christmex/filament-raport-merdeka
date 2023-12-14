@@ -87,6 +87,11 @@ IMPORTANT
 - [ ] bisa export report sheet via select student?
 - [ ] bisa export grade sheet via select student?
 
+
+#Need to be done
+- [ ] Tyndell perbedaan di grade sheet and raport sheet.
+
+
 ## HOWTO
 1. git fetch origin && git merge origin/main && composer2 install
 2. php artisan migrate

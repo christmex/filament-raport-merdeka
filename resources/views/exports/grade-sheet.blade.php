@@ -60,20 +60,26 @@
                     @endif
                 </td>
                 <td>
-                    @php 
-                        if(count($topicAvg) && !empty($dataPAS[$key])){
-
-                        }
+                    @php
+                        $finalAvg = 0;
                         //Helper::customRound(array_sum($finalAvg)/count($finalAvg))
-                        $finalAvg = Helper::customRound(($countAvgAvg*$avgDiv)+($dataPAS[$key]*$PASDiv));
+                        //$finalAvg = ($countAvgAvg*$avgDiv)+($dataPAS[$key]*$PASDiv);
                     @endphp 
-                    {{ $finalAvg }}
-                    @if(!empty($finalAvg)) 
+
+                    @if(count($topicAvg)) 
+                        @php
+                            $finalAvg += ($countAvgAvg*$avgDiv);
+                        @endphp 
                     @endif    
+                    @if(!empty($dataPAS[$key])) 
+                        @php
+                            $finalAvg += ($dataPAS[$key]*$PASDiv);
+                        @endphp 
+                    @endif
+                    {{ Helper::customRound($finalAvg) }}
                 </td>
-                <td>
-                    @if(!empty($minMax)) 
-                        
+                <td style="width: 500px">
+                    @if(!empty($minMax))
                         @php 
                             arsort($minMax);
                             $desc = '';

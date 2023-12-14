@@ -103,7 +103,8 @@ class Helper {
             foreach($subjects as $subjectKey => $subjectValue ){
                 array_push($avg, self::countFinalGrade($subjectValue['AVG'],$subjectValue['PAS'],$avgDiv, $PASDiv));
             }
-            $result[$student_name] = round(array_sum($avg) / count($avg),1)/10;
+            // $result[$student_name] = round(array_sum($avg) / count($avg),1)/10;
+            $result[$student_name] = array_sum($avg) / count($avg)/10;
         }
 
         return $result;
@@ -118,7 +119,8 @@ class Helper {
 
         if(count($character) == count($getOnlyFinalAvgAcademic)){
             foreach ($character as $key => $value) {
-                $rank[$key] = round(($getOnlyFinalAvgAcademic[$key]*75/100+$character[$key]*25/100*2.5),1);
+                // $rank[$key] = round(($getOnlyFinalAvgAcademic[$key]*75/100+$character[$key]*25/100*2.5),1);
+                $rank[$key] = self::customRound(($getOnlyFinalAvgAcademic[$key]*75/100+$character[$key]*25/100*2.5));
             }
         }
         
@@ -263,7 +265,9 @@ class Helper {
             if ($totalCount === 0) {
                 $average = 0;
             } else {
-                $average = round($totalSum / $totalCount); // Memasukkan fungsi round di sini
+                // $average = self::customRound($totalSum / $totalCount); // Memasukkan fungsi round di sini
+                $average = $totalSum / $totalCount; 
+                // $average = round($totalSum / $totalCount); // Memasukkan fungsi round di sini
             }
     
             // Simpan rata-rata dalam array dengan nama mata pelajaran sebagai kunci
@@ -305,7 +309,8 @@ class Helper {
 
                 if ($totalCount > 0) {
                     // $topicAverage = round($totalSum / $totalCount);
-                    $topicAverage = self::customRound($totalSum / $totalCount);
+                    // $topicAverage = self::customRound($totalSum / $totalCount);
+                    $topicAverage = $totalSum / $totalCount;
                     $subjectAverages[$topic] = $topicAverage;
                 }
             }
@@ -609,8 +614,8 @@ class Helper {
 
         // Tanya lagi mau gimana untuk pembulatannya
         // return round($result,mode: PHP_ROUND_HALF_DOWN );
-        return self::customRound($result);
-        // return $result;
+        // return self::customRound($result);
+        return $result;
     }
 
     public static function customRound($number)

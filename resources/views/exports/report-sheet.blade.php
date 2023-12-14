@@ -29,17 +29,18 @@
 				<td style="text-align: left;padding-left: 2px">{{$student_name}}</td>
 				@foreach($subjects as $subjectKey => $subjectValue )
 					@php array_push($avg, Helper::countFinalGrade($subjectValue['AVG'],$subjectValue['PAS'],$avgDiv, $PASDiv)); @endphp
-					<td>{{Helper::countFinalGrade($subjectValue['AVG'],$subjectValue['PAS'],$avgDiv, $PASDiv)}}</td>
+					<td>{{ Helper::customRound(Helper::countFinalGrade($subjectValue['AVG'],$subjectValue['PAS'],$avgDiv, $PASDiv))}}</td>
 				@endforeach
 				@php
-					$countFinalAvgAcademic = round(array_sum($avg) / count($avg),1)/10;
+					//$countFinalAvgAcademic = round(array_sum($avg) / count($avg),1)/10;
+					$countFinalAvgAcademic = array_sum($avg) / count($avg)/10;
 					if(count($getStudentCharacter) == count($finalNewData)){
 						$countFinalAvgCharacter = Helper::generateCharacterAvg($getStudentCharacter[$student_name]);
 					}else {
 						$countFinalAvgCharacter = 'unavailable';
 					}
 				@endphp
-				<td>{{ $countFinalAvgAcademic }}</td>
+				<td>{{ Helper::customRound($countFinalAvgAcademic) }}</td>
 				<td> {{ $countFinalAvgCharacter == 'unavailable' ? $countFinalAvgCharacter : Helper::customRound($countFinalAvgCharacter) }}</td>
 				@if(count($getStudentCharacter) == count($finalNewData))
 					<td>{{Helper::customRound(($countFinalAvgAcademic*75/100+$countFinalAvgCharacter*25/100*2.5))}}</td>

@@ -625,7 +625,7 @@
 										$countFinalGrade = Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv);
 										array_push($avgIP, $countFinalGrade);
 									@endphp 
-									{{ $countFinalGrade }}
+									{{ Helper::customRound($countFinalGrade) }}
 								</td>
 								<td style="text-align: left; padding: 5px; word-wrap: break-word;">
 									@php 
@@ -713,7 +713,7 @@
 							$countFinalGrade = Helper::countFinalGrade($value['AVG'],$value['PAS'],$avgDiv, $PASDiv);
 							array_push($avgIP, $countFinalGrade);
 						@endphp 
-						{{ $countFinalGrade }}
+						{{ Helper::customRound($countFinalGrade) }}
 					</td>
 					<td style="text-align: left; padding: 5px; word-wrap: break-word;">
 						@php 
