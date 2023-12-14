@@ -363,7 +363,7 @@
 			<tbody>
 				<tr>
 					<td>Character Average Score</td>
-					<td style="vertical-align: middle;width: 28%">{{round(round(array_sum($avgTotal),1) / $habitsTotal,1)}}</td>
+					<td style="vertical-align: middle;width: 28%">{{round(round(array_sum($avgTotal),2) / $habitsTotal,2)}}</td>
 				</tr>
 				<tr>
 					<td>Academic Average Score</td>
@@ -371,7 +371,7 @@
 				</tr>
 				<tr>
 					<td>Final Scored:</td>
-					<td style="vertical-align: middle;width: 28%">{{round((round(round(array_sum($avgTotal),1) / $habitsTotal,1) * 25/100 * 2.5)+((round($avgAcademic,0)/10)*75/100),2)}}</td>
+					<td style="vertical-align: middle;width: 28%">{{round((round(round(array_sum($avgTotal),2) / $habitsTotal,2) * 25/100 * 2.5)+((round($avgAcademic,0)/10)*75/100),2)}}</td>
 				</tr>
 			</tbody>
 		</table>
