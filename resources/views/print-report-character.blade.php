@@ -380,7 +380,7 @@
 				</tr>
 				<tr>
 					<td>Academic Average Score</td>
-					<td style="vertical-align: middle;width: 28%">{{Helper::customRound($avgAcademic)/10}}</td>
+					<td style="vertical-align: middle;width: 28%">{{Helper::customRound($avgAcademic,2)/10}}</td>
 				</tr>
 				<tr>
 					<td>Final Scored:</td>
