@@ -380,7 +380,7 @@ class PrintController extends Controller
         
         // Count avg based on the $data
         $newData = Helper::reportSheetCalculateAverage($data);
-        dd($data, $newData);
+        // dd($data, $newData);
 
         // dd($data['Tyndale James Shumaker'], $newData['Tyndale James Shumaker']);
         // Sort by student name
