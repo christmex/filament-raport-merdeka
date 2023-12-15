@@ -123,7 +123,7 @@ class Helper {
         $rank = [];
         $character = [];
         foreach ($getStudentCharacter as $key => $value) {
-            $character[self::generateCharacterAvg($value)] = $key;
+            $character[$key] = self::generateCharacterAvg($value);
         }
         
 
@@ -133,7 +133,7 @@ class Helper {
                 $rank[$key] = self::customRound(($getOnlyFinalAvgAcademic[$key]*75/100+$character[$key]*25/100*2.5));
             }
         }
-        dd($getStudentCharacter,$character, $getOnlyFinalAvgAcademic);
+        dd($getStudentCharacter,$character, $getOnlyFinalAvgAcademic, $rank);
         
         arsort($rank);
         $start = 1;
