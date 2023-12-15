@@ -36,6 +36,7 @@
 					$countFinalAvgAcademic = array_sum($avg) / count($avg)/10;
 					if(count($getStudentCharacter) == count($finalNewData)){
 						$countFinalAvgCharacter = Helper::generateCharacterAvg($getStudentCharacter[$student_name]);
+						dd($countFinalAvgCharacter);
 					}else {
 						$countFinalAvgCharacter = 'unavailable';
 					}
