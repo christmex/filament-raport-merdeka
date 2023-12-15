@@ -53,6 +53,7 @@
 					@php
 						if(count($getStudentCharacter) == count($finalNewData)){
 							//$getRank = Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic)[$student_name];
+							$getRank = 'dd.';
 						}else {
 							$getRank = 'unavailable.';
 						}
