@@ -119,12 +119,13 @@ class Helper {
         return $result;
     }
 
-    public static function generateRank($data,$getOnlyFinalAvgAcademic){
+    public static function generateRank($getStudentCharacter,$getOnlyFinalAvgAcademic){
         $rank = [];
         $character = [];
-        foreach ($data as $key => $value) {
+        foreach ($getStudentCharacter as $key => $value) {
             $character[$key] = self::generateCharacterAvg($value);
         }
+        dd($character);
 
         if(count($character) == count($getOnlyFinalAvgAcademic)){
             foreach ($character as $key => $value) {
