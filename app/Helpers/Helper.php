@@ -141,7 +141,7 @@ class Helper {
             $rank[$key] = $start;
             $start++;
         }
-        dd($getStudentCharacter,$character, $getOnlyFinalAvgAcademic, $rank);
+        // dd($getStudentCharacter,$character, $getOnlyFinalAvgAcademic, $rank);
         return $rank;
     }
 
