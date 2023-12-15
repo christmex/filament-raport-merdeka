@@ -52,7 +52,7 @@
 				<td>
 					@php
 						if(count($getStudentCharacter) == count($finalNewData)){
-							$getRank = Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic)[$student_name];
+							//$getRank = Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic)[$student_name];
 						}else {
 							$getRank = 'unavailable.';
 						}
@@ -64,3 +64,4 @@
 		@endforeach
 	</tbody>
 </table>
+{{dd(Helper::generateRank($getStudentCharacter, $getOnlyFinalAvgAcademic))}}
