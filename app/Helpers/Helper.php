@@ -125,7 +125,7 @@ class Helper {
         foreach ($getStudentCharacter as $key => $value) {
             $character[$key] = self::generateCharacterAvg($value);
         }
-        dd($character);
+        dd($getStudentCharacter,$character);
 
         if(count($character) == count($getOnlyFinalAvgAcademic)){
             foreach ($character as $key => $value) {
