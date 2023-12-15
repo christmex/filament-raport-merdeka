@@ -255,12 +255,20 @@
 					$habitsTotal = 0;
 				@endphp
 				@foreach($data as $aspectName => $AspectValue)
-					<tr>
-						<td rowspan="{{count($AspectValue)+2}}">{{$aspectName}}</td>
-					</tr>
-					
+					<!-- <tr>
+						sebelumnya disini ada aspectname td rowspan +2 bukan +1, tpi kita pindahkan ke bawah sepertinya karna sblumny ada kesalahn kita pindahkan supaya fix kesalahan tersebut
+					</tr> -->
+					@php 
+						$countAspectName = 0;
+					@endphp
 					@foreach($AspectValue as $habitKey => $habitValue)
 						<tr>
+							@if($countAspectName == 0)
+								<td rowspan="{{count($AspectValue)+1}}">{{$aspectName}}</td>
+								@php 
+									$countAspectName++;
+								@endphp
+							@endif
 							<td style="text-align:left;padding-left: 5px">{{$habitKey}}</td>
 							@php 
 								$avgHome = [];
@@ -383,5 +391,6 @@
 		<div style="clear: both;"></div>
 	</section>
 	<!-- <div class="page-break"></div> -->
+	
 </body>
 </html>
