@@ -50,7 +50,11 @@ class PrintController extends Controller
     
         ->join('subjects', 'subject_users.subject_id', '=', 'subjects.id') // Inner join another_table inside subject_users
         ->join('subject_groups', 'subjects.subject_group_id', '=', 'subject_groups.id') // Inner join another_table inside subject_users
-    
+        
+        
+        ->join('topic_settings', 'assessments.topic_setting_id', '=', 'topic_settings.id')
+        ->join('assessment_method_settings', 'assessments.assessment_method_setting_id', '=', 'assessment_method_settings.id')
+        
         ->select(
             'subjects.is_curiculum_basic',
             'subject_user_id',
@@ -69,6 +73,11 @@ class PrintController extends Controller
         ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
         ->orderBy('subjects.subject_name', 'asc') // Order by the sort_order column from subject_users table
         ->orderBy('subject_groups.order', 'asc') // Order by the sort_order column from subject_users table
+
+        
+        ->orderBy('topic_settings.topic_setting_name','asc')
+        ->orderBy('assessment_method_settings.order','asc')
+
         ->orderByDesc('max_grading') // Order by the maximum grading
         ->withoutGlobalScope('subjectUser')
         ->get();
@@ -87,7 +96,8 @@ class PrintController extends Controller
         // dd($assessments->whereIn('subject_user_id',[78,46])->toArray());
         
         // Count avg based on the $data
-        $newData = Helper::calculateAverage($data);
+        // $newData = Helper::calculateAverage($data);
+        $newData = Helper::reportSheetCalculateAverage([$student->student_name => $data])[$student->student_name];
         
         $avgPerTopic = Helper::calculateAvgTopic($data);
 
@@ -298,6 +308,7 @@ class PrintController extends Controller
         $avgDiv = ($getSchoolSettings->sumatif_avg/100);
         $PASDiv = ($getSchoolSettings->pas_avg/100);
 
+        // dd($data['Tyndale James Shumaker']);
         return Excel::download(new GradeSheetExport(compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS','subjectDescription','grade_minimum','avgDiv','PASDiv')), 'grade_sheet - '.$subjectUser->subject->subject_name.' kelas '.$subjectUser->classroom->school_level.' '.$subjectUser->classroom->classroom_name.'.xlsx');
 
         // return view('exports.grade-sheet', compact('data','thead','assessmentMethodSetting','totalTopic','dataPAS','subjectDescription','grade_minimum','avgDiv','PASDiv'));
@@ -328,30 +339,35 @@ class PrintController extends Controller
                         ->toArray();
 
         $assessments = Assessment::query()
-        ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough','subjectUser')
-        ->join('subject_users', 'assessments.subject_user_id', '=', 'subject_users.id')
-    
-        ->join('subjects', 'subject_users.subject_id', '=', 'subjects.id') // Inner join another_table inside subject_users
-        ->join('students', 'assessments.student_id', '=', 'students.id') // Join the students table
-        ->select(
-            'subjects.is_curiculum_basic',
-            'subject_user_id',
-            'assessment_method_setting_id',
-            'topic_setting_id',
-            'student_id',
-            DB::raw('AVG(grading) as max_grading')
-        )
-        ->whereIn('student_id', $studentIds)
-        ->where('subject_users.school_year_id', SchoolYear::activeId())
-        ->where('subject_users.school_term_id', SchoolTerm::activeId())
-        ->whereNotNull('grading')
-        ->groupBy( 'subjects.is_curiculum_basic','assessment_method_setting_id', 'subject_user_id', 'topic_setting_id','student_id')
-        ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
-        ->orderBy('subjects.subject_name', 'asc') // Order by the sort_order column from subject_users table
-        ->orderBy('students.student_name', 'asc')
-        ->orderByDesc('max_grading') // Order by the maximum grading
-        ->withoutGlobalScope('subjectUser')
-        ->get();
+            ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough','subjectUser')
+            ->join('subject_users', 'assessments.subject_user_id', '=', 'subject_users.id')
+        
+            ->join('subjects', 'subject_users.subject_id', '=', 'subjects.id') // Inner join another_table inside subject_users
+            ->join('students', 'assessments.student_id', '=', 'students.id') // Join the students table
+            ->join('topic_settings', 'assessments.topic_setting_id', '=', 'topic_settings.id')
+            ->join('assessment_method_settings', 'assessments.assessment_method_setting_id', '=', 'assessment_method_settings.id')
+            ->select(
+                'subjects.is_curiculum_basic',
+                'subject_user_id',
+                'assessment_method_setting_id',
+                'topic_setting_id',
+                'student_id',
+                DB::raw('AVG(grading) as max_grading')
+                // DB::raw('grading as max_grading')
+            )
+            ->whereIn('student_id', $studentIds)
+            ->where('subject_users.school_year_id', SchoolYear::activeId())
+            ->where('subject_users.school_term_id', SchoolTerm::activeId())
+            ->whereNotNull('grading')
+            ->groupBy( 'subjects.is_curiculum_basic','assessment_method_setting_id', 'subject_user_id', 'topic_setting_id','student_id')
+            ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
+            ->orderBy('subjects.subject_name', 'asc') // Order by the sort_order column from subject_users table
+            ->orderBy('students.student_name', 'asc')
+            ->orderBy('topic_settings.topic_setting_name','asc')
+            ->orderBy('assessment_method_settings.order','asc')
+            ->orderByDesc('max_grading') // Order by the maximum grading
+            ->withoutGlobalScope('subjectUser')
+            ->get();
 
         // Group By Subject
         $activeData = [];
@@ -361,10 +377,12 @@ class PrintController extends Controller
             // $data[$value->student->student_name][$value->subjectUserThrough->subject_name]['subject_user_id'] = $value->subject_user_id;
             $data[$value->student->student_name][$value->subjectUserThrough->subject_name]['is_curiculum_basic'] = $value->is_curiculum_basic;
         }
-        dd($data);
+        
         // Count avg based on the $data
         $newData = Helper::reportSheetCalculateAverage($data);
+        dd($data, $newData);
 
+        // dd($data['Tyndale James Shumaker'], $newData['Tyndale James Shumaker']);
         // Sort by student name
         // ksort($newData);
 
@@ -467,7 +485,7 @@ class PrintController extends Controller
         //     }
         // }
         array_push($tableHeader,'Rata-rata Akademik','Rata-rata Karakter','Nilai Akhir','Ranking');
-        dd($finalNewData);
+        // dd($finalNewData['Tyndale James Shumaker']);
         
         $getStudentCharacter = $this->generateCharacterAvg($studentIds);
         // if(count($studentIds) != count($getStudentCharacter)){
@@ -694,7 +712,7 @@ class PrintController extends Controller
 
         // ->setPaper(array(0,0,935.433,609.449), 'potrait')
         $avgAcademic = $this->generateAcademyAvg([$student->id]);
-        // dd($avgAcademic);
+        // dd(Helper::customRound($avgAcademic,10));
         $pdf = Pdf::loadView('print-report-character', compact('data','avgAcademic','student'))->setPaper(array(0,0,935.433,609.449), 'potrait');//convert mm to point
         return $pdf->download('print-report-character.pdf');
 

@@ -297,9 +297,9 @@
 										}
 
 									@endphp 
-									<td>{{ round($countAvgHome, 1) }}</td>
-									<td>{{ round($countAvgSchool, 1) }}</td>
-									<td>{{ round($countAllAvg,1)}} </td>
+									<td>{{ Helper::customRound($countAvgHome, 1) }}</td>
+									<td>{{ Helper::customRound($countAvgSchool, 1) }}</td>
+									<td>{{ Helper::customRound($countAllAvg,1)}} </td>
 								@endif
 							@endforeach
 						</tr>
@@ -320,7 +320,9 @@
 			
 			@php 
 				//$value = 3.6; //test purposes
-				$value = round(round(array_sum($avgTotal),1) / $habitsTotal,1); 
+
+				//$value = round(round(array_sum($avgTotal),1) / $habitsTotal,1); 
+				$value = array_sum($avgTotal) / $habitsTotal; 
 				$getData = App\Models\RangeCharacterDescription::where('start', '<=', $value)->where('end', '>=', $value)->first();
 				
 				if($getData){
@@ -363,21 +365,23 @@
 			<tbody>
 				<tr>
 					<td>Character Average Score</td>
-					<td style="vertical-align: middle;width: 28%">{{round(round(array_sum($avgTotal),2) / $habitsTotal,2)}}</td>
+						@php 
+							$characterAvgScore = array_sum($avgTotal) / $habitsTotal;
+						@endphp 
+					<td style="vertical-align: middle;width: 28%">{{Helper::customRound($characterAvgScore,2)}}</td>
 				</tr>
 				<tr>
 					<td>Academic Average Score</td>
-					<td style="vertical-align: middle;width: 28%">{{round($avgAcademic,0)/10}}</td>
+					<td style="vertical-align: middle;width: 28%">{{Helper::customRound($avgAcademic)/10}}</td>
 				</tr>
 				<tr>
 					<td>Final Scored:</td>
-					<td style="vertical-align: middle;width: 28%">{{round((round(round(array_sum($avgTotal),2) / $habitsTotal,2) * 25/100 * 2.5)+((round($avgAcademic,0)/10)*75/100),2)}}</td>
+					<td style="vertical-align: middle;width: 28%">{{Helper::customRound(($characterAvgScore * 25/100 * 2.5)+(($avgAcademic/10)*75/100),2)}}</td>
 				</tr>
 			</tbody>
 		</table>
 		<div style="clear: both;"></div>
 	</section>
 	<!-- <div class="page-break"></div> -->
-	
 </body>
 </html>

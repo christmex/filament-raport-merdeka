@@ -10,6 +10,15 @@ class Helper {
 
     public static $superUserEmail = 'super@sekolahbasic.sch.id';
 
+
+
+
+    // SERVICE
+    public static function generateGetAssessments(){
+
+    }
+    // SERVICE
+
     public static function getArrayDifKey($array1, $array2) :array{
         $keys1 = array_keys($array1);
         $keys2 = array_keys($array2);
@@ -227,6 +236,7 @@ class Helper {
     }
     
 
+    // Deprecated
     public static function calculateAverage($data) {
         $averages = [];
 
@@ -283,17 +293,13 @@ class Helper {
         foreach ($data as $subject => $topics) {
             $subjectAverages = [];
             $kkm = 0;
-            $subject_user_id = 0;
             
             foreach ($topics as $topic => $subTopics) {
                 if ($topic === 'KKM') {
                     $kkm = is_array($subTopics) ? (float)$subTopics['grading'] : (float)$subTopics;
                     continue;
                 }
-                if($topic === 'subject_user_id'){
-                    continue;
-                }
-                if($topic === 'is_curiculum_basic' || $topic === 'subject_group_name'){
+                if($topic === 'subject_user_id' || $topic === 'is_curiculum_basic' || $topic === 'subject_group_name'){
                     continue;
                 }
 
@@ -308,8 +314,6 @@ class Helper {
                 }
 
                 if ($totalCount > 0) {
-                    // $topicAverage = round($totalSum / $totalCount);
-                    // $topicAverage = self::customRound($totalSum / $totalCount);
                     $topicAverage = $totalSum / $totalCount;
                     $subjectAverages[$topic] = $topicAverage;
                 }
@@ -618,58 +622,66 @@ class Helper {
         return $result;
     }
 
-    public static function customRound($number)
+    public static function customRound($number, int|null $precision = 0)
     {
         $decimalPart = $number - floor($number); // Mendapatkan bagian desimal
 
         if ($decimalPart >= 0.5) {
-            return ceil($number); // Pembulatan ke atas jika desimal >= 0.55
+            // return ceil($number); // Pembulatan ke atas jika desimal >= 0.55
+            return round($number, $precision, PHP_ROUND_HALF_UP);
         } else {
-            return floor($number); // Pembulatan ke bawah jika desimal < 0.55
+            // return floor($number); // Pembulatan ke bawah jika desimal < 0.55
+            return round($number, $precision, PHP_ROUND_HALF_DOWN);
         }
     }
 
     public static function reportSheetCalculateAverage($datas){
         $averages = [];
 
-        foreach($datas as $keyData => $data){
-            foreach ($data as $subject => $topics) {
-                $totalSum = 0;
-                $totalCount = 0;
+        foreach($datas as $studentName => $subjects){
+            foreach ($subjects as $subject => $topics) {
+                // $totalSum = 0;
+                $totalSum = [];
+                $totalTopics = 0;
     
                 // Iterasi melalui semua topik dalam mata pelajaran
-                foreach ($topics as $topic => $subTopics) {
+                foreach ($topics as $topic => $assessmentMethod) {
+                    
                     // Tambahkan validasi untuk melewatkan jika topik adalah 'KKM'
                     if ($topic === 'KKM') {
-                        $averages[$keyData][$subject]['KKM'] = $subTopics;
+                        $averages[$studentName][$subject]['KKM'] = $assessmentMethod;
                         continue;
                     }
-                    // if($topic === 'subject_user_id'){
-                    //     continue;
-                    // }
-                    if($topic === 'is_curiculum_basic'){
+                    if($topic === 'is_curiculum_basic' || $topic === 'subject_user_id' || $topic === 'subject_group_name'){
                         continue;
                     }
+                    $countAssementMethod = 0;
+                    $arrrayGradingTopic = [];
                     // Iterasi melalui semua subtopik dalam topik
-                    foreach ($subTopics as $subTopic => $values) {
+                    foreach ($assessmentMethod as $values) {
                         if (isset($values['grading'])) {
                             // Jika 'grading' ada, tambahkan ke totalSum
-                            $totalSum += (float)$values['grading'];
-                            $totalCount++;
+                            // $totalSum += (float)$values['grading'];
+                            // $totalSum[] = (float)$values['grading'];
+                            $arrrayGradingTopic[] = (float)$values['grading'];
                         }
+                        $countAssementMethod++;
                     }
+                    $totalSum[] = array_sum($arrrayGradingTopic) / $countAssementMethod;
+                    $totalTopics++;
                 }
         
                 // Menghindari pembagian oleh nol
-                if ($totalCount === 0) {
+                if ($totalTopics === 0) {
                     $average = 0;
                 } else {
                     // $average = round($totalSum / $totalCount); // Memasukkan fungsi round di sini
-                    $average = $totalSum / $totalCount; // Memasukkan fungsi round di sini
+                    $average = array_sum($totalSum) / $totalTopics; // Memasukkan fungsi round di sini
                 }
         
                 // Simpan rata-rata dalam array dengan nama mata pelajaran sebagai kunci
-                $averages[$keyData][$subject] = ['AVG'=> $average];
+                $averages[$studentName][$subject] = ['AVG'=> $average];
+                
             }
         }
         // Iterasi melalui semua mata pelajaran (misalnya, 'Maths', 'Science', dll.)

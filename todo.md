@@ -89,7 +89,8 @@ IMPORTANT
 
 
 #Need to be done
-- [ ] Tyndell perbedaan di grade sheet and raport sheet.
+- [x] Tyndell perbedaan di grade sheet and raport sheet.
+- [x] cek dari grade sheet, raport sheet, raport, raport character
 
 
 ## HOWTO
