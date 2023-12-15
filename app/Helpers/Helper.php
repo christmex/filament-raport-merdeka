@@ -130,10 +130,10 @@ class Helper {
         if(count($character) == count($getOnlyFinalAvgAcademic)){
             foreach ($character as $key => $value) {
                 // $rank[$key] = round(($getOnlyFinalAvgAcademic[$key]*75/100+$character[$key]*25/100*2.5),1);
-                $rank[$key] = self::customRound(($getOnlyFinalAvgAcademic[$key]*75/100+$character[$key]*25/100*2.5));
+                $rank[$key] = self::customRound(($getOnlyFinalAvgAcademic[$key]*75/100+$character[$key]*25/100*2.5),2);
             }
         }
-        dd($getStudentCharacter,$character, $getOnlyFinalAvgAcademic, $rank);
+        
         
         arsort($rank);
         $start = 1;
@@ -141,6 +141,7 @@ class Helper {
             $rank[$key] = $start;
             $start++;
         }
+        dd($getStudentCharacter,$character, $getOnlyFinalAvgAcademic, $rank);
         return $rank;
     }
 
