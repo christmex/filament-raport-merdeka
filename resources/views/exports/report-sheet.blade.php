@@ -36,13 +36,13 @@
 					$countFinalAvgAcademic = array_sum($avg) / count($avg)/10;
 					if(count($getStudentCharacter) == count($finalNewData)){
 						$countFinalAvgCharacter = Helper::generateCharacterAvg($getStudentCharacter[$student_name]);
-						dd($countFinalAvgCharacter);
 					}else {
 						$countFinalAvgCharacter = 'unavailable';
 					}
 				@endphp
 				<td>{{ Helper::customRound($countFinalAvgAcademic,1) }}</td>
-				<td> {{ $countFinalAvgCharacter == 'unavailable' ? $countFinalAvgCharacter : Helper::customRound($countFinalAvgCharacter) }}</td>
+				<td> {{ $countFinalAvgCharacter == 'unavailable' ? $countFinalAvgCharacter : $countFinalAvgCharacter }}</td>
+				
 				@if(count($getStudentCharacter) == count($finalNewData))
 					<td>{{Helper::customRound(($countFinalAvgAcademic*75/100+$countFinalAvgCharacter*25/100*2.5))}}</td>
 				@else
@@ -64,3 +64,4 @@
 		@endforeach
 	</tbody>
 </table>
+{{dd()}}
