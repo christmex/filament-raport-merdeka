@@ -80,6 +80,8 @@ class AdminPanelProvider extends PanelProvider
                 EnsureApplicationAlreadySetup::class
             ])
             ->brandLogo(asset('logo_basic_digital.svg'))
+            // ->brandLogo(asset('logo_filamic.png'))
+            ->brandLogoHeight('1rem')
             ->profile(EditProfile::class)
             // ->topNavigation()
             ->sidebarCollapsibleOnDesktop()
@@ -144,6 +146,7 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-academic-cap'),
             ])
             ->breadcrumbs(false)
+            ->font('Sansation')
             ;
     }
 }
