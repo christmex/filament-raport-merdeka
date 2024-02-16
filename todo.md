@@ -7,11 +7,11 @@
 
 - [x] Prevent all action before the admin set the school year and school term
 
-- [ ] Create a new custom student page for super admin, in that table loop data from StudentClassroom model insted of Student model
+- [x] Create a new custom student page for super admin, in that table loop data from StudentClassroom model insted of Student model
 
-- [ ] Di bagian Subject Users sediakan bulk untuk copy record ke school year tertentu dan school term tertentu, karna kita menghilangkan delete dan update action, maka untuk mempermudah user kita buat bulk action untuk clone, tapi user bisa pilih clonenya mau apa saja dan mau ganti yang diperlukan
+- [x] Di bagian Subject Users sediakan bulk untuk copy record ke school year tertentu dan school term tertentu, karna kita menghilangkan delete dan update action, maka untuk mempermudah user kita buat bulk action untuk clone, tapi user bisa pilih clonenya mau apa saja dan mau ganti yang diperlukan
 
-- [ ] Di bagian Homeroom Teacher sediakan bulk untuk copy record ke school year tertentu dan school term tertentu, karna kita menghilangkan delete dan update action, maka untuk mempermudah user kita buat bulk action untuk clone, tapi user bisa pilih clonenya mau apa saja dan mau ganti yang diperlukan
+- [x] Di bagian Homeroom Teacher sediakan bulk untuk copy record ke school year tertentu dan school term tertentu, karna kita menghilangkan delete dan update action, maka untuk mempermudah user kita buat bulk action untuk clone, tapi user bisa pilih clonenya mau apa saja dan mau ganti yang diperlukan
 
 - [ ] Ada fitur naik kelas, nah saat naik kelas, user sebagai homeroom teacher juga akan otomatis dibuatkan homeroom teacher untuk tahun ajaran yang dipilih, sehingga admin tidak perlu repot
 
@@ -21,7 +21,7 @@
 
 - [x] As a main teacher, i want be able to print student progrees report so that i can give it to the student
 
-- [ ] X01 - As a subject teacher, i want be able to create assessment for specific student in assessment menu so that i can give the grading to that student
+- [x] X01 - As a subject teacher, i want be able to create assessment for specific student in assessment menu so that i can give the grading to that student
 
 - [x] There is an error in ManageAssessments take a look at here $getHomeroomTeacherIds, i think it's just wrong logic, its done,already check  in 18 september 2023
 - [ ] refactor code, in ManageAssessments inside the action dont do select table inside loop, instead, in thatloop, extract the classroom_id,school_year_id and school_term_id in array, then do select database after the loop, dont place the select in loop
