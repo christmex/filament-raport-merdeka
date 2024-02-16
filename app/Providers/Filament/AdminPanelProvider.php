@@ -87,8 +87,8 @@ class AdminPanelProvider extends PanelProvider
             ->profile(EditProfile::class)
             // ->topNavigation()
             ->sidebarCollapsibleOnDesktop()
-            // ->spa()
-            ->unsavedChangesAlerts()
+            ->spa()
+            // ->unsavedChangesAlerts()
             ->plugins([
                 FilamentJobsMonitorPlugin::make()
                 ->label('Job')
