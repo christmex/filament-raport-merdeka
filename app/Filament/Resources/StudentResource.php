@@ -405,23 +405,26 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('previous_education')->maxLength(255),
                         Forms\Components\TextInput::make('joined_at_class')->maxLength(255),
                         Forms\Components\DatePicker::make('joined_at'),
-                    ]),
+                    ])
+                    ->columns(2),
                 Tabs\Tab::make('Parent Details')
                     ->schema([
                         Forms\Components\TextInput::make('father_name')->maxLength(255),
                         Forms\Components\TextInput::make('mother_name')->maxLength(255),
-                        Forms\Components\Textarea::make('parent_address'),
-                        Forms\Components\TextInput::make('parent_phone')->tel(),
                         Forms\Components\TextInput::make('father_job')->maxLength(255),
                         Forms\Components\TextInput::make('mother_job')->maxLength(255),
-                    ]),
+                        Forms\Components\TextInput::make('parent_phone')->tel(),
+                        Forms\Components\Textarea::make('parent_address'),
+                    ])
+                    ->columns(2),
                 Tabs\Tab::make('Guardian Details')
                     ->schema([
                         Forms\Components\TextInput::make('guardian_name')->maxLength(255),
-                        Forms\Components\Textarea::make('guardian_address'),
-                        Forms\Components\TextInput::make('guardian_phone')->tel(),
                         Forms\Components\TextInput::make('guardian_job')->maxLength(255),
-                    ]),
+                        Forms\Components\TextInput::make('guardian_phone')->tel(),
+                        Forms\Components\Textarea::make('guardian_address'),
+                    ])
+                    ->columns(2),
             ])->columnSpanFull(),
 
         ];

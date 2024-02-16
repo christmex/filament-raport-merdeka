@@ -23,14 +23,14 @@ class AbsenceRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('school_year_id')
-                    ->options(SchoolYear::all()->pluck('school_year_name','id'))
+                    ->options(SchoolYear::where('id',SchoolYear::activeId())->get()->pluck('school_year_name','id'))
                     ->searchable(['school_year_name'])
                     ->preload()
                     ->live()
                     ->default(fn($state) => $state ?? SchoolYear::activeId())
                     ->required(),
                 Forms\Components\Select::make('school_term_id')
-                    ->options(SchoolTerm::all()->pluck('school_term_name','id'))
+                    ->options(SchoolTerm::where('id',SchoolTerm::activeId())->get()->pluck('school_term_name','id'))
                     ->searchable(['school_term_name'])
                     ->preload()
                     ->live()
