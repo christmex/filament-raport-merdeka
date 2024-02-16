@@ -76,7 +76,9 @@ class Student extends Model
     }
     public function activeStudentClassrooms(): HasMany
     {
-        return $this->studentClassrooms()->latest();
+        // return $this->studentClassrooms()->latest();
+        return $this->studentClassrooms()->where('school_year_id', SchoolYear::active())
+        ->where('school_term_id', SchoolTerm::active())->latest();
     }   
 
 

@@ -47,6 +47,7 @@ class ListStudents extends ListRecords
                             ->helperText(new HtmlString('Before you import, please export the excel first'))
                             ->columnSpanFull(),
                     ])
+                    ->hidden(true)
                     ->action(function(array $data){
                         DB::beginTransaction();
                         try {
@@ -72,6 +73,7 @@ class ListStudents extends ListRecords
                             ->helperText(new HtmlString('Please download the excel file to use our format before you upload the file, or ask your admin level'))
                             ->columnSpanFull(),
                     ])
+                    ->hidden(true)
                     ->action(function(array $data){
                             Notification::make()
                                 ->warning()
