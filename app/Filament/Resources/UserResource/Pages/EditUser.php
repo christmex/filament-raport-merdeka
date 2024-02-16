@@ -6,6 +6,7 @@ use Filament\Actions;
 use Illuminate\Support\Str;
 use App\Filament\Resources\UserResource;
 use Filament\Resources\Pages\EditRecord;
+use STS\FilamentImpersonate\Pages\Actions\Impersonate;
 
 class EditUser extends EditRecord
 {
@@ -15,6 +16,7 @@ class EditUser extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
+            Impersonate::make()
         ];
     }
 
