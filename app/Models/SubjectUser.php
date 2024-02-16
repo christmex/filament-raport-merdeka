@@ -34,7 +34,7 @@ class SubjectUser extends Model
     {
         // Check if the user it's not super admin with this permission
         if(!auth()->user()->can('view_any_subject::user')){
-            $query->where('user_id',auth()->id());
+            $query->where('user_id',auth()->id())->where('school_year_id', SchoolYear::active())->where('school_term_id', SchoolTerm::active());
         }
     }
 

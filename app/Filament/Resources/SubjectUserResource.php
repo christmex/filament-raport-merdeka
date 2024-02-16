@@ -12,7 +12,10 @@ use App\Models\SchoolYear;
 use Filament\Tables\Table;
 use App\Models\SubjectUser;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Unique;
+use Filament\Notifications\Notification;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Tables\Columns\GradingTextInputColumn;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -157,7 +160,21 @@ class SubjectUserResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('school_year_id')
+                    ->searchable()
+                    ->preload()
+                    ->optionsLimit(7)
+                    ->relationship('schoolYear', 'school_year_name'),
+                SelectFilter::make('school_term_id')
+                    ->preload()
+                    ->searchable()
+                    ->optionsLimit(7)
+                    ->relationship('schoolTerm', 'school_term_name'),
+                SelectFilter::make('classroom_id')
+                    ->preload()
+                    ->searchable()
+                    ->optionsLimit(7)
+                    ->relationship('classroom', 'classroom_name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -165,7 +182,57 @@ class SubjectUserResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
-                    ExportBulkAction::make()
+                    ExportBulkAction::make(),
+                    Tables\Actions\BulkAction::make('syncSchoolSetting')
+                        ->icon('heroicon-s-cog')
+                        ->form([
+                            \Filament\Forms\Components\Select::make('school_year_id')
+                                ->relationship('schoolYear', 'school_year_name')
+                                ->searchable(['school_year_name'])
+                                ->preload()
+                                ->createOptionForm(SchoolYearResource::getForm())
+                                ->editOptionForm(SchoolYearResource::getForm())
+                                ->default(fn($state) => $state ?? SchoolYear::activeId())
+                                ->required(),
+                            \Filament\Forms\Components\Select::make('school_term_id')
+                                ->relationship('schoolTerm', 'school_term_name')
+                                ->searchable(['school_term_name'])
+                                ->preload()
+                                ->createOptionForm(SchoolTermResource::getForm())
+                                ->editOptionForm(SchoolTermResource::getForm())
+                                ->default(fn($state) => $state ?? SchoolTerm::activeId())
+                                ->required(),
+                        ])
+                        ->action(function(array $data,$livewire){
+                            DB::beginTransaction();
+                            try {
+                                $livewire->getSelectedTableRecords()->each(function ($item, $key) use($data) {
+                                    SubjectUser::firstOrCreate(
+                                        [
+                                            'school_year_id' => $data['school_year_id'],
+                                            'school_term_id' => $data['school_term_id'],
+                                            'classroom_id' => $item['classroom_id'],
+                                            'user_id' => $item['user_id'],
+                                            'subject_id' => $item['subject_id'],
+                                        ],
+                                        ['grade_minimum' => $item['grade_minimum']]
+                                    );
+                                });
+                                DB::commit();
+                                Notification::make()
+                                    ->success()
+                                    ->title('Successfully sync to the new school year and school term')
+                                    ->send();
+                            } catch (\Throwable $th) {
+                                DB::rollback();
+                                Notification::make()
+                                    ->danger()
+                                    ->title($th->getMessage())
+                                    ->send();
+                            }
+
+                        })
+                        ->deselectRecordsAfterCompletion()
                 ]),
             ])
             ->emptyStateActions([

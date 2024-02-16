@@ -24,7 +24,7 @@ class ListStudentClassrooms extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            // Actions\CreateAction::make(),
             Actions\Action::make('studentSync')->color('success')
                 ->form([
                     \Filament\Forms\Components\Select::make('school_year_id')

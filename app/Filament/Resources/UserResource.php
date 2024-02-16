@@ -6,15 +6,20 @@ use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Get;
+use Filament\Infolists;
 use Filament\Forms\Form;
 use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
 use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Support\HtmlString;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Unique;
+use Filament\Infolists\Components\Split;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
@@ -83,6 +88,7 @@ class UserResource extends Resource implements HasShieldPermissions
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 // Tables\Actions\Action::make('addHomeroom')
                 //     ->form([
@@ -122,6 +128,7 @@ class UserResource extends Resource implements HasShieldPermissions
         return [
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
+            'view' => Pages\ViewUser::route('/{record}'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
@@ -157,5 +164,30 @@ class UserResource extends Resource implements HasShieldPermissions
                 ->searchable(),
            
         ];
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Split::make([
+                    Section::make([
+                        TextEntry::make('name'),
+                        TextEntry::make('email')
+                            ->columnSpanFull(),
+                        // TextEntry::make('title')
+                        //     ->weight(FontWeight::Bold),
+                        // TextEntry::make('content')
+                        //     ->markdown()
+                        //     ->prose(),
+                    ]),
+                    Section::make([
+                        TextEntry::make('created_at')
+                            ->dateTime(),
+                    ])->grow(false),
+                ])->columnSpanFull()
+
+                
+            ]);
     }
 }

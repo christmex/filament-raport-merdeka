@@ -31,7 +31,7 @@ class CharacterReport extends Model
 
                     $studentIds = Student::whereIn('id',$studentIds)->get()->pluck('id')->toArray();
                 }
-                $builder->whereIn('student_id',$studentIds);
+                $builder->whereIn('student_id',$studentIds)->where('school_year_id', SchoolYear::active())->where('school_term_id', SchoolTerm::active());
             }
         });
     }

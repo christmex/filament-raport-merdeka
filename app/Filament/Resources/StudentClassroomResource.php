@@ -159,6 +159,53 @@ class StudentClassroomResource extends Resource
                         }
                     })
                     ->deselectRecordsAfterCompletion(),
+                    Tables\Actions\BulkAction::make('syncSchoolSetting')
+                        ->icon('heroicon-s-cog')
+                        ->form([
+                            \Filament\Forms\Components\Select::make('school_year_id')
+                                ->relationship('schoolYear', 'school_year_name')
+                                ->searchable(['school_year_name'])
+                                ->preload()
+                                ->createOptionForm(SchoolYearResource::getForm())
+                                ->editOptionForm(SchoolYearResource::getForm())
+                                ->default(fn($state) => $state ?? SchoolYear::activeId())
+                                ->required(),
+                            \Filament\Forms\Components\Select::make('school_term_id')
+                                ->relationship('schoolTerm', 'school_term_name')
+                                ->searchable(['school_term_name'])
+                                ->preload()
+                                ->createOptionForm(SchoolTermResource::getForm())
+                                ->editOptionForm(SchoolTermResource::getForm())
+                                ->default(fn($state) => $state ?? SchoolTerm::activeId())
+                                ->required(),
+                        ])
+                        ->action(function(array $data,$livewire){
+                            DB::beginTransaction();
+                            try {
+                                $livewire->getSelectedTableRecords()->each(function ($item, $key) use($data) {
+                                    StudentClassroom::firstOrCreate(
+                                        [
+                                            'school_year_id' => $data['school_year_id'],
+                                            'school_term_id' => $data['school_term_id'],
+                                            'classroom_id' => $item['classroom_id'],
+                                            'student_id' => $item['student_id'],
+                                        ],
+                                    );
+                                });
+                                DB::commit();
+                                Notification::make()
+                                    ->success()
+                                    ->title('Successfully sync to the new school year and school term')
+                                    ->send();
+                            } catch (\Throwable $th) {
+                                DB::rollback();
+                                Notification::make()
+                                    ->danger()
+                                    ->title($th->getMessage())
+                                    ->send();
+                            }
+                        })
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ]);
     }

@@ -97,7 +97,10 @@ class PrintController extends Controller
         
         // Count avg based on the $data
         // $newData = Helper::calculateAverage($data);
-        $newData = Helper::reportSheetCalculateAverage([$student->student_name => $data])[$student->student_name];
+        $newData = Helper::reportSheetCalculateAverage([$student->student_name => $data]);
+        if(count($newData)){
+            $newData = $newData[$student->student_name];
+        }
         
         $avgPerTopic = Helper::calculateAvgTopic($data);
 
