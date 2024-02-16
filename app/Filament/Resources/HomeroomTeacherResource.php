@@ -30,7 +30,9 @@ class HomeroomTeacherResource extends Resource
 
     protected static ?string $navigationLabel = 'Main Teacher';
 
-    protected static ?string $navigationGroup = 'Configuration';
+    protected static ?string $navigationGroup = 'Main Configuration';
+
+    protected static ?int $navigationSort = 3;
 
     
     public static function form(Form $form): Form

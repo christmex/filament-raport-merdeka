@@ -17,7 +17,7 @@ class ClassroomResource extends Resource
 {
     protected static ?string $model = Classroom::class;
 
-    protected static ?string $navigationIcon = 'heroicon-m-chevron-double-down';
+    protected static ?string $navigationIcon = 'heroicon-m-archive-box';
 
     protected static ?string $navigationGroup = 'Master';
 

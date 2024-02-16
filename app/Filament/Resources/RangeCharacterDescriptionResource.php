@@ -17,7 +17,7 @@ class RangeCharacterDescriptionResource extends Resource
 {
     protected static ?string $model = RangeCharacterDescription::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-m-archive-box';
 
     protected static ?string $navigationGroup = 'Master';
     

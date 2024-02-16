@@ -58,7 +58,9 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
+            ->sidebarFullyCollapsibleOnDesktop()
             ->navigationGroups([
+                'Main Configuration',
                 'Configuration',
                 'Master',
             ])
@@ -76,12 +78,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 EnsureApplicationAlreadySetup::class
-            ])
-            ->userMenuItems([
-                // MenuItem::make()
-                //     ->label('Iam a teacher')
-                //     // ->url(fn (): string => Settings::getUrl())
-                //     ->icon('heroicon-o-cog-6-tooth'),
             ])
             ->brandLogo(asset('logo_basic_digital.svg'))
             ->profile(EditProfile::class)
@@ -147,6 +143,7 @@ class AdminPanelProvider extends PanelProvider
                     ->url('https://pr-sma2.sekolahbasic.sch.id/')
                     ->icon('heroicon-o-academic-cap'),
             ])
+            ->breadcrumbs(false)
             ;
     }
 }

@@ -29,7 +29,9 @@ class SubjectUserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-book-open';
 
-    protected static ?string $navigationGroup = 'Configuration';
+    protected static ?string $navigationGroup = 'Main Configuration';
+
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $navigationLabel = 'Teacher\'s Subject';
 

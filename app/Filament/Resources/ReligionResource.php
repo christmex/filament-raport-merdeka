@@ -17,7 +17,7 @@ class ReligionResource extends Resource
 {
     protected static ?string $model = Religion::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-m-archive-box';
 
     protected static ?string $navigationGroup = 'Master';
 

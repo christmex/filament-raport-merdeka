@@ -17,7 +17,7 @@ class TopicSettingResource extends Resource
 {
     protected static ?string $model = TopicSetting::class;
 
-    protected static ?string $navigationIcon = 'heroicon-s-cog';
+    protected static ?string $navigationIcon = 'heroicon-m-archive-box';
 
     protected static ?string $navigationGroup = 'Master';
 
