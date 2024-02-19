@@ -167,4 +167,13 @@ class ManageSubjectDescriptions extends ManageRecords
             }),
         ];
     }
+
+    public function getSubheading(): ?string
+    {
+        $classroom = null;
+        if(auth()->user()){
+            $classroom = 'Current School Year: '.Helper::getSchoolYearName().' - '.Helper::getSchoolTermName();
+        }
+        return $classroom;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\AssessmentResource\Pages;
 
 use Filament\Actions;
+use App\Helpers\Helper;
 use App\Helpers\Report;
 use App\Models\Student;
 use Filament\Forms\Get;
@@ -367,5 +368,14 @@ class ManageAssessments extends ManageRecords
             ->button(),
 
         ];
+    }
+
+    public function getSubheading(): ?string
+    {
+        $classroom = null;
+        if(auth()->user()){
+            $classroom = 'Current School Year: '.Helper::getSchoolYearName().' - '.Helper::getSchoolTermName();
+        }
+        return $classroom;
     }
 }

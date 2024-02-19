@@ -4,6 +4,7 @@ namespace App\Filament\Resources\CharacterReportResource\Pages;
 
 use App\Models\Habit;
 use Filament\Actions;
+use App\Helpers\Helper;
 use App\Models\Student;
 use Filament\Forms\Get;
 use App\Models\CharacterReport;
@@ -122,5 +123,14 @@ class ManageCharacterReports extends ManageRecords
                 }
             })
         ];
+    }
+
+    public function getSubheading(): ?string
+    {
+        $classroom = null;
+        if(auth()->user()){
+            $classroom = 'Current School Year: '.Helper::getSchoolYearName().' - '.Helper::getSchoolTermName();
+        }
+        return $classroom;
     }
 }

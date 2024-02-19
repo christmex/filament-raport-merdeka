@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\StudentSemesterEvaluationResource\Pages;
 
-use App\Models\StudentSemesterEvaluation;
 use Filament\Actions;
+use App\Helpers\Helper;
 use App\Models\Student;
 use Filament\Forms\Get;
 use App\Models\SubjectUser;
@@ -11,6 +11,7 @@ use App\Models\StudentClassroom;
 use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
+use App\Models\StudentSemesterEvaluation;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Resources\Pages\ManageRecords;
 use App\Filament\Resources\StudentSemesterEvaluationResource;
@@ -151,5 +152,14 @@ class ManageStudentSemesterEvaluations extends ManageRecords
             //     }
             // }),
         ];
+    }
+
+    public function getSubheading(): ?string
+    {
+        $classroom = null;
+        if(auth()->user()){
+            $classroom = 'Current School Year: '.Helper::getSchoolYearName().' - '.Helper::getSchoolTermName();
+        }
+        return $classroom;
     }
 }

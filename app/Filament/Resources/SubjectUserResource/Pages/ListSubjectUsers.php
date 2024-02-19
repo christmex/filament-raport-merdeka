@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\SubjectUserResource\Pages;
 
-use App\Filament\Resources\SubjectUserResource;
 use Filament\Actions;
+use App\Helpers\Helper;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\SubjectUserResource;
 
 class ListSubjectUsers extends ListRecords
 {
@@ -15,5 +16,14 @@ class ListSubjectUsers extends ListRecords
         return [
             Actions\CreateAction::make(),
         ];
+    }
+
+    public function getSubheading(): ?string
+    {
+        $classroom = null;
+        if(auth()->user()){
+            $classroom = 'Current School Year: '.Helper::getSchoolYearName().' - '.Helper::getSchoolTermName();
+        }
+        return $classroom;
     }
 }

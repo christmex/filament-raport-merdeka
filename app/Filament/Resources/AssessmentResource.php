@@ -24,6 +24,8 @@ class AssessmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-plus';
 
+    protected ?string $subheading = 'Custom Page Subheading';
+
     public static function form(Form $form): Form
     {
         return $form
