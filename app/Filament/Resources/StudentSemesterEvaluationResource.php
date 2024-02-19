@@ -22,6 +22,8 @@ class StudentSemesterEvaluationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-document-duplicate';
 
+    protected static ?string $navigationLabel = 'Semester Evaluation';
+
     public static function form(Form $form): Form
     {
         return $form
