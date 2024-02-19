@@ -23,7 +23,8 @@ class ManageStudentSemesterEvaluations extends ManageRecords
     {
         return [
             // Actions\CreateAction::make(),
-            Actions\Action::make('Create PAS')
+            Actions\Action::make('CreatePAS')
+            ->label('Create PAS')
             ->button()
             ->form([
                 Select::make('subject_user_id')
