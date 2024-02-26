@@ -47,7 +47,7 @@ class GenerateReportSheet {
                             ->toArray();
 
             if(!count($studentIds)){
-                throw new \Exception('There is no student in that class!');
+                throw new \Exception('There is no assessment in that class yet!');
             }
             $assessments = Assessment::query()
                 ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough','subjectUser')
