@@ -8,14 +8,15 @@ use Filament\Forms\Get;
 use App\Models\Classroom;
 use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
+use App\Models\HomeroomTeacher;
+use App\Models\StudentClassroom;
 use Illuminate\Support\Facades\DB;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\ClassroomResource;
 use \App\Filament\Resources\SchoolTermResource;
 use \App\Filament\Resources\SchoolYearResource;
 use App\Filament\Resources\StudentClassroomResource;
-use App\Models\HomeroomTeacher;
-use App\Models\StudentClassroom;
 
 class ListStudentClassrooms extends ListRecords
 {
@@ -25,6 +26,105 @@ class ListStudentClassrooms extends ListRecords
     {
         return [
             // Actions\CreateAction::make(),
+            Actions\Action::make('classup')->color('primary')
+                ->visible(true)
+                ->form([
+                    \Filament\Forms\Components\Group::make([
+                        \Filament\Forms\Components\Select::make('previous_school_year_id')
+                            ->relationship('schoolYear', 'school_year_name')
+                            ->label('Previous school year')
+                            ->searchable(['school_year_name'])
+                            ->preload()
+                            ->live()
+                            ->createOptionForm(SchoolYearResource::getForm())
+                            ->editOptionForm(SchoolYearResource::getForm())
+                            ->default(fn($state) => $state ?? SchoolYear::activeId())
+                            ->required(),
+                        \Filament\Forms\Components\Select::make('previous_school_term_id')
+                            ->relationship('schoolTerm', 'school_term_name')
+                            ->label('Previous school Term')
+                            ->searchable(['school_term_name'])
+                            ->preload()
+                            ->live()
+                            ->createOptionForm(SchoolTermResource::getForm())
+                            ->editOptionForm(SchoolTermResource::getForm())
+                            ->default(fn($state) => $state ?? SchoolTerm::activeId())
+                            ->required(),
+                        \Filament\Forms\Components\Select::make('previous_classroom_id')
+                            ->relationship('classroom', 'classroom_name')
+                            ->label('Previous Classroom')
+                            ->searchable(['classroom_name'])
+                            ->preload()
+                            ->live()
+                            ->createOptionForm(ClassroomResource::getForm())
+                            ->editOptionForm(ClassroomResource::getForm())
+                            ->default(fn($state) => $state)
+                            ->required(),
+                        \Filament\Forms\Components\CheckboxList::make('student_id')
+                            ->label('Students')
+                            ->options(function(Get $get){
+                                $studentIds = StudentClassroom::query()
+                                ->where('classroom_id',$get('previous_classroom_id'))
+                                ->where('school_year_id',$get('previous_school_year_id'))
+                                ->where('school_term_id',$get('previous_school_term_id'))
+                                ->get()
+                                ->pluck('student_id')
+                                ->toArray();
+        
+                                return Student::whereIn('id',$studentIds)->get()->pluck('student_name','id');
+                            })
+                            // ->default(fn (CheckboxList $component): array => dd($component))
+                            ->searchable()
+                            ->bulkToggleable()
+                            ->columns(3)
+                            ->columnSpanFull(),
+                        \Filament\Forms\Components\Select::make('school_year_id')
+                            ->relationship('schoolYear', 'school_year_name')
+                            ->searchable(['school_year_name'])
+                            ->preload()
+                            ->live()
+                            ->required(),
+                        \Filament\Forms\Components\Select::make('school_term_id')
+                            ->relationship('schoolTerm', 'school_term_name')
+                            ->searchable(['school_term_name'])
+                            ->preload()
+                            ->live()
+                            ->required(),
+                        \Filament\Forms\Components\Select::make('classroom_id')
+                            ->relationship('classroom', 'classroom_name')
+                            ->searchable(['classroom_name'])
+                            ->preload()
+                            ->live()
+                            ->required(),
+                    ])
+                    ->columns(3)
+                ])
+                ->action(function(array $data){
+                    DB::beginTransaction();
+                    try {
+                        foreach ($data['student_id'] as $value) {
+                            StudentClassroom::firstOrCreate(
+                                [
+                                    'school_year_id' => $data['school_year_id'],
+                                    'school_term_id' => $data['school_term_id'],
+                                    'classroom_id' => $data['classroom_id'],
+                                    'student_id' => $value,
+                                ],
+                            );
+                        }
+                        DB::commit();
+                        Notification::make()
+                            ->success()
+                            ->title('Successfully adding student to the new class')
+                            ->send();
+                    } catch (\Throwable $th) {
+                        DB::rollback();
+                        Notification::make()
+                            ->danger()
+                            ->title($th->getMessage())
+                            ->send();
+                    }
+                }),
             Actions\Action::make('studentSync')->color('success')
                 ->form([
                     \Filament\Forms\Components\Select::make('school_year_id')
