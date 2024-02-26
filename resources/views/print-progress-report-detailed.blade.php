@@ -376,7 +376,11 @@
 		</div>
 		<div id="sign_main_teacher" style="float:right;width:auto;">
 			<div class="sign_top" style="margin-bottom: @if(!empty($getSchoolSetting->meta['margin_bottom_sign_homeroom_teacher'])) {{$getSchoolSetting->meta['margin_bottom_sign_homeroom_teacher']}} @else 60px @endif">
-				<p>Batam, {!!$getSchoolSetting->school_progress_report_date!!}</p>
+				@if(!empty($data['print_progress_report_date']))
+					<p>Batam, {!!$data['print_progress_report_date']!!}</p>
+				@else
+					<p>Batam, {!!$getSchoolSetting->school_progress_report_date!!}</p>
+				@endif
 				<p>Wali Kelas {{Helper::numberToRomawi($student->active_classroom_level)}} {{$student->active_classroom_name}}</p>
 			</div>
 

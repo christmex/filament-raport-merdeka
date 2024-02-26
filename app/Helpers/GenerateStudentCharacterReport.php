@@ -18,6 +18,7 @@ public static function make(Student $student, $form){
         if(auth()->guest()){
             abort(404,'Login First');
         }
+        $print_progress_report_date = $form['print_progress_report_date'];
         $data = [];
         $characterReports = CharacterReport::query()
             ->with('habit', 'student')
@@ -59,7 +60,7 @@ public static function make(Student $student, $form){
         // ->setPaper(array(0,0,935.433,609.449), 'potrait')
         $avgAcademic = self::generateAcademyAvg([$student->id], $form);
         // dd(Helper::customRound($avgAcademic,10));
-        $pdf = Pdf::loadView('print-report-character', compact('data','avgAcademic','student'))->setPaper(array(0,0,935.433,609.449), 'potrait');//convert mm to point
+        $pdf = Pdf::loadView('print-report-character', compact('print_progress_report_date','data','avgAcademic','student'))->setPaper(array(0,0,935.433,609.449), 'potrait');//convert mm to point
         $filaneme = 'report-character/print-report-character-'.$student->student_name.'.pdf';
         $pdf->save($filaneme,'public');
         

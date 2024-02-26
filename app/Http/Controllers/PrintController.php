@@ -44,6 +44,7 @@ class PrintController extends Controller
             abort(404,'Login First');
         }
 
+        $print_progress_report_date = $request->print_progress_report_date;
         $data = [];
         $assessments = Assessment::query()
         ->with('assessmentMethodSetting', 'topicSetting', 'student', 'subjectUserThrough','subjectUser','subjectUser.subject.subjectGroup')
@@ -199,7 +200,7 @@ class PrintController extends Controller
         // dd($basicCurriculum, $schoolCurriculum);
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,609.4488,935.433), 'portrait');
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,612.283,935.433), 'portrait');//convert mm to point 216 mm
-        $pdf = Pdf::loadView('print-raport', compact('getSubjectGroup','student','basicCurriculum','schoolCurriculum','avgDiv','PASDiv','subjectDescription'))->setPaper(array(0,0,609.449,935.433), 'portrait');//convert mm to point
+        $pdf = Pdf::loadView('print-raport', compact('getSubjectGroup','student','basicCurriculum','schoolCurriculum','avgDiv','PASDiv','subjectDescription','print_progress_report_date'))->setPaper(array(0,0,609.449,935.433), 'portrait');//convert mm to point
         // $pdf = Pdf::loadView('print-raport', compact('student'))->setPaper(array(0,0,595.28,935.433), 'portrait');//convert mm to point
         return $pdf->stream('print-raport.pdf');
 

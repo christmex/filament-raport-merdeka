@@ -14,6 +14,7 @@ use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
 use Filament\Tables\Table;
 use Illuminate\Http\Request;
+use App\Models\SchoolSetting;
 use App\Models\Extracurricular;
 use App\Models\StudentClassroom;
 use Filament\Resources\Resource;
@@ -178,7 +179,12 @@ class StudentResource extends Resource
                                     ->default(SchoolTerm::activeId())
                                     ->options(fn()=>SchoolTerm::all()->pluck('school_term_name','id'))
                                     ->required(),
-                                Forms\Components\Checkbox::make('print_detail')->inline()
+                                Forms\Components\Checkbox::make('print_detail')->inline(),
+                                Forms\Components\TextInput::make('print_progress_report_date')
+                                    ->helperText('You can change the progress report date but dont remove the <sup></sup> tag')
+                                    ->default(SchoolSetting::first()->school_progress_report_date)
+                                    ->columnSpanFull()
+                                    ->required()
                             ])
                             ->columns(3)
                         ])
@@ -214,6 +220,11 @@ class StudentResource extends Resource
                                     ->required(),
                                 Forms\Components\Toggle::make('newPageAfterFirstTabel'),
                                 Forms\Components\Toggle::make('newPageAfterBasicCurriculum'),
+                                Forms\Components\TextInput::make('print_progress_report_date')
+                                    ->helperText('You can change the progress report date but dont remove the <sup></sup> tag')
+                                    ->default(SchoolSetting::first()->school_progress_report_date)
+                                    ->columnSpanFull()
+                                    ->required()
                             ])
                             ->columns(2)
                         ])
@@ -225,6 +236,7 @@ class StudentResource extends Resource
                                     'newPageAfterBasicCurriculum'=>$data['newPageAfterBasicCurriculum'],
                                     'school_year_id'=>$data['school_year_id'],
                                     'school_term_id'=>$data['school_term_id'],
+                                    'print_progress_report_date'=>$data['print_progress_report_date'],
                                 ]);
                         })
                         // ->url(fn (Student $record): string => route('students.print-raport', $record))
@@ -244,6 +256,11 @@ class StudentResource extends Resource
                                 ->default(SchoolTerm::activeId())
                                 ->options(fn()=>SchoolTerm::all()->pluck('school_term_name','id'))
                                 ->required(),
+                            Forms\Components\TextInput::make('print_progress_report_date')
+                                ->required()
+                                ->helperText('You can change the progress report date but dont remove the <sup></sup> tag')
+                                ->default(SchoolSetting::first()->school_progress_report_date)
+                                ->columnSpanFull()
                         ])
                         ->action(function(Student $record, array $data){return GenerateStudentCharacterReport::make($record, $data);})
                         

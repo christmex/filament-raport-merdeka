@@ -90,7 +90,10 @@ class GenerateProgressReport {
 
         $view = 'print-progress-report';
         if ($isDetailed) $view ='print-progress-report-detailed';
-        $pdf = Pdf::loadView($view, compact('thead','student','dataPublic','dataBasicCur','topicSettings','assessmentMethodSetting'))->setPaper(array(0,0,609.449,935.433), 'portrait');//convert mm to point
+        $pdf = Pdf::loadView(
+                $view, 
+                compact('thead','student','dataPublic','dataBasicCur','topicSettings','assessmentMethodSetting', 'data')
+            )->setPaper(array(0,0,609.449,935.433), 'portrait');//convert mm to point
         $filaneme = 'progress-report/print-progress-report_'.$student->student_name.'.pdf';
         // return $pdf->stream($filaneme,'public');
         $pdf->save($filaneme,'public');

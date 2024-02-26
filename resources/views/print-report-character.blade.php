@@ -353,7 +353,13 @@
 			@endif
 		</div>
 		<div style="width:45%;float: left">
-			<span style="margin-top: 5px;display: block;font-size: 12px">Batam, {!!$getSchoolSetting->school_progress_report_date!!}</span>
+			<span style="margin-top: 5px;display: block;font-size: 12px">
+				@if(!empty($print_progress_report_date))
+					Batam, {!!$print_progress_report_date!!}
+				@else
+					Batam, {!!$getSchoolSetting->school_progress_report_date!!}
+				@endif
+			</span>
 			<table style="margin-top: 5px">
 				<tbody>
 					<tr>
