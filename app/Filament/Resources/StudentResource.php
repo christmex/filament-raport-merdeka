@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Religion;
 use Filament\Forms;
 use Filament\Tables;
 use App\Helpers\Helper;
 use App\Models\Student;
 use Filament\Forms\Get;
+use App\Models\Religion;
 use Filament\Forms\Form;
 use App\Models\Classroom;
 use App\Models\SchoolTerm;
@@ -20,6 +20,7 @@ use Filament\Resources\Resource;
 use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Tabs;
 use App\Models\StudentExtracurricular;
+use App\Helpers\GenerateProgressReport;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Notifications\Notification;
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Enums\ActionsPosition;
 use Illuminate\Database\Eloquent\Collection;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use App\Helpers\GenerateStudentCharacterReport;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
@@ -163,25 +165,67 @@ class StudentResource extends Resource
 
                     //     }),
                     Tables\Actions\Action::make('print_progress_report')
-                        ->url(fn (Student $record): string => route('students.print', $record))
-                        ->openUrlInNewTab()
+                        // ->url(fn (Student $record): string => route('students.print', $record))
+                        // ->url(fn (Student $record, array $data): string => route('students.print_progress_report', $record))
+                        // ->openUrlInNewTab()
+                        ->form([
+                            Forms\Components\Group::make([
+                                Forms\Components\Select::make('school_year_id')
+                                    ->default(SchoolYear::activeId())
+                                    ->options(fn()=>SchoolYear::all()->pluck('school_year_name','id'))
+                                    ->required(),
+                                Forms\Components\Select::make('school_term_id')
+                                    ->default(SchoolTerm::activeId())
+                                    ->options(fn()=>SchoolTerm::all()->pluck('school_term_name','id'))
+                                    ->required(),
+                                Forms\Components\Checkbox::make('print_detail')->inline()
+                            ])
+                            ->columns(3)
+                        ])
+                        ->action(function(array $data, Student $record){
+                            // return redirect()->route('students.print_progress_report', [$record->id, 'fase' => $data['fase'],'newPageAfterFirstTabel'=>$data['newPageAfterFirstTabel']]);
+
+                            GenerateProgressReport::make($record, $data, $data['print_detail']);
+                            // return redirect()->route('students.print_progress_report', [
+                            //     $record->id,
+                            //     'school_year_id'=>$data['school_year_id'],
+                            //     'school_term_id'=>$data['school_term_id'],
+                            // ]);
+                        })
                         ->icon('heroicon-o-printer'),
                     
-                    Tables\Actions\Action::make('detail_progress_report')
-                        ->url(fn (Student $record): string => route('students.print', ['student' => $record,'detailed' => true]))
-                        ->openUrlInNewTab()
-                        ->icon('heroicon-o-eye'),
+                    // Tables\Actions\Action::make('detail_progress_report')
+                    //     ->url(fn (Student $record): string => route('students.print', ['student' => $record,'detailed' => true]))
+                    //     ->openUrlInNewTab()
+                    //     ->icon('heroicon-o-printer'),
                     Tables\Actions\Action::make('print_raport')
                         ->form([
-                            // Forms\Components\TextInput::make('fase')
-                            //     ->default('A')
-                            //     ->required(),
-                            Forms\Components\Toggle::make('newPageAfterFirstTabel'),
-                            Forms\Components\Toggle::make('newPageAfterBasicCurriculum'),
+                            Forms\Components\Group::make([
+                                // Forms\Components\TextInput::make('fase')
+                                //     ->default('A')
+                                //     ->required(),
+                                Forms\Components\Select::make('school_year_id')
+                                    ->default(SchoolYear::activeId())
+                                    ->options(fn()=>SchoolYear::all()->pluck('school_year_name','id'))
+                                    ->required(),
+                                Forms\Components\Select::make('school_term_id')
+                                    ->default(SchoolTerm::activeId())
+                                    ->options(fn()=>SchoolTerm::all()->pluck('school_term_name','id'))
+                                    ->required(),
+                                Forms\Components\Toggle::make('newPageAfterFirstTabel'),
+                                Forms\Components\Toggle::make('newPageAfterBasicCurriculum'),
+                            ])
+                            ->columns(2)
                         ])
                         ->action(function(array $data, Student $record){
                             // return redirect()->route('students.print-raport', [$record->id, 'fase' => $data['fase'],'newPageAfterFirstTabel'=>$data['newPageAfterFirstTabel']]);
-                            return redirect()->route('students.print-raport', [$record->id,'newPageAfterFirstTabel'=>$data['newPageAfterFirstTabel'],'newPageAfterBasicCurriculum'=>$data['newPageAfterBasicCurriculum']]);
+                            return redirect()->route('students.print-raport', [
+                                    $record->id,
+                                    'newPageAfterFirstTabel'=>$data['newPageAfterFirstTabel'],
+                                    'newPageAfterBasicCurriculum'=>$data['newPageAfterBasicCurriculum'],
+                                    'school_year_id'=>$data['school_year_id'],
+                                    'school_term_id'=>$data['school_term_id'],
+                                ]);
                         })
                         // ->url(fn (Student $record): string => route('students.print-raport', $record))
                         // ->openUrlInNewTab()
@@ -191,44 +235,56 @@ class StudentResource extends Resource
                     //     ->openUrlInNewTab()
                     //     ->icon('heroicon-o-printer'),
                     Tables\Actions\Action::make('print_character_report')
-                        ->url(fn (Student $record): string => route('students.print-report-character', $record))
-                        ->openUrlInNewTab()
-                        ->icon('heroicon-o-printer'),
-                    ExportAction::make()->exports([
-                        ExcelExport::make()
-                            ->withColumns([
-                                Column::make('id'),
-                                Column::make('student_name'),
-                                Column::make('student_nis'),
-                                Column::make('student_nisn'),
-                                Column::make('born_place'),
-                                Column::make('born_date'),
-                                Column::make('sex')->formatStateUsing(fn ($state) => Helper::getSex($state)),
-                                Column::make('religion_id')->formatStateUsing(fn ($state) => Religion::find($state)->name),
-                                Column::make('status_in_family'),
-                                Column::make('sibling_order_in_family'),
-                                Column::make('address'),
-                                Column::make('phone'),
-                                Column::make('previous_education'),
-                                Column::make('joined_at_class'),
-                                Column::make('joined_at'),
-                                Column::make('father_name'),
-                                Column::make('mother_name'),
-                                Column::make('parent_address'),
-                                Column::make('parent_phone'),
-                                Column::make('father_job'),
-                                Column::make('mother_job'),
-                                Column::make('guardian_name'),
-                                Column::make('guardian_phone'),
-                                Column::make('guardian_address'),
-                                Column::make('guardian_job'),
-                            ])
-                        ->modifyQueryUsing(fn ($query) => $query->ownStudent()->withoutGlobalScopes([SoftDeletingScope::class]))
+                        ->form([
+                            Forms\Components\Select::make('school_year_id')
+                                ->default(SchoolYear::activeId())
+                                ->options(fn()=>SchoolYear::all()->pluck('school_year_name','id'))
+                                ->required(),
+                            Forms\Components\Select::make('school_term_id')
+                                ->default(SchoolTerm::activeId())
+                                ->options(fn()=>SchoolTerm::all()->pluck('school_term_name','id'))
+                                ->required(),
+                        ])
+                        ->action(function(Student $record, array $data){return GenerateStudentCharacterReport::make($record, $data);})
                         
-                        // ->fromTable()
-                        ->withNamesAsHeadings()
-                        ,
-                    ]),
+                        // ->url(fn (Student $record): string => route('students.print-report-character', $record))
+                        // ->openUrlInNewTab()
+                        ->icon('heroicon-o-printer'),
+                    // ExportAction::make()->exports([
+                    //     ExcelExport::make()
+                    //         ->withColumns([
+                    //             Column::make('id'),
+                    //             Column::make('student_name'),
+                    //             Column::make('student_nis'),
+                    //             Column::make('student_nisn'),
+                    //             Column::make('born_place'),
+                    //             Column::make('born_date'),
+                    //             Column::make('sex')->formatStateUsing(fn ($state) => Helper::getSex($state)),
+                    //             Column::make('religion_id')->formatStateUsing(fn ($state) => Religion::find($state)->name),
+                    //             Column::make('status_in_family'),
+                    //             Column::make('sibling_order_in_family'),
+                    //             Column::make('address'),
+                    //             Column::make('phone'),
+                    //             Column::make('previous_education'),
+                    //             Column::make('joined_at_class'),
+                    //             Column::make('joined_at'),
+                    //             Column::make('father_name'),
+                    //             Column::make('mother_name'),
+                    //             Column::make('parent_address'),
+                    //             Column::make('parent_phone'),
+                    //             Column::make('father_job'),
+                    //             Column::make('mother_job'),
+                    //             Column::make('guardian_name'),
+                    //             Column::make('guardian_phone'),
+                    //             Column::make('guardian_address'),
+                    //             Column::make('guardian_job'),
+                    //         ])
+                    //     ->modifyQueryUsing(fn ($query) => $query->ownStudent()->withoutGlobalScopes([SoftDeletingScope::class]))
+                        
+                    //     // ->fromTable()
+                    //     ->withNamesAsHeadings()
+                    //     ,
+                    // ]),
                 ])
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([

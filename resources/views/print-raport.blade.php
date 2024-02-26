@@ -541,7 +541,7 @@
 				<tr>
 					<td>Semester</td>
 					<td>:</td>
-					<td>{{Helper::getSchoolTermName()}}</td>
+					<td>{{Helper::getSchoolTermName(request('school_term_id'))}}</td>
 				</tr>
 				@if(!empty($getSchoolSetting->meta['show_fase']))
 					@if($getSchoolSetting->meta['show_fase'])
@@ -564,7 +564,7 @@
 				<tr>
 					<td>Tahun Pelajaran</td>
 					<td>:</td>
-					<td>{{Helper::getSchoolYearName()}}</td>
+					<td>{{Helper::getSchoolYearName(request('school_year_id'))}}</td>
 				</tr>
 			</table>
 		</div>

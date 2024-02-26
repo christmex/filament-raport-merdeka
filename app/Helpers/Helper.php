@@ -433,14 +433,20 @@ class Helper {
         }
     }
 
-    public static function getSchoolYearName(): ?string
+    public static function getSchoolYearName(int|null $id = null): ?string
     {
-        return SchoolYear::where('school_year_status', true)->first()->school_year_name;
+        if($id == null){
+            return SchoolYear::where('school_year_status', true)->first()->school_year_name;
+        }
+        return SchoolYear::where('id', $id)->first()->school_year_name;
     }
 
-    public static function getSchoolTermName(): ?string
+    public static function getSchoolTermName(int|null $id = null): ?string
     {
-        return SchoolTerm::where('school_term_status', true)->first()->school_term_name;
+        if($id == null){
+            return SchoolTerm::where('school_term_status', true)->first()->school_term_name;
+        }
+        return SchoolTerm::where('id', $id)->first()->school_term_name;
     }
 
     public static function getSchoolSetting()
@@ -690,6 +696,17 @@ class Helper {
         // Iterasi melalui semua mata pelajaran (misalnya, 'Maths', 'Science', dll.)
     
         return $averages;
+    }
+
+    public static function countTopicAvg(array $topic){
+        $avg = 0;
+        foreach ($topic as $key => $value) {
+            $avg += $value['grading'];
+        }
+        if($avg>0){
+            return self::customRound($avg/count($topic));
+        }
+        return '-';
     }
 
 

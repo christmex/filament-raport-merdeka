@@ -4,9 +4,13 @@ namespace App\Filament\Resources\StudentResource\Pages;
 
 use Filament\Actions;
 use App\Helpers\Helper;
+use App\Helpers\Report;
 use App\Models\Student;
+use Filament\Forms\Get;
 use App\Models\Classroom;
 use App\Models\Assessment;
+use App\Models\SchoolTerm;
+use App\Models\SchoolYear;
 use Filament\Tables\Table;
 use App\Models\SchoolSetting;
 use App\Imports\StudentImport;
@@ -16,6 +20,7 @@ use App\Exports\ReportSheetExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
 use Illuminate\Contracts\View\View;
+use App\Helpers\GenerateReportSheet;
 use Maatwebsite\Excel\Facades\Excel;
 use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
@@ -24,7 +29,6 @@ use App\Models\StudentSemesterEvaluation;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StudentResource;
-use App\Helpers\Report;
 
 class ListStudents extends ListRecords
 {
@@ -104,19 +108,58 @@ class ListStudents extends ListRecords
             Actions\Action::make('reportSheet')
                 // ->url(route('students.print-report-sheet'))
                 // ->openUrlInNewTab()
-                // ->form([
-                //     Select::make('classroom_id')
-                //     ->label('classroom')
-                //     ->options(function(){
-                //         return Classroom::whereIn('id',auth()->user()->activeHomeroom->first()->classroom_id)->pluck('classroom_name','id');
-                //     })
-                //     ->required()
-                //     ->searchable()
-                //     ->selectablePlaceholder(false)
-                //     ->preload(),
-                // ])
+                ->form([
+                    // Select::make('school_year_id')
+                    //     ->default(SchoolYear::activeId())
+                    //     ->label('School Year')
+                    //     ->options(fn()=>SchoolYear::all()->pluck('school_year_name','id'))
+                    //     ->required()
+                    //     ->live(),
+                    // Select::make('school_term_id')
+                    //     ->default(SchoolTerm::activeId())
+                    //     ->label('School Term')
+                    //     ->options(fn()=>SchoolTerm::all()->pluck('school_term_name','id'))
+                    //     ->required()
+                    //     ->live(),
+                    // Select::make('classroom_id')
+                    //     ->label('classroom')
+                    //     ->options(function(Get $get){
+                    //         // return SubjectUser::query()
+                    //         //     ->where('user_id',auth()->user()->id)
+                    //         //     ->where('school_year_id',$get('school_year_id'))
+                    //         //     ->where('school_term_id',$get('school_term_id'))
+                    //         //     ->get()
+                    //         //     ->pluck('subject_user_name', 'id');
+                    //         return Classroom::query()
+                    //             ->whereIn(
+                    //                 'id',
+                    //                 auth()->user()->homerooms
+                    //                     ->where('school_year_id',$get('school_year_id'))
+                    //                     ->where('school_term_id',$get('school_term_id'))
+                    //                     ->pluck('classroom_id')
+                    //                     ->toArray())
+                    //             ->get()
+                    //             ->pluck('classroom_name','id');
+                            
+                    //         // ->whereIn('id',auth()->user()->activeSubjects->pluck('id')       ->toArray())->get()->pluck('subject_user_name', 'id');
+                    //     })
+
+                    //     // ->options(function(){
+                    //     //     return Classroom::whereIn('id',auth()->user()->activeHomeroom->first()->classroom_id)->pluck('classroom_name','id');
+                    //     // })
+                    //     ->required(),
+                    Select::make('homeroom_id')
+                        ->label('Classroom')
+                        ->options(fn()=>auth()->user()->homerooms->pluck('classroom_name','id'))
+                        ->required(),
+                ])
                 ->action(function(array $data){
-                    return redirect()->route('print-report-sheet-for-teacher',auth()->user()->activeHomeroom->first()->classroom_id);
+                    return GenerateReportSheet::make($data['homeroom_id']);
+                    // return redirect()->route('print-report-sheet-for-teacher',$data['classroom_id']);
+                    // return redirect()->route('print-report-sheet-for-teacher',auth()->user()->activeHomeroom->first()->classroom_id);
+
+
+
                     // return redirect()->route('students.print-report-sheet');
                     // return Excel::download(new ReportSheetExport(Report::generateReportSheet(auth()->user()->activeHomeroom->first()->classroom_id)), 'report_sheet.xlsx');
                 })

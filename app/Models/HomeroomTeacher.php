@@ -28,4 +28,11 @@ class HomeroomTeacher extends Model
     {
         return $this->belongsTo(Classroom::class);
     }
+
+    public function getClassroomNameAttribute()
+    {
+        return $this->classroom->classroom_name." - ".$this->schoolYear->school_year_name." - ".$this->SchoolTerm->school_term_name;
+        // return !empty($this->subject->subject_name) ? "- ".$this->subject->subject_name : "";
+        // return $this->department->department_name;
+    }
 }

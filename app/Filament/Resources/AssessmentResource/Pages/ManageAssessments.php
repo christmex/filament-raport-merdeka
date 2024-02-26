@@ -9,6 +9,8 @@ use App\Models\Student;
 use Filament\Forms\Get;
 use App\Models\Classroom;
 use App\Models\Assessment;
+use App\Models\SchoolTerm;
+use App\Models\SchoolYear;
 use App\Models\SubjectUser;
 use App\Models\HomeroomTeacher;
 use App\Models\StudentClassroom;
@@ -16,6 +18,7 @@ use App\Imports\AssessmentImport;
 use App\Exports\ReportSheetExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
+use App\Helpers\GenerateGradeSheet;
 use Maatwebsite\Excel\Facades\Excel;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -35,17 +38,39 @@ class ManageAssessments extends ManageRecords
             Actions\ActionGroup::make([
                 Actions\Action::make('gradeSheet')
                     ->form([
+                        Select::make('school_year_id')
+                            ->default(SchoolYear::activeId())
+                            ->label('School Year')
+                            ->options(fn()=>SchoolYear::all()->pluck('school_year_name','id'))
+                            ->required()
+                            ->live(),
+                        Select::make('school_term_id')
+                            ->default(SchoolTerm::activeId())
+                            ->label('School Term')
+                            ->options(fn()=>SchoolTerm::all()->pluck('school_term_name','id'))
+                            ->required()
+                            ->live(),
                         Select::make('subject_user_id')
-                        ->label('subject')
-                        ->options(SubjectUser::with('subject')->whereIn('id',auth()->user()->activeSubjects->pluck('id')->toArray())->get()->pluck('subject_user_name', 'id'))
-                        ->required()
-                        ->searchable()
-                        ->live()
-                        ->selectablePlaceholder(false)
-                        ->preload(),
+                            ->label('subject')
+                            // ->options(SubjectUser::with('subject')->whereIn('id',auth()->user()->activeSubjects->pluck('id')->toArray())->get()->pluck('subject_user_name', 'id'))
+                            ->options(function(Get $get){
+                                return SubjectUser::query()
+                                    ->where('user_id',auth()->user()->id)
+                                    ->where('school_year_id',$get('school_year_id'))
+                                    ->where('school_term_id',$get('school_term_id'))
+                                    ->get()
+                                    ->pluck('subject_user_name', 'id');
+                                
+                                // ->whereIn('id',auth()->user()->activeSubjects->pluck('id')       ->toArray())->get()->pluck('subject_user_name', 'id');
+                            })
+                            ->required()
+                            ->searchable()
+                            ->live()
+                            ->selectablePlaceholder(false)
+                            ->preload(),
                     ])
                     ->action(function(array $data){
-                        return redirect()->route('print-grade-sheet',$data['subject_user_id']);
+                        return GenerateGradeSheet::make($data['subject_user_id']);
                     }),
                 // Actions\Action::make('reportSheet')
                 //     ->form([

@@ -10,6 +10,7 @@ use App\Models\SchoolTerm;
 use App\Models\SchoolYear;
 use App\Models\SubjectUser;
 use App\Models\SubjectGroup;
+use App\Models\TopicSetting;
 use Illuminate\Http\Request;
 use App\Models\SchoolSetting;
 use App\Models\CharacterReport;
@@ -38,7 +39,7 @@ class PrintController extends Controller
 
         // return view('print-raport-cover',compact('student'));
     }
-    public function print_raport(Student $student){
+    public function print_raport(Student $student, Request $request){
         if(auth()->guest()){
             abort(404,'Login First');
         }
@@ -66,8 +67,10 @@ class PrintController extends Controller
         ->where('student_id', $student->id)
         // ->where('subject_users.school_year_id', SchoolYear::active())
         // ->where('subject_users.school_term_id', SchoolTerm::active())
-        ->where('subject_users.school_year_id', auth()->user()->activeHomeroom->first()->school_year_id)
-        ->where('subject_users.school_term_id', auth()->user()->activeHomeroom->first()->school_term_id)
+        // ->where('subject_users.school_year_id', auth()->user()->activeHomeroom->first()->school_year_id)
+        // ->where('subject_users.school_term_id', auth()->user()->activeHomeroom->first()->school_term_id)
+        ->where('subject_users.school_year_id', $request->school_year_id)
+        ->where('subject_users.school_term_id', $request->school_term_id)
         ->whereNotNull('grading')
         ->groupBy( 'subject_groups.name','subjects.is_curiculum_basic','assessment_method_setting_id', 'subject_user_id', 'topic_setting_id')
         ->orderBy('subjects.sort_order', 'asc') // Order by the sort_order column from subject_users table
@@ -163,7 +166,6 @@ class PrintController extends Controller
         ->withoutGlobalScope('subjectUser')
         ->get();
 
-        // dd($newData);
         $basicCurriculum = [];
         foreach ($newData as $key => $value) { 
             if($newData[$key]['is_curiculum_basic']){
