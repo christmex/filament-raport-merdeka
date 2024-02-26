@@ -160,6 +160,7 @@ class StudentClassroomResource extends Resource
                                 ->send();
                         }
                     })
+                    ->icon('heroicon-s-cog')
                     ->deselectRecordsAfterCompletion(),
                     Tables\Actions\BulkAction::make('syncSchoolSetting')
                         ->icon('heroicon-s-cog')
