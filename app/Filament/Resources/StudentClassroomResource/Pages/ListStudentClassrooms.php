@@ -60,6 +60,7 @@ class ListStudentClassrooms extends ListRecords
                             ->editOptionForm(ClassroomResource::getForm())
                             ->default(fn($state) => $state)
                             ->required(),
+                        
                         \Filament\Forms\Components\CheckboxList::make('student_id')
                             ->label('Students')
                             ->options(function(Get $get){
@@ -96,6 +97,30 @@ class ListStudentClassrooms extends ListRecords
                             ->preload()
                             ->live()
                             ->required(),
+                        // \Filament\Forms\Components\Select::make('main_teacher')
+                        //     ->options(fn()=> HomeroomTeacher::query()
+                        //         ->get()
+                        //         ->pluck('user_id','id')
+                        //     )
+                        //     ->default(function(Get $get){
+                        //         $homeroom = HomeroomTeacher::where('school_year_id',$get('previous_school_year_id'))
+                        //         ->where('school_term_id',$get('previous_school_term_id'))
+                        //         ->where('classroom_id',$get('previous_classroom_id'))
+                        //         ->first();
+                        //         if($homeroom != null){return $homeroom->user_id;}
+                        //         // if($get('classroom_id') != null){
+                        //         //     dd(22);
+                        //         //     HomeroomTeacher::query()
+                        //         //     ->where('school_year_id',$get('previous_school_year_id'))
+                        //         //     ->where('school_term_id',$get('previous_school_term_id'))
+                        //         //     ->where('classroom_id',$get('previous_classroom_id'))
+                        //         //     ->first()->user_id;
+                        //         // }else {
+                        //         //     dd('sss');
+                        //         // }
+                        //     })
+                        //     ->required()
+                        //     ->columnSpanFull(),
                     ])
                     ->columns(3)
                 ])
