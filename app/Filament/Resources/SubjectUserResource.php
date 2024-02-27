@@ -67,7 +67,7 @@ class SubjectUserResource extends Resource
                     ->editOptionForm(UserResource::getForm())
                     // ->mutateDehydratedState()
                     ->default(fn($state) => $state)
-                    ->visibleOn('create')
+                    // ->visibleOn('create')
                     ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
                         return $rule->where('school_year_id', $get('school_year_id'))
                                     ->where('school_term_id', $get('school_term_id'))
