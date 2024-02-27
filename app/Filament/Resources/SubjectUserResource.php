@@ -183,7 +183,7 @@ class SubjectUserResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make(),
                     ExportBulkAction::make(),
                     Tables\Actions\BulkAction::make('syncSchoolSetting')
                         ->icon('heroicon-s-cog')
